@@ -3,21 +3,21 @@
 int main(int argc, char **argv, char **envp)
 {
 	char *buff;
-	char *arg_list[20];
+	char **arg_list;
 	int j;
 	(void)argv, (void)envp, (void)argc;
 
-	buff = malloc(sizeof(char) * 100);
+	buff = malloc(sizeof(char) * BUFSIZE);
 	if (buff == NULL)
 		return (0);
-	memset(buff, '\0', sizeof(buff));
-	for (j = 0; j < 20; j++)
-		arg_list[j] = NULL;
+	memset(buff, '\0', BUFSIZE);
+	arg_list = NULL;
+	printf("size of buff is %d\n", BUFSIZE);
 	print_cmdline();
 	while (1)
 	{
 		read(0, buff, 100);
-		tokenize_buf(buff, arg_list);
+		tokenize_buf(buff, &arg_list);
 		for(j = 0; arg_list[j] != '\0'; j++)
 			printf("%s\n", arg_list[j]);
 		memset(buff, '\0', 100);
