@@ -1,57 +1,34 @@
 #include "shell.h"
 
-static char *arg_list[100];
-
 int main(int argc, char **argv, char **envp)
 {
-	char c;
 	char *buff;
-	char *command;
-	int i, j, bp;
+	char *arg_list[20];
+	int j;
 	(void)argv, (void)envp, (void)argc;
 
-	c = '\0';
-	i = 0, bp = 0;
 	buff = malloc(sizeof(char) * 100);
 	if (buff == NULL)
 		return (0);
-	memset(buff, 0, 100);
-	command = malloc(sizeof(char) * 100);
-	if (command == NULL)
-		return (0);
-	/* shell loop */
+	memset(buff, '\0', sizeof(buff));
+	for (j = 0; j < 20; j++)
+		arg_list[j] = NULL;
 	print_cmdline();
-
-	while (bp < 5)
+	while (1)
 	{
 		read(0, buff, 100);
-		bp++;
-
-		if (bp == 10)
-		{
-			if (buff[0] == 0)
-				print_cmdline();
-			else
-			{
-				buff[i] = '\0';
-				tok_list(buff);
-				strcpy(command, arg_list[0]);
-			}
-			for(j = 0; arg_list[j] != '\0'; j++)
-				printf("%s\n", arg_list[j]);
-			i = 0;
-			memset(buff, '\0', 100);
-			free_args();
-			print_cmdline();
-		}
-		/*else */
-			/*buff[i++] = c;*/
+		tokenize_buf(buff, arg_list);
+		for(j = 0; arg_list[j] != '\0'; j++)
+			printf("%s\n", arg_list[j]);
+		memset(buff, '\0', 100);
+		free_args(arg_list);
+		print_cmdline();
 	}
 	printf("%s\n", buff);
 	return (0);
 }
 
-char **tok_list(char *buffer)
+void tok_list(char *buffer, char **arg_list)
 {
 
 	char *temp, *str;
@@ -74,7 +51,9 @@ char **tok_list(char *buffer)
 			i++;
 		}
 		else
+		{
 			str[j++] = *temp;
+		}
 		temp++;
 	}
 	if (str[0] != 0)
@@ -83,10 +62,9 @@ char **tok_list(char *buffer)
 		strncpy(arg_list[i], str, strlen(str));
 		strncat(arg_list[i], "\0", 1);
 	}
-	return (arg_list);
 }
 
-void free_args()
+void free_args(char **arg_list)
 {
 	int i;
 

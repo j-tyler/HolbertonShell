@@ -11,8 +11,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-char **tok_list(char *buffer);
+void tok_list(char *buffer, char **arg_list);
 void print_cmdline();
 int _strlen(char *s);
-void free_args();
+void free_args(char **arg_list);
+void tokenize_buf(char *buf, char **av);
 #endif
