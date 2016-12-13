@@ -8,25 +8,25 @@
  */
 void tokenize_buf(char *buf, char ***av)
 {
-	int i, avp, flag;
+	int avp, flag, whitespace;
 
 	_av_init(buf, av);
 
-	flag = 1;
-	for (i = 0, avp = 0; buf[i] != '\0'; i++)
+	for (avp = 0, flag = 1; *buf; buf++)
 	{
-		if (flag && buf[i] != ' ')
+		whitespace = _is_whitespace(*buf);
+		if (flag && !whitespace)
 		{
-			*av[avp++] = (buf + i);
+			(*av)[avp++] = buf;
 			flag = 0;
 		}
-		if (buf[i] == ' ')
+		if (whitespace)
 		{
-			buf[i] = '\0';
+			*buf = '\0';
 			flag = 1;
 		}
 	}
-	*av[avp] = NULL;
+	(*av)[avp] == NULL;
 }
 /**
  * _av_init - resize av if needed
@@ -35,28 +35,33 @@ void tokenize_buf(char *buf, char ***av)
  */
 void _av_init(char *buf, char ***av)
 {
-	int i, c, flag;
+	int c, flag, whitespace;
 
-	c = 0, flag = 1;
-	for (i = 0; buf[i] != '\0'; i++)
+	for (c = 0, flag = 1; *buf; buf++)
 	{
-		if (flag && buf[i] != ' ')
+		whitespace = _is_whitespace(*buf);
+		if (flag && !whitespace)
 			flag = 0, c++;
-		if (buf[i] == ' ')
+		else if (whitespace)
 			flag = 1;
 	}
-	if (*av != NULL)
-		for (i = 0; *av[i] != NULL; i++)
-			;			
-	else
-		i = 0;
 
-	printf("I see %d tokens\n", c);
-	if (c > i)
-	{
-		if (*av != NULL)
-			free(*av);
-		*av = malloc(sizeof(char *) * (c + 1));
-		printf("DEBUG: Need to give condition for malloc failure\n");
-	}
+	/* ADD: Do not reallocate if array is big enough ! */
+
+	if (*av != NULL)
+		free(*av);
+	*av = malloc(sizeof(char *) * (c + 1));
+	printf("DEBUG: Need to give condition for malloc failure\n");
+}
+/**
+ * _is_whitespace - Boolean true for false for whitespace
+ * @c: char to evalute.
+ *
+ * Return: 1 if whitespace, 0 if not
+ */
+int _is_whitespace(char c)
+{
+	if (c == ' ' || c == '\n')
+		return (1);
+	return (0);
 }

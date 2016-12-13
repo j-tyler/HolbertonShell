@@ -21,4 +21,5 @@ void free_args(char **arg_list);
 /* tokenize.c */
 void tokenize_buf(char *buf, char ***av);
 void _av_init(char *buf, char ***av);
+int _is_whitespace(char c);
 #endif
