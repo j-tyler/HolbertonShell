@@ -11,7 +11,8 @@ int run_builtin(char **arg_list)
 	builtin table[] = {
 	{"exit", hsh_exit},     {"env", hsh_env},
 	{"setenv", hsh_setenv}, {"unsetenv", hsh_unsetenv},
-	{"cd", hsh_cd},         {"history", hsh_history}
+	{"cd", hsh_cd},         {"history", hsh_history},
+	{"help", hsh_help}
 	};
 
 	size = sizeof(table)/sizeof(table[0]);
@@ -19,7 +20,7 @@ int run_builtin(char **arg_list)
 	{
 		if (_str_match(arg_list[0], table[i].name))
 		{
-			table[i].func(/*arguments + pointer structure? ? */);
+			table[i].func(arg_list[1]);
 			return (0);
 		}
 	}

@@ -49,4 +49,13 @@ void hsh_setenv();
 void hsh_unsetenv();
 void hsh_cd();
 void hsh_history();
+void hsh_help(char *arg);
+#/* list of builtin help printouts */
+void hsh_exit_help(void);
+void hsh_env_help(void);
+void hsh_setenv_help(void);
+void hsh_unsetenv_help(void);
+void hsh_cd_help(void);
+void hsh_history_help(void);
+void hsh_help_help(void);
 #endif
