@@ -14,10 +14,16 @@
 #define BUFSIZE 1024
 #define ARGLISTINIT 5
 
-void tok_list(char *buffer, char **arg_list);
+extern char **environ;
+
 void print_cmdline();
 int _strlen(char *s);
 void free_args(char **arg_list);
+void execute_func(char *cmd, char **args);
+
+/* path_funcs.c */
+void get_path(char *path);
+char **tokenize_path(char **search_path, char *path);
 /* tokenize.c */
 void tokenize_buf(char *buf, char ***av);
 void _av_init(char *buf, char ***av);
