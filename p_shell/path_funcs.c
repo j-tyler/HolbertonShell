@@ -38,30 +38,31 @@ char  **tokenize_path(char **search_path, char *path)
 		if (path[i] == ':')
 			count++;
 	}
-	search_path = malloc(sizeof(char *) * (count + 1));
-	printf("Debug: check if malloc failed\n");
-
+	count++;
+	search_path = malloc(sizeof(char *) * count);
+/*	printf("Debug: check if malloc failed\n");/*
 	/* skip the PATH= */
-	temp = path;
-	while (*temp != '=')
-		temp++;
+	for (temp = path; *temp != '='; temp++);
 	temp++;
 	for (s_index = 0; *temp; temp++)
 	{
 		if (*temp == ':')
 		{
 			strncat(buffer, "/", 1);
-			search_path[s_index] = (char *)malloc(sizeof(char) * (strlen(buffer) + 2));
+			search_path[s_index] = malloc(sizeof(char) * (strlen(buffer) + 1));
 			/*printf("Debug: check if malloc failed"); */
 			strncat(search_path[s_index], buffer, strlen(buffer));
-			strncat(search_path[s_index], "\0", 1);
 			s_index++;
 			memset(buffer, '\0', BUFSIZE);
 		}
 		else
 			strncat(buffer, temp, 1);
 	}
+	strncat(buffer, "/", 1);
+	search_path[s_index] = malloc(sizeof(char) * (strlen(buffer) + 1));
+	strncat(search_path[s_index], buffer, strlen(buffer));
 	s_index++;
+	search_path[s_index] = malloc(sizeof(char *));
 	search_path[s_index] = NULL;
 	return (search_path);
 }
@@ -87,6 +88,7 @@ int create_path(char *cmd, char **search_path)
 		{
 			close(fd);
 			strcpy(cmd, search_path[i]);
+			strncat(cmd, "\0", 1);
 			return (0);
 		}
 	}

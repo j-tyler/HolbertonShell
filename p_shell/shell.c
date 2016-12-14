@@ -14,11 +14,12 @@ int main(int argc, char **argv, char **envp)
 	memset(buff, '\0', BUFSIZE);
 	cmd = malloc(sizeof(char) * BUFSIZE);
 	path = malloc(sizeof(char) * BUFSIZE);
+	search_path = NULL;
 	arg_list = NULL;
 	print_cmdline();
 	while (1)
 	{
-		read(0, buff, 100);
+		buff = _getline(buff);
 		tokenize_buf(buff, &arg_list);
 		strcpy(cmd, arg_list[0]);
 		if (strchr(cmd, '/') != NULL)

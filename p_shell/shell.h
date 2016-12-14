@@ -16,10 +16,16 @@
 
 extern char **environ;
 
+
+
 void print_cmdline();
 int _strlen(char *s);
 void free_args(char **arg_list);
 void execute_func(char *cmd, char **args);
+
+/* getline.c */
+
+char *_getline();
 
 /* path_funcs.c */
 void get_path(char *path);
