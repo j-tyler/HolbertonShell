@@ -14,8 +14,9 @@ char * _getline()
 
 	b_size = 1024;
 	buff = malloc(sizeof(char) * b_size);
+	memset(buff, 0, b_size);
 	buff_p = buff;
-	while ((n = read(0, buff, BUFSIZE)) > 0)
+	while ((n = read(0, buff, b_size)) > 0)
 	{
 		size = strlen(buff_p);
 		new_buff = malloc((b_size + size) * sizeof(char));
@@ -27,7 +28,10 @@ char * _getline()
 			return (new_buff);
 		}
 	}
-	if (n < 0)
-		return (NULL);
+	if (n ==  0)
+	{
+		printf("Debug: Exit 1\n");
+		exit(1);
+	}
 	return (NULL);
 }

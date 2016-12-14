@@ -8,19 +8,16 @@ int main(int argc, char **argv, char **envp)
 	int j;
 	(void)argv, (void)envp, (void)argc;
 
-	buff = malloc(sizeof(char) * BUFSIZE);
-	if (buff == NULL)
-		return (0);
-	memset(buff, '\0', BUFSIZE);
+	buff = NULL;
 	cmd = malloc(sizeof(char) * BUFSIZE);
 	path = malloc(sizeof(char) * BUFSIZE);
 	search_path = NULL;
 	arg_list = NULL;
 	while (1)
 	{
-		buff = _getline(buff);
 		print_cmdline();
-		read(0, buff, 100);
+		buff = _getline(buff);
+		strncat(buff, "\0", 1);
 		tokenize_buf(buff, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
@@ -40,7 +37,7 @@ int main(int argc, char **argv, char **envp)
 		memset(buff, '\0', 100);
 		free_args(arg_list);
 	}
-	printf("%s\n", buff);
+/*	printf("%s\n", buff);*/
 	return (0);
 }
 void execute_func(char *cmd, char **args)

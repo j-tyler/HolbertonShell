@@ -10,6 +10,7 @@ void tokenize_buf(char *buf, char ***av)
 {
 	int avp, flag, whitespace;
 
+	printf("buff is %s\n", buf);
 	_av_init(buf, av);
 
 	for (avp = 0, flag = 1; *buf; buf++)
