@@ -16,11 +16,15 @@ int main(int argc, char **argv, char **envp)
 	path = malloc(sizeof(char) * BUFSIZE);
 	search_path = NULL;
 	arg_list = NULL;
-	print_cmdline();
 	while (1)
 	{
 		buff = _getline(buff);
+		print_cmdline();
+		read(0, buff, 100);
 		tokenize_buf(buff, &arg_list);
+		if (arg_list[0] == NULL)
+			continue;
+		run_builtin(arg_list); /* need to pass more args than this! */
 		strcpy(cmd, arg_list[0]);
 		if (strchr(cmd, '/') != NULL)
 			execute_func(cmd, arg_list);
@@ -35,7 +39,6 @@ int main(int argc, char **argv, char **envp)
 		}
 		memset(buff, '\0', 100);
 		free_args(arg_list);
-		print_cmdline();
 	}
 	printf("%s\n", buff);
 	return (0);

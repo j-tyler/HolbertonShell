@@ -26,7 +26,11 @@ void tokenize_buf(char *buf, char ***av)
 			flag = 1;
 		}
 	}
-	(*av)[avp] == NULL;
+	printf("AVP is %d\n", avp);
+	(*av)[avp] = NULL;
+	/* Command debugging */
+	for (avp = 0; (*av)[avp] != NULL; avp++)
+		printf("Command %d is %s\n", avp, (*av)[avp]);
 }
 /**
  * _av_init - resize av if needed
@@ -50,8 +54,7 @@ void _av_init(char *buf, char ***av)
 
 	if (*av != NULL)
 		free(*av);
-	*av = malloc(sizeof(char *) * (c + 1));
-	printf("DEBUG: Need to give condition for malloc failure\n");
+	*av = safe_malloc(sizeof(char *) * (c + 1));
 }
 /**
  * _is_whitespace - Boolean true for false for whitespace
