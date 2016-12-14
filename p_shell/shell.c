@@ -2,8 +2,9 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	char *buff;
+	char *buff, *cmd, *path;
 	char **arg_list;
+	char **search_path;
 	int j;
 	(void)argv, (void)envp, (void)argc;
 
@@ -11,15 +12,26 @@ int main(int argc, char **argv, char **envp)
 	if (buff == NULL)
 		return (0);
 	memset(buff, '\0', BUFSIZE);
+	cmd = malloc(sizeof(char) * BUFSIZE);
+	path = malloc(sizeof(char) * BUFSIZE);
 	arg_list = NULL;
-	printf("size of buff is %d\n", BUFSIZE);
 	print_cmdline();
 	while (1)
 	{
 		read(0, buff, 100);
 		tokenize_buf(buff, &arg_list);
-		for(j = 0; arg_list[j] != '\0'; j++)
-			printf("%s\n", arg_list[j]);
+		strcpy(cmd, arg_list[0]);
+		if (strchr(cmd, '/') != NULL)
+			execute_func(cmd, arg_list);
+		else
+		{
+			get_path(path);
+			search_path = tokenize_path(search_path, path);
+			if (create_path(cmd, search_path) == 0)
+			{
+				execute_func(cmd, arg_list);
+			}
+		}
 		memset(buff, '\0', 100);
 		free_args(arg_list);
 		print_cmdline();
@@ -27,41 +39,21 @@ int main(int argc, char **argv, char **envp)
 	printf("%s\n", buff);
 	return (0);
 }
-
-void tok_list(char *buffer, char **arg_list)
+void execute_func(char *cmd, char **args)
 {
+	int status, i;
 
-	char *temp, *str;
-        int i, j;
-
-	temp = buffer;
-	i = j = 0;
-	str = malloc(sizeof(char) * strlen(buffer) + 1);
-	memset(str, 0, strlen(buffer));
-	while (*temp != '\0')
+	if (fork() == 0)
 	{
-		if (*temp == ' ')
+		i = execve(cmd, args, NULL);
+		if (i < 0)
 		{
-			if (arg_list[i] == NULL)
-                                arg_list[i] = malloc(sizeof(char) * strlen(str)+ 1);
-			strncpy(arg_list[i], str, strlen(str));
-			strncat(arg_list[i], "\0", 1);
-			memset(str, 0, strlen(buffer));
-			j = 0;
-			i++;
+			write (0, "Error: command not found\n", 25);
+			exit(1);
 		}
-		else
-		{
-			str[j++] = *temp;
-		}
-		temp++;
 	}
-	if (str[0] != 0)
-	{
-		arg_list[i] = malloc(sizeof(char) * strlen(str) + 1);
-		strncpy(arg_list[i], str, strlen(str));
-		strncat(arg_list[i], "\0", 1);
-	}
+	else
+		wait(&status);
 }
 
 void free_args(char **arg_list)
