@@ -5,14 +5,16 @@
  * @path: string to copy the $PATH into
  */
 
-void get_path(char *path)
+void get_path(char *path, env_t *list)
 {
 	int i;
+	env_t *temp;
 
-	for (i = 0; environ[i] != NULL; i++)
+	temp = list;
+	for (i = 0; temp->next != NULL; temp = temp->next)
 	{
-		if (strstr(environ[i], "PATH") != NULL)
-			strcpy(path, environ[i]);
+		if (strstr(temp->value, "PATH") != NULL)
+			strcpy(path, temp->value);
 	}
 }
 

@@ -26,6 +26,21 @@ typedef struct builtin
 
 extern char **environ;
 
+/**
+ * struct env_s - structure for each environmental variable
+ * @value: value of the environmental variable
+ * @next: next environmental variable
+ */
+
+typedef struct env_s
+{
+	char *value;
+	struct env_s *next;
+} env_t;
+
+/* linked_env.c*/
+env_t *create_envlist();
+env_t *add_env(env_t **head, const char *value);
 
 /* helpers.c */
 void print_cmdline();
@@ -36,11 +51,10 @@ void free_args(char **arg_list);
 void execute_func(char *cmd, char **args);
 
 /* getline.c */
-
 char *_getline();
 
 /* path_funcs.c */
-void get_path(char *path);
+void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path);
 /* tokenize.c */
 void tokenize_buf(char *buf, char ***av);
