@@ -30,6 +30,7 @@ extern char **environ;
 void print_cmdline();
 int _strlen(char *s);
 int _str_match(char *s1, char *s2);
+void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 void execute_func(char *cmd, char **args);
 
