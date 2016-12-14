@@ -20,6 +20,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		read(0, buff, 100);
 		tokenize_buf(buff, &arg_list);
+		run_builtin(arg_list); /* need to pass more args than this! */
 		strcpy(cmd, arg_list[0]);
 		if (strchr(cmd, '/') != NULL)
 			execute_func(cmd, arg_list);
