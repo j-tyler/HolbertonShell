@@ -27,7 +27,7 @@ void tokenize_buf(char *buf, char ***av)
 		}
 	}
 	printf("AVP is %d\n", avp);
-	(*av)[avp] == NULL;
+	(*av)[avp] = NULL;
 	/* Command debugging */
 	for (avp = 0; (*av)[avp] != NULL; avp++)
 		printf("Command %d is %s\n", avp, (*av)[avp]);
