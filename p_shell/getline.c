@@ -13,13 +13,13 @@ char * _getline()
 	char *new_buff;
 
 	b_size = 1024;
-	buff = malloc(sizeof(char) * b_size);
+	buff = safe_malloc(sizeof(char) * b_size);
 	memset(buff, 0, b_size);
 	buff_p = buff;
 	while ((n = read(0, buff, b_size)) > 0)
 	{
 		size = strlen(buff_p);
-		new_buff = malloc((b_size + size) * sizeof(char));
+		new_buff = safe_malloc((b_size + size) * sizeof(char));
 		memcpy(new_buff, buff, b_size);
 		buff = new_buff;
 		b_size += size;
