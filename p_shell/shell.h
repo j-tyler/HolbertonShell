@@ -79,7 +79,6 @@ void defer_free(void *address);
 int clear_addr_list_node(addr_list *list, void *address);
 void add_addr_list_node(addr_list *list, void *address);
 void free_addr_list(addr_list *list);
->>>>>>> 2d428da5fe494701037b37189c15af6e6a4ed5cc
 /* list of builtin functions */
 void hsh_exit();
 void hsh_env(char **arg, env_t *env_p);
