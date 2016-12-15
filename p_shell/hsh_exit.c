@@ -7,10 +7,11 @@ void hsh_exit()
 {
 	printf("We executed exit (◕‿◕✿)\n");
 
-	/* void hsh_exit(!pointers to memory to clean?, int status) */
+	/* ADD: Exit Status */
 
-	/* Clean up all memory */
+	defer_free(FREE_ADDRESSES);
 	/* Call _exit() with argument[1] & 0377*/
+	_exit(0);
 }
 /**
  * hsh_exit_help - builtin help printout for exit
