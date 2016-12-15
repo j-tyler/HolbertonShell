@@ -77,7 +77,7 @@ int _str_match(char *s1, char *s2);
 int _atoi(char *s);
 
 /* getline.c */
-char *_getline();
+int _getline(char **buf);
 
 /* path_funcs.c */
 void get_path(char *path, env_t *list);

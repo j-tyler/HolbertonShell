@@ -5,9 +5,11 @@
  */
 void hsh_exit(char **arg_list)
 {
+	int tmp;
+
+	tmp = _atoi(arg_list[1]);
 	defer_free(FREE_ADDRESSES);
-	/* Call _exit() with argument[1] & 0377 ?*/
-	_exit(_atoi(arg_list[1]));
+	_exit(tmp);
 }
 /**
  * hsh_exit_help - builtin help printout for exit
