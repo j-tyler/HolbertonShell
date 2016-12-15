@@ -13,6 +13,7 @@
 
 #define BUFSIZE 1024
 #define ARGLISTINIT 5
+#define FREE_ADDRESSES ((void *)3)
 /**
  * struct builtin - lookup structure for builtin functions
  * @name: string name user types to call function
@@ -23,6 +24,16 @@ typedef struct builtin
 	char *name;
 	void (*func)();
 } builtin;
+/**
+ * struct addr_list
+ * @address: an address of any type
+ * @next: the next node in the list
+ */
+typedef struct addr_list
+{
+	void *address;
+	struct addr_list *next;
+} addr_list;
 
 extern char **environ;
 
@@ -48,6 +59,12 @@ void _av_init(char *buf, char ***av);
 int _is_whitespace(char c);
 /* builtin.c */
 int run_builtin(char **arg_list/* wat we doing here? */);
+/* memory_allocation.c */
+void _free(void *address);
+void defer_free(void *address);
+int clear_addr_list_node(addr_list *list, void *address);
+void add_addr_list_node(addr_list *list, void *address);
+void free_addr_list(addr_list *list);
 /* list of builtin functions */
 void hsh_exit();
 void hsh_env();

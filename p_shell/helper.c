@@ -56,7 +56,8 @@ void *safe_malloc(size_t size)
 	if (tmp == NULL)
 	{
 		write(STDOUT_FILENO, "Out of Memory (._.)\n", 20);
-		/* somehow exit here while cleaning up */
+		/* ADD: Exit! */	
 	}
+	defer_free(tmp);
 	return (tmp);
 }

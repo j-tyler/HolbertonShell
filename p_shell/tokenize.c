@@ -54,7 +54,7 @@ void _av_init(char *buf, char ***av)
 	/* ADD: Do not reallocate if array is big enough ! */
 
 	if (*av != NULL)
-		free(*av);
+		_free(*av);
 	*av = safe_malloc(sizeof(char *) * (c + 1));
 }
 /**
