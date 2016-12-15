@@ -15,7 +15,7 @@ void hsh_setenv(char **arg_list, env_t *envp)
 	if (arg_list[1] == NULL || strlen(arg_list[1]) == 0 ||
 	    strstr(arg_list[1], "=") != NULL)
 		exit(1);
-	name = malloc(strlen(arg_list[1]) + strlen(arg_list[2] + 1));
+	name = safe_malloc(strlen(arg_list[1]) + strlen(arg_list[2] + 1));
 	memset(name, 0, strlen(arg_list[1]) + strlen(arg_list[2] + 1));
 	strcpy(name, arg_list[1]);
 	strncat(name, "=\0", 2);
