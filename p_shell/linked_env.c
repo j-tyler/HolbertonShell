@@ -45,7 +45,43 @@ env_t *add_env(env_t **head, const char *env)
 }
 
 /**
+ * remove_env - removes an environmental variable
+ * @head: pointer to the head of the linked list
+ * @index: the nth node to delete
+ */
+
+void remove_env(env_t **head, int index)
+{
+	env_t *temp;
+	env_t *dnode;
+	int i;
+
+	i = 0;
+	temp = *head;
+	if (index == 0)
+	{
+		*head = (*head)->next;
+		_free(temp);
+	}
+	else
+	{
+		while (i < index - 1)
+		{
+			printf("im going into the loop");
+			temp = temp->next;
+			i++;
+		}
+		dnode = temp;
+		dnode = dnode->next;
+		temp->next = dnode->next;
+		_free(dnode);
+	}
+}
+
+
+/**
  * print_env - prints all environmental variables and its values
+ * @head: head pointer to the linked list
  */
 
 void print_env(env_t *head)

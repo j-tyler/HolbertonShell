@@ -52,7 +52,7 @@ typedef struct env_s
 /* linked_env.c*/
 env_t *create_envlist();
 env_t *add_env(env_t **head, const char *value);
-
+void  remove_env(env_t **head, int index);
 /* helpers.c */
 void print_cmdline();
 int _strlen(char *s);
@@ -83,7 +83,7 @@ void free_addr_list(addr_list *list);
 void hsh_exit();
 void hsh_env(char **arg, env_t *env_p);
 void  hsh_setenv(char **arg, env_t *env_p);
-void hsh_unsetenv();
+void hsh_unsetenv(char **arg, env_t *env_p);
 void hsh_cd();
 void hsh_history();
 void hsh_help(char **arg);

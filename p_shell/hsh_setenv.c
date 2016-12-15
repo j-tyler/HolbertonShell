@@ -8,36 +8,37 @@
  */
 void hsh_setenv(char **arg_list, env_t *envp)
 {
-	int i, num;
-	char *name, *overwrite;
+	int flag;
+	char *name, *value;
 	env_t *temp;
 
-	if (arg_list[1] == NULL || strlen(arg_list[1]) == 0 ||
-	    strstr(arg_list[1], "=") != NULL)
-		exit(1);
-	name = safe_malloc(strlen(arg_list[1]) + strlen(arg_list[2] + 1));
-	memset(name, 0, strlen(arg_list[1]) + strlen(arg_list[2] + 1));
-	strcpy(name, arg_list[1]);
-	strncat(name, "=\0", 2);
-	overwrite = arg_list[3];
-	num = (overwrite == NULL ? 0 : atoi(overwrite));
+	if (arg_list[1] == NULL || arg_list[2] == NULL)
+		exit (1);
+	/* set up all strings up*/
+	name = safe_malloc(sizeof(char) * (strlen(arg_list[1]) + strlen(arg_list[2]) + 2));
+	memset(name, 0, (strlen(arg_list[1]) + strlen(arg_list[2]) + 2));
+	memcpy(name, arg_list[1], strlen(arg_list[1]));
+	value = safe_malloc(sizeof(char) * (strlen(arg_list[2]) + 1));
+	memset(value, 0, strlen(arg_list[2]) + 1);
+	memcpy(value, arg_list[2], strlen(arg_list[2]));
+	strcat(name, "=");
 	temp = envp;
+	flag = 0;
 	while (temp != NULL)
 	{
-		if(strstr(temp->value, name) != NULL && overwrite != 0)
+		if (strstr(temp->value, name) != NULL)
 		{
-			temp->value = strcat(name, arg_list[2]);
-			exit(1);
+			strcat(name, value);
+			temp->value = name;
+			flag = 1;
 		}
-		else if (strstr(temp->value, name) != NULL && overwrite == 0)
-			exit (1);
 		temp = temp->next;
 	}
-	strcat(name, arg_list[2]);
-	strncat(name, "\0", 1);
-	add_env(&envp, name);
-	print_env(envp);
-	printf("something is wrong when i try to return \n");
+	if (flag == 0)
+	{
+		strcat(name, value);
+		add_env(&envp, name);
+	}
 }
 /**
  * hsh_setenv_help - builtin help printout for setenv

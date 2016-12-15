@@ -22,9 +22,10 @@ int main(int argc, char **argv, char **envp)
 		tokenize_buf(buff, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		run_builtin(arg_list, env_p); /* need to pass more args than this! */
 		strcpy(cmd, arg_list[0]);
-		if (strchr(cmd, '/') != NULL)
+		if(!run_builtin(arg_list, env_p))
+			continue; /* need to pass more args than this! */
+		else if (strchr(cmd, '/') != NULL)
 			execute_func(cmd, arg_list);
 		else
 		{
