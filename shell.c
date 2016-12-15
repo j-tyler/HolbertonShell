@@ -21,38 +21,27 @@ int main(int argc, char **argv, char **envp)
 		tokenize_buf(buf, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		strcpy(cmd, arg_list[0]);
-		if(run_builtin(arg_list, env_p))
+		if (run_builtin(arg_list, env_p) != 0)
 		{
-			if (strchr(cmd, '/') != NULL)
-				execute_func(cmd, arg_list);
-			else
-			{
-				get_path(path, env_p);
-				search_path = tokenize_path(search_path, path);
-				if (create_path(cmd, search_path) == 0)
-					execute_func(cmd, arg_list);
-			}
+			run_execute(arg_list, env_p);
 		}
+/**
+ *		strcpy(cmd, arg_list[0]);
+ *		if(!run_builtin(arg_list, env_p))
+ *			continue;
+ *		else if (strchr(cmd, '/') != NULL)
+ *			execute_func(cmd, arg_list);
+ *		else
+ *		{
+ *			get_path(path, env_p);
+ *			search_path = tokenize_path(search_path, path);
+ *			if (create_path(cmd, search_path) == 0)
+ *			{
+ *				execute_func(cmd, arg_list);
+ *			}
+ *		}
+ */
+		memset(buf, '\0', 100);
 	}
 	return (0);
-}
-/**
- * execute_func - Execute the function given by cmd
- */
-void execute_func(char *cmd, char **args)
-{
-	int status, i;
-
-	if (fork() == 0)
-	{
-		i = execve(cmd, args, NULL);
-		if (i < 0)
-		{
-			write (0, "Error: command not found\n", 25);
-			exit(1);
-		}
-	}
-	else
-		wait(&status);
 }
