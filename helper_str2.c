@@ -85,3 +85,19 @@ int _str_match(char *s1, char *s2)
 	}
 	return (0);
 }
+/**
+ * _atoi - convert a string to a number
+ * @s: string to convert
+ *
+ * Return: number representation of string
+ */
+int _atoi(char *s)
+{
+	int n;
+	printf("string is %s\n", s);
+	for (n = 0; *s; s++)
+		if (*s >= '0' && *s <= '9')
+			n = (n * 10) + (*s - '0');
+	printf("returning %d\n", n);
+	return (n);
+}
