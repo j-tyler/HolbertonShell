@@ -11,7 +11,6 @@ void tokenize_buf(char *buf, char ***av)
 	int avp, flag, whitespace;
 
 	_av_init(buf, av);
-
 	for (avp = 0, flag = 1; *buf; buf++)
 	{
 		whitespace = _is_whitespace(*buf);
@@ -26,7 +25,11 @@ void tokenize_buf(char *buf, char ***av)
 			flag = 1;
 		}
 	}
-	(*av)[avp] == NULL;
+	printf("AVP is %d\n", avp);
+	(*av)[avp] = NULL;
+	/* Command debugging */
+	for (avp = 0; (*av)[avp] != NULL; avp++)
+		printf("Command %d is %s\n", avp, (*av)[avp]);
 }
 /**
  * _av_init - resize av if needed
@@ -49,9 +52,8 @@ void _av_init(char *buf, char ***av)
 	/* ADD: Do not reallocate if array is big enough ! */
 
 	if (*av != NULL)
-		free(*av);
-	*av = malloc(sizeof(char *) * (c + 1));
-	printf("DEBUG: Need to give condition for malloc failure\n");
+		_free(*av);
+	*av = safe_malloc(sizeof(char *) * (c + 1));
 }
 /**
  * _is_whitespace - Boolean true for false for whitespace

@@ -3,29 +3,33 @@
 int main(int argc, char **argv, char **envp)
 {
 	char *buff, *cmd, *path;
-	char **arg_list;
-	char **search_path;
+	char **arg_list, **search_path;
+	env_t *env_p;
 	int j;
 	(void)argv, (void)envp, (void)argc;
 
-	buff = malloc(sizeof(char) * BUFSIZE);
-	if (buff == NULL)
-		return (0);
-	memset(buff, '\0', BUFSIZE);
-	cmd = malloc(sizeof(char) * BUFSIZE);
-	path = malloc(sizeof(char) * BUFSIZE);
+	env_p = create_envlist();
+	cmd = safe_malloc(sizeof(char) * BUFSIZE);
+	path = safe_malloc(sizeof(char) * BUFSIZE);
+	buff = NULL;
+	search_path = NULL;
 	arg_list = NULL;
-	print_cmdline();
 	while (1)
 	{
-		read(0, buff, 100);
+		print_cmdline();
+		buff = _getline(buff);
+		strncat(buff, "\0", 1);
 		tokenize_buf(buff, &arg_list);
+		if (arg_list[0] == NULL)
+			continue;
 		strcpy(cmd, arg_list[0]);
-		if (strchr(cmd, '/') != NULL)
+		if(!run_builtin(arg_list, env_p))
+			continue; /* need to pass more args than this! */
+		else if (strchr(cmd, '/') != NULL)
 			execute_func(cmd, arg_list);
 		else
 		{
-			get_path(path);
+			get_path(path, env_p);
 			search_path = tokenize_path(search_path, path);
 			if (create_path(cmd, search_path) == 0)
 			{
@@ -33,10 +37,8 @@ int main(int argc, char **argv, char **envp)
 			}
 		}
 		memset(buff, '\0', 100);
-		free_args(arg_list);
-		print_cmdline();
 	}
-	printf("%s\n", buff);
+/*	printf("%s\n", buff);*/
 	return (0);
 }
 void execute_func(char *cmd, char **args)
@@ -54,16 +56,4 @@ void execute_func(char *cmd, char **args)
 	}
 	else
 		wait(&status);
-}
-
-void free_args(char **arg_list)
-{
-	int i;
-
-	for (i = 0; arg_list[i] != '\0'; i++)
-	{
-		memset(arg_list[i], '\0', strlen(arg_list[i]));
-		arg_list[i] = NULL;
-		free(arg_list[i]);
-	}
 }
