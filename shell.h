@@ -50,7 +50,7 @@ typedef struct env_s
 } env_t;
 
 /* run_execute.c */
-void run_execute(char **arg_list, env_t *env_p);
+void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
 /* linked_env.c*/
 env_t *create_envlist();
@@ -80,7 +80,7 @@ int _getline(char **buf);
 
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
-char **tokenize_path(char **search_path, char *path);
+char **tokenize_path(char **search_path, char *path, int size);
 /* tokenize.c */
 void tokenize_buf(char *buf, char ***av);
 void _av_init(char *buf, char ***av);
