@@ -3,15 +3,11 @@
  * hsh_exit - builtin command hsh_exit, mimics exit()
  * @??:
  */
-void hsh_exit()
+void hsh_exit(char **arg_list)
 {
-	printf("We executed exit (◕‿◕✿)\n");
-
-	/* ADD: Exit Status */
-
 	defer_free(FREE_ADDRESSES);
-	/* Call _exit() with argument[1] & 0377*/
-	_exit(0);
+	/* Call _exit() with argument[1] & 0377 ?*/
+	_exit(_atoi(arg_list[1]));
 }
 /**
  * hsh_exit_help - builtin help printout for exit
