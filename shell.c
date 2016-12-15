@@ -1,22 +1,25 @@
 #include "shell.h"
-
+/**
+ * main - Holberton Shell
+ */
 int main(int argc, char **argv, char **envp)
 {
-	char *buff;
-	char **arg_list;
+	char *buf, *cmd, *path;
+	char **arg_list, **search_path;
 	env_t *env_p;
 	int j;
 	(void)argv, (void)envp, (void)argc;
 
 	env_p = create_envlist();
-	buff = NULL;
-	arg_list = NULL;
+	cmd = safe_malloc(sizeof(char) * BUFSIZE);
+	path = safe_malloc(sizeof(char) * BUFSIZE);
+	buf = safe_malloc(sizeof(char) * BUFSIZE); 
+	search_path = arg_list = NULL;
 	while (1)
 	{
 		print_cmdline();
-		buff = _getline(buff);
-		strncat(buff, "\0", 1);
-		tokenize_buf(buff, &arg_list);
+		_getline(&buf);
+		tokenize_buf(buf, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
 		if (run_builtin(arg_list, env_p) != 0)
@@ -39,8 +42,7 @@ int main(int argc, char **argv, char **envp)
  *			}
  *		}
  */
-		memset(buff, '\0', 100);
+		memset(buf, '\0', 100);
 	}
-/*	printf("%s\n", buff);*/
 	return (0);
 }
