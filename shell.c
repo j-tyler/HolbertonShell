@@ -7,7 +7,7 @@ int main(int argc, char **argv, char **envp)
 	char *buf;
 	char **arg_list;
 	env_t *env_p;
-	int cmd_size;
+	int buf_size;
 	(void)argv, (void)envp, (void)argc;
 
 	env_p = create_envlist();
@@ -16,13 +16,12 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		print_cmdline();
-		cmd_size = _getline(&buf);
+		buf_size = _getline(&buf);
 		tokenize_buf(buf, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
 		if (run_builtin(arg_list, env_p) != 0)
-			run_execute(arg_list, env_p, cmd_size);
-		memset(buf, '\0', 100);
+			run_execute(arg_list, env_p, buf_size);
 	}
 	return (0);
 }
