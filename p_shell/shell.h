@@ -61,15 +61,15 @@ void tokenize_buf(char *buf, char ***av);
 void _av_init(char *buf, char ***av);
 int _is_whitespace(char c);
 /* builtin.c */
-int run_builtin(char **arg_list/* wat we doing here? */);
+int run_builtin(char **arg_list, env_t *env_p/* wat we doing here? */);
 /* list of builtin functions */
 void hsh_exit();
-void hsh_env();
-void hsh_setenv();
+void hsh_env(char **arg, env_t *env_p);
+void  hsh_setenv(char **arg, env_t *env_p);
 void hsh_unsetenv();
 void hsh_cd();
 void hsh_history();
-void hsh_help(char *arg);
+void hsh_help(char **arg);
 /* list of builtin help printouts */
 void hsh_exit_help(void);
 void hsh_env_help(void);

@@ -3,10 +3,9 @@
  * hsh_env - builtin command hsh_env, mimics sh builtin env
  * @??:
  */
-void hsh_env()
+void hsh_env(char **arg_list, env_t *envp)
 {
-	printf("We executed env (◕‿◕✿)\n");
-	/* Print out the env */
+	print_env(envp);
 }
 /**
  * hsh_env_help - builtin help printout for env

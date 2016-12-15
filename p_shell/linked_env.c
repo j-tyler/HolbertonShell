@@ -43,3 +43,16 @@ env_t *add_env(env_t **head, const char *env)
 	}
 	return (new_node);
 }
+
+/**
+ * print_env - prints all environmental variables and its values
+ */
+
+void print_env(env_t *head)
+{
+	while (head != NULL)
+	{
+		printf("%s\n", head->value);
+		head = head->next;
+	}
+}

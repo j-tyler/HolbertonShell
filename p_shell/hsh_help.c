@@ -4,7 +4,7 @@
  * @??:
  * Return: ??
  */
-void hsh_help(char *arg)
+void hsh_help(char **arg)
 {
 	int i, size;
 	builtin table[] = {
@@ -21,7 +21,7 @@ void hsh_help(char *arg)
 		size = sizeof(table)/sizeof(table[0]);
 		for (i = 0; i < size; i++)
 		{
-			if (_str_match(arg, table[i].name))
+			if (_str_match(arg[1], table[i].name))
 			{
 				table[i].func();
 				return;

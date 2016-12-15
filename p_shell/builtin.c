@@ -5,7 +5,7 @@
  *
  * Return: 0 on found builtin, 1 on found nothing
  */
-int run_builtin(char **arg_list)
+int run_builtin(char **arg_list, env_t *env_p)
 {
 	int i, size;
 	builtin table[] = {
@@ -20,7 +20,7 @@ int run_builtin(char **arg_list)
 	{
 		if (_str_match(arg_list[0], table[i].name))
 		{
-			table[i].func(arg_list[1]);
+			table[i].func(arg_list, env_p);
 			return (0);
 		}
 	}
