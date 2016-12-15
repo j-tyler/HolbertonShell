@@ -67,7 +67,6 @@ void remove_env(env_t **head, int index)
 	{
 		while (i < index - 1)
 		{
-			printf("im going into the loop");
 			temp = temp->next;
 			i++;
 		}
