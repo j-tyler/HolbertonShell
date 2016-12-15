@@ -5,23 +5,24 @@
  * string.
  *
  */
-char *_getline(char **buf)
+int _getline(char **buf)
 {
-	int i, n, size, b_size;
+	static int b_size = BUFSIZE;
+	int offset, n;
 	char *new_buf;
 
-	b_size = 1024;
-	*buf = safe_malloc(sizeof(char) * b_size);
-	while ((n = read(0, *buf, b_size)) > 0)
+	offset = 0;
+	while ((n = read(0, *buf + offset, b_size - offset)) > 0)
 	{
-		if (n < b_size)
+		if (n < b_size - offset)
 		{
-			(*buf)[n] = '\0';
-			return (*buf);
+			(*buf)[n + offset] = '\0';
+			return (b_size);
 		}
 		b_size *= 2;
 		new_buf = safe_malloc((b_size) * sizeof(char));
-		memcpy(new_buf, *buf, b_size/2); /* This does not work to save buffer */
+		offset += n;
+		memcpy(new_buf, *buf, b_size / 2); /* This does not work to save buffer */
 		*buf = new_buf;
 	}
 	if (n == 0) /* Exit when given EOF */
@@ -29,5 +30,5 @@ char *_getline(char **buf)
 		defer_free(FREE_ADDRESSES);
 		_exit(0);
 	}
-	return (*buf);
+	return (b_size);
 }

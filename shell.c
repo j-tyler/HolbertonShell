@@ -13,7 +13,8 @@ int main(int argc, char **argv, char **envp)
 	env_p = create_envlist();
 	cmd = safe_malloc(sizeof(char) * BUFSIZE);
 	path = safe_malloc(sizeof(char) * BUFSIZE);
-	buf = NULL; search_path = arg_list = NULL;
+	buf = safe_malloc(sizeof(char) * BUFSIZE); 
+	search_path = arg_list = NULL;
 	while (1)
 	{
 		print_cmdline();
