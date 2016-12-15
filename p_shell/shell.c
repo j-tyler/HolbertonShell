@@ -66,6 +66,6 @@ void free_args(char **arg_list)
 	{
 		memset(arg_list[i], '\0', strlen(arg_list[i]));
 		arg_list[i] = NULL;
-		free(arg_list[i]);
+		_free(arg_list[i]);
 	}
 }

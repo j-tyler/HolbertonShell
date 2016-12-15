@@ -41,7 +41,7 @@ char  **tokenize_path(char **search_path, char *path)
 			count++;
 	}
 	count++;
-	search_path = malloc(sizeof(char *) * count);
+	search_path = safe_malloc(sizeof(char *) * count);
 /*	printf("Debug: check if malloc failed\n");/*
 	/* skip the PATH= */
 	for (temp = path; *temp != '='; temp++);
@@ -51,7 +51,7 @@ char  **tokenize_path(char **search_path, char *path)
 		if (*temp == ':')
 		{
 			strncat(buffer, "/", 1);
-			search_path[s_index] = malloc(sizeof(char) * (strlen(buffer) + 6));
+			search_path[s_index] = safe_malloc(sizeof(char) * (strlen(buffer) + 6));
 			memset(search_path[s_index], 0, (strlen(buffer) + 6));
 			/*printf("Debug: check if malloc failed"); */
 			strncat(search_path[s_index], buffer, strlen(buffer));
@@ -62,7 +62,7 @@ char  **tokenize_path(char **search_path, char *path)
 			strncat(buffer, temp, 1);
 	}
 	strncat(buffer, "/", 1);
-	search_path[s_index] = malloc(sizeof(char) * (strlen(buffer) + 6));
+	search_path[s_index] = safe_malloc(sizeof(char) * (strlen(buffer) + 6));
 	memset(search_path[s_index], 0, (strlen(buffer) + 6));
 	strncat(search_path[s_index], buffer, strlen(buffer));
 	s_index++;
