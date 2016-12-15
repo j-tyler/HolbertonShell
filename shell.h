@@ -50,7 +50,7 @@ typedef struct env_s
 } env_t;
 
 /* run_execute.c */
-void run_execute(char **arg_list, env_t *env_p);
+void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
 /* linked_env.c*/
 env_t *create_envlist();
@@ -74,13 +74,14 @@ char *_strdup(char *str);
 char *_strchr(char *s, char c);
 int _strlen(char *s);
 int _str_match(char *s1, char *s2);
+int _atoi(char *s);
 
 /* getline.c */
 int _getline(char **buf);
 
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
-char **tokenize_path(char **search_path, char *path);
+char **tokenize_path(char **search_path, char *path, int size);
 /* tokenize.c */
 void tokenize_buf(char *buf, char ***av);
 void _av_init(char *buf, char ***av);
@@ -94,7 +95,7 @@ int clear_addr_list_node(addr_list *list, void *address);
 void add_addr_list_node(addr_list *list, void *address);
 void free_addr_list(addr_list *list);
 /* list of builtin functions */
-void hsh_exit();
+void hsh_exit(char **arg_list);
 void hsh_env(char **arg, env_t *env_p);
 void  hsh_setenv(char **arg, env_t *env_p);
 void hsh_unsetenv(char **arg, env_t *env_p);

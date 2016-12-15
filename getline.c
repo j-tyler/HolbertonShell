@@ -11,6 +11,8 @@ int _getline(char **buf)
 	int offset, n;
 	char *new_buf;
 
+	/* DEBUG, does not work on realloc the third time */
+
 	offset = 0;
 	while ((n = read(0, *buf + offset, b_size - offset)) > 0)
 	{
@@ -22,7 +24,7 @@ int _getline(char **buf)
 		b_size *= 2;
 		new_buf = safe_malloc((b_size) * sizeof(char));
 		offset += n;
-		memcpy(new_buf, *buf, b_size / 2); /* This does not work to save buffer */
+		memcpy(new_buf, *buf, b_size / 2); /* DEBUG: rewrite this non-stdlib */
 		*buf = new_buf;
 	}
 	if (n == 0) /* Exit when given EOF */

@@ -23,7 +23,10 @@ void hsh_unsetenv(char **arg_list, env_t *envp)
 	for (temp = envp, count = 0; temp != NULL; temp = temp->next)
 	{
 		if (strstr(temp->value, name) != NULL)
+		{
 			remove_env(&envp, count);
+			break;
+		}
 		count++;
 	}
 }
