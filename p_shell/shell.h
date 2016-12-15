@@ -49,17 +49,31 @@ typedef struct env_s
 	struct env_s *next;
 } env_t;
 
+/* run_execute.c */
+void run_execute(char **arg_list, env_t *env_p);
+
 /* linked_env.c*/
 env_t *create_envlist();
 env_t *add_env(env_t **head, const char *value);
 void  remove_env(env_t **head, int index);
 /* helpers.c */
 void print_cmdline();
-int _strlen(char *s);
-int _str_match(char *s1, char *s2);
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 void execute_func(char *cmd, char **args);
+
+/* helper_str.c*/
+char *_memcpy(char *dest, char *src, unsigned int n);
+char *_memset(char *s, char b, unsigned int n);
+char *_strcat(char *dest, char *src);
+char *_strncat(char *dest, char *src, int n);
+char *_strstr(char *haystack, char *needle);
+
+/* helper_str2.c */
+char *_strdup(char *str);
+char *_strchr(char *s, char c);
+int _strlen(char *s);
+int _str_match(char *s1, char *s2);
 
 /* getline.c */
 char *_getline();
