@@ -15,11 +15,18 @@ void _free(void *address)
 void defer_free(void *address)
 {
 	static addr_list list = {NULL, NULL};
-	addr_list *tmp;
+	addr_list *tmp, *tmp2;
 
+	printf("DEBUG: We are defer_freeing address: %p\n", address);
 	tmp = &list;
+	/*tmp2 = tmp;
+	while (tmp2 != NULL)
+	{
+		printf("Addresses in the list: %p\n", tmp2->address);
+		tmp2 = tmp2->next;
+	}*/
 	/* If not given signal to free all, and address not already in list, add it */
-	if (address != FREE_ADDRESSES && !clear_addr_list_node(tmp, address))
+	if (address != FREE_ADDRESSES && clear_addr_list_node(tmp, address))
 	{
 		while (1)
 		{
@@ -36,7 +43,7 @@ void defer_free(void *address)
 			tmp = tmp->next;
 		}
 	}
-	else /*free all addresses*/
+	else if (address == FREE_ADDRESSES)
 	{
 		free_addr_list(list.next);
 		if (list.address != NULL)
@@ -72,8 +79,10 @@ void add_addr_list_node(addr_list *list, void *address)
 {
 	addr_list *node;
 
-	node = safe_malloc(sizeof(addr_list));
+	node = malloc(sizeof(addr_list));
+	/* ADD: Condition to exit() on malloc failure */
 	node->address = address;
+	node->next = NULL;
 	list->next = node;
 }
 /**
@@ -83,9 +92,10 @@ void add_addr_list_node(addr_list *list, void *address)
 void free_addr_list(addr_list *list)
 {
 	addr_list *tmp;
-
+	printf("Freeing the list\n");
 	while (list != NULL)
 	{
+		printf("Freeing Address: %p\n", list->address);
 		tmp = list;
 		list = list->next;
 		if (tmp->address != NULL)

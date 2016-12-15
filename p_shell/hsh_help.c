@@ -14,7 +14,7 @@ void hsh_help(char **arg)
 	{"help", hsh_help_help}
 	};
 
-	if (arg == NULL)
+	if (arg[1] == NULL)
 		printf("We executed help (◕‿◕✿)\n");
 	else
 	{
