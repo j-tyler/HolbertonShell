@@ -3,14 +3,15 @@
 int main(int argc, char **argv, char **envp)
 {
 	char *buff, *cmd, *path;
-	char **arg_list;
-	char **search_path;
+	char **arg_list, **search_path;
+	env_t *env_p;
 	int j;
 	(void)argv, (void)envp, (void)argc;
 
+	env_p = create_envlist();
+	cmd = safe_malloc(sizeof(char) * BUFSIZE);
+	path = safe_malloc(sizeof(char) * BUFSIZE);
 	buff = NULL;
-	cmd = malloc(sizeof(char) * BUFSIZE);
-	path = malloc(sizeof(char) * BUFSIZE);
 	search_path = NULL;
 	arg_list = NULL;
 	while (1)
@@ -27,7 +28,7 @@ int main(int argc, char **argv, char **envp)
 			execute_func(cmd, arg_list);
 		else
 		{
-			get_path(path);
+			get_path(path, env_p);
 			search_path = tokenize_path(search_path, path);
 			if (create_path(cmd, search_path) == 0)
 			{
