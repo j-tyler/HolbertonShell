@@ -5,33 +5,29 @@
  * string.
  *
  */
-
-char * _getline()
+char *_getline(char **buf)
 {
 	int i, n, size, b_size;
-	char *buff, *buff_p;
-	char *new_buff;
+	char *new_buf;
 
 	b_size = 1024;
-	buff = safe_malloc(sizeof(char) * b_size);
-	memset(buff, 0, b_size);
-	buff_p = buff;
-	while ((n = read(0, buff, b_size)) > 0)
+	*buf = safe_malloc(sizeof(char) * b_size);
+	while ((n = read(0, *buf, b_size)) > 0)
 	{
-		size = strlen(buff_p);
-		new_buff = safe_malloc((b_size + size) * sizeof(char));
-		memcpy(new_buff, buff, b_size);
-		buff = new_buff;
-		b_size += size;
-		for (i = 0; buff[i] != '\0'; i++)
+		if (n < b_size)
 		{
-			return (new_buff);
+			(*buf)[n] = '\0';
+			return (*buf);
 		}
+		b_size *= 2;
+		new_buf = safe_malloc((b_size) * sizeof(char));
+		memcpy(new_buf, *buf, b_size/2); /* This does not work to save buffer */
+		*buf = new_buf;
 	}
-	if (n ==  0)
+	if (n == 0) /* Exit when given EOF */
 	{
-		printf("Debug: Exit 1\n");
-		exit(1);
+		defer_free(FREE_ADDRESSES);
+		_exit(0);
 	}
-	return (NULL);
+	return (*buf);
 }
