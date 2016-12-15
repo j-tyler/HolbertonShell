@@ -76,7 +76,7 @@ int _strlen(char *s);
 int _str_match(char *s1, char *s2);
 
 /* getline.c */
-char *_getline();
+int _getline(char **buf);
 
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
