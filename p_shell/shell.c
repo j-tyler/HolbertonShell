@@ -36,7 +36,6 @@ int main(int argc, char **argv, char **envp)
 			}
 		}
 		memset(buff, '\0', 100);
-		free_args(arg_list);
 	}
 /*	printf("%s\n", buff);*/
 	return (0);
@@ -56,16 +55,4 @@ void execute_func(char *cmd, char **args)
 	}
 	else
 		wait(&status);
-}
-
-void free_args(char **arg_list)
-{
-	int i;
-
-	for (i = 0; arg_list[i] != '\0'; i++)
-	{
-		memset(arg_list[i], '\0', strlen(arg_list[i]));
-		arg_list[i] = NULL;
-		_free(arg_list[i]);
-	}
 }
