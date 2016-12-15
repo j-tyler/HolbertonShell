@@ -56,11 +56,14 @@ void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 env_t *create_envlist();
 env_t *add_env(env_t **head, const char *value);
 void  remove_env(env_t **head, int index);
+void update_env(env_t *envp, char *name, char *value);
+
 /* helpers.c */
 void print_cmdline();
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 void execute_func(char *cmd, char **args);
+char *rm_vname(env_t *envp, char *arg, int buf_size);
 
 /* helper_str.c*/
 char *_memcpy(char *dest, char *src, unsigned int n);
@@ -82,26 +85,31 @@ int _getline(char **buf);
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
+
 /* tokenize.c */
 void tokenize_buf(char *buf, char ***av);
 void _av_init(char *buf, char ***av);
 int _is_whitespace(char c);
+
 /* builtin.c */
-int run_builtin(char **arg_list, env_t *env_p/* wat we doing here? */);
+int run_builtin(char **arg_list, env_t *env_p, int buf_size);
+
 /* memory_allocation.c */
 void _free(void *address);
 void defer_free(void *address);
 int clear_addr_list_node(addr_list *list, void *address);
 void add_addr_list_node(addr_list *list, void *address);
 void free_addr_list(addr_list *list);
+
 /* list of builtin functions */
 void hsh_exit(char **arg_list);
 void hsh_env(char **arg, env_t *env_p);
-void  hsh_setenv(char **arg, env_t *env_p);
+void hsh_setenv(char **arg, env_t *env_p);
 void hsh_unsetenv(char **arg, env_t *env_p);
-void hsh_cd();
+void hsh_cd(char **arg, env_t *env_p, int buf_size);
 void hsh_history();
 void hsh_help(char **arg);
+
 /* list of builtin help printouts */
 void hsh_exit_help(void);
 void hsh_env_help(void);

@@ -17,7 +17,7 @@ void defer_free(void *address)
 	static addr_list list = {NULL, NULL};
 	addr_list *tmp, *tmp2;
 
-	printf("DEBUG: We are defer_freeing address: %p\n", address);
+/*	printf("DEBUG: We are defer_freeing address: %p\n", address); */
 	tmp = &list;
 	/*tmp2 = tmp;
 	while (tmp2 != NULL)
@@ -95,7 +95,7 @@ void free_addr_list(addr_list *list)
 	printf("Freeing the list\n");
 	while (list != NULL)
 	{
-		printf("Freeing Address: %p\n", list->address);
+/*		printf("Freeing Address: %p\n", list->address); */
 		tmp = list;
 		list = list->next;
 		if (tmp->address != NULL)

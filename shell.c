@@ -20,7 +20,7 @@ int main(int argc, char **argv, char **envp)
 		tokenize_buf(buf, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		if (run_builtin(arg_list, env_p) != 0)
+		if (run_builtin(arg_list, env_p, buf_size) != 0)
 			run_execute(arg_list, env_p, buf_size);
 	}
 	return (0);

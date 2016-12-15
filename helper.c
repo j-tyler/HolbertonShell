@@ -31,3 +31,28 @@ void *safe_malloc(size_t size)
 	defer_free(tmp);
 	return (tmp);
 }
+
+/**
+ * rm_vname - removes varaiable name of an environemental variable
+ * @env: the environemental varaible name and value string
+ * Return: a string containing the path
+ */
+
+char *rm_vname(env_t *envp, char *name, int buf_size)
+{
+	char *pwd;
+	env_t *temp;
+	int i;
+
+	pwd = safe_malloc(sizeof(char) * buf_size);
+	temp = envp;
+	for (i = 0; temp->next != NULL; temp = temp->next)
+	{
+		if (strstr(temp->value, name) != NULL)
+			strcpy(pwd, temp->value);
+	}
+	while (*pwd != '=')
+		pwd++;
+	pwd++;
+	return(pwd);
+}

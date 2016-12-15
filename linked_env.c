@@ -87,7 +87,35 @@ void print_env(env_t *head)
 {
 	while (head != NULL)
 	{
-		printf("%s\n", head->value);
+		write(0, head->value, strlen(head->value));
+		write(0, "\n", 1);
 		head = head->next;
+	}
+}
+
+/**
+ * update_env - updates an environemental variable
+ * @env-: linked list of environemental variables
+ * @name: the name of variable to update;
+ * @value: the value to update env with
+ */
+
+void update_env(env_t *envp, char *name, char *value)
+{
+	char *rep;
+	int i;
+	env_t *temp;
+
+	rep = safe_malloc(sizeof(char) * (strlen(name) + strlen(value) + 1));
+	memset(rep, '\0', (strlen(name) + strlen(value) + 1));
+	strcat(rep, name);
+	strcat(rep, value);
+	for (temp = envp; temp != NULL; temp = temp->next)
+	{
+		if (strstr(temp->value, name) != NULL && temp->value[0] == name[0])
+		{
+			temp->value = rep;
+			break;
+		}
 	}
 }
