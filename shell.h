@@ -61,6 +61,8 @@ typedef struct env_s
 	struct env_s *next;
 } env_t;
 
+int check_cmd(buffer *buf, int return_value);
+void trim_cmd(buffer *buf);
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
@@ -101,8 +103,9 @@ char **tokenize_path(char **search_path, char *path, int size);
 /* tokenize.c */
 void tokenize_buf(buffer *buf, char ***av);
 void _av_init(char *buf, char ***av);
+void _add_null(char *buf);
 int _is_whitespace(char c);
-
+int _is_endofcmd(char c);
 /* builtin.c */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
 
