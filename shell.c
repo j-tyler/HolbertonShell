@@ -4,28 +4,28 @@
  */
 int main(int argc, char **argv, char **envp)
 {
-	buffer buf;
+	buffer b;
 	char **arg_list;
 	env_t *env_p;
 	int return_value;
 	(void)argv, (void)envp, (void)argc;
 
 	env_p = create_envlist();
-	buf.size = BUFSIZE, buf.bp = return_value = 0;
-	buf.buf = safe_malloc(sizeof(char) * buf.size);
+	b.size = BUFSIZE, b.bp = return_value = 0;
+	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
 	while (1)
 	{
-		if (!more_cmds(&buf, return_value)) /* need to read return_value from builtin and execute */
+		if (!more_cmds(&b, return_value)) /* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
-			_getline(&buf);
+			_getline(&b);
 		}
-		tokenize_buf(&buf, &arg_list);
+		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		if (run_builtin(arg_list, env_p, buf.size) != 0)
-			run_execute(arg_list, env_p, buf.size);
+		if (run_builtin(arg_list, env_p, b.size) != 0)
+			run_execute(arg_list, env_p, b.size);
 	}
 	return (0);
 }
@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **envp)
  *
  * Return: 1 if we have more commands to execute, 0 if we don't
  */
-int more_cmds(buffer *buf, int return_value)
+int more_cmds(buffer *b, int return_value)
 {
 	int i;
 	// if buf->bp == 0, return 0
@@ -47,40 +47,40 @@ int more_cmds(buffer *buf, int return_value)
 	//   trim off | and return 1
 
 	// else return 0;
-	if (buf->bp == 0)
+	if (b->bp == 0)
 		return (0);
-	while (buf->buf[buf->bp] != '\0')
+	while (b->buf[b->bp] != '\0')
 	{
-		if (buf->buf[buf->bp] == ';')
+		if (b->buf[b->bp] == ';')
 		{
-			trim_cmd(buf);
+			trim_cmd(b);
 			return (1);
 		}
-		if (buf->buf[buf->bp] == '&' && return_value == 0)
+		if (b->buf[b->bp] == '&' && return_value == 0)
 		{
-			trim_cmd(buf);
+			trim_cmd(b);
 			return (1);
 		}
-		if (buf->buf[buf->bp] == '|' && return_value != 0)
+		if (b->buf[b->bp] == '|' && return_value != 0)
 		{
-			trim_cmd(buf);
+			trim_cmd(b);
 			return (1);
 		}
-		buf->bp++;
+		b->bp++;
 	}
-	buf->bp = 0;
+	b->bp = 0;
 	return (0);
 }
 /**
  * trim_cmd - move past cmd flowcontrol point at given buffer position
  * @buf: buffer structure
  */
-void trim_cmd(buffer *buf)
+void trim_cmd(buffer *b)
 {
-	while (buf->buf[buf->bp] == ';')
-		buf->bp++;
-	while (buf->buf[buf->bp] == '|')
-		buf->bp++;
-	while (buf->buf[buf->bp] == '&')
-		buf->bp++;
+	while (b->buf[b->bp] == ';')
+		b->bp++;
+	while (b->buf[b->bp] == '|')
+		b->bp++;
+	while (b->buf[b->bp] == '&')
+		b->bp++;
 }
