@@ -15,6 +15,18 @@
 #define ARGLISTINIT 5
 #define FREE_ADDRESSES ((void *)3)
 /**
+ * struct buffer - structure for controlling buffer
+ * @buf: pointer the buffer
+ * @size: size of the buffer
+ * @bp: current point in buffer to check for multiple command passes
+ */
+typedef struct buffer
+{
+	char *buf;
+	unsigned int size;
+	unsigned int bp;
+} buffer;
+/**
  * struct builtin - lookup structure for builtin functions
  * @name: string name user types to call function
  * @func: function pointer to that function
@@ -61,10 +73,15 @@ typedef struct env_s
 	struct env_s *next;
 } env_t;
 
+<<<<<<< HEAD
 /* history_func.c*/
 hist_t *create_history(env_t *envp);
 
 
+=======
+int more_cmds(buffer *buf, int return_value);
+void trim_cmd(buffer *buf);
+>>>>>>> 1f5dffe9a76e8edc54ca625ea126e5e151bb081c
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
@@ -96,17 +113,18 @@ int _str_match(char *s1, char *s2);
 int _atoi(char *s);
 
 /* getline.c */
-int _getline(char **buf);
+int _getline(buffer *buf);
 
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
 
 /* tokenize.c */
-void tokenize_buf(char *buf, char ***av);
+void tokenize_buf(buffer *buf, char ***av);
 void _av_init(char *buf, char ***av);
+void _add_null(char *buf);
 int _is_whitespace(char c);
-
+int _is_endofcmd(char c);
 /* builtin.c */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
 
