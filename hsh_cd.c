@@ -10,7 +10,7 @@ void hsh_cd(char **arg_list, env_t *envp, int buf_size)
 
 	path = safe_malloc(sizeof(char) * buf_size), memset(path, '\0', buf_size);
 	pwd = safe_malloc(sizeof(char) * buf_size), memset(path,'\0', buf_size);
-	if (arg_list[1] == NULL)
+	if (arg_list[1] == NULL || (n = strcmp(arg_list[1], "~")) == 0)
 	{
 		path = rm_vname(envp, "HOME=", buf_size);
 		n = chdir(path);
