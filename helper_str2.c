@@ -94,6 +94,9 @@ int _str_match(char *s1, char *s2)
 int _atoi(char *s)
 {
 	int n;
+
+	if (s == NULL)
+		return (0);
 	printf("string is %s\n", s);
 	for (n = 0; *s; s++)
 		if (*s >= '0' && *s <= '9')
