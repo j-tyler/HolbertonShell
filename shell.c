@@ -16,7 +16,7 @@ int main(int argc, char **argv, char **envp)
 	arg_list = NULL;
 	while (1)
 	{
-		if (!check_cmd(&buf, return_value)) /* need to read return_value from builtin and execute */
+		if (!more_cmds(&buf, return_value)) /* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
 			_getline(&buf);
@@ -30,13 +30,13 @@ int main(int argc, char **argv, char **envp)
 	return (0);
 }
 /**
- * check_cmd - check the command line for the next command
+ * more_cmds - check the command line for the next command
  * @buf: buffer structure
  * @return_value: Return value from last command
  *
  * Return: 1 if we have more commands to execute, 0 if we don't
  */
-int check_cmd(buffer *buf, int return_value)
+int more_cmds(buffer *buf, int return_value)
 {
 	int i;
 	// if buf->bp == 0, return 0
@@ -46,7 +46,6 @@ int check_cmd(buffer *buf, int return_value)
  	// if buf->buf[buf->bp] == '|' && return_value != 0,
 	//   trim off | and return 1
 
-	// seach for | or ;, trim and return 1,
 	// else return 0;
 	if (buf->bp == 0)
 		return (0);
@@ -73,7 +72,7 @@ int check_cmd(buffer *buf, int return_value)
 	return (0);
 }
 /**
- * trim_cmd - move past cmd point at given buffer position
+ * trim_cmd - move past cmd flowcontrol point at given buffer position
  * @buf: buffer structure
  */
 void trim_cmd(buffer *buf)
