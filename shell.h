@@ -35,6 +35,18 @@ typedef struct addr_list
 	struct addr_list *next;
 } addr_list;
 
+/**
+ * struct history_list
+ * @cmd: command given as input
+ * @next: pointer to next node on list
+ */
+
+typedef struct hist_s
+{
+	void *cmd;
+	struct hist_s *next;
+} hist_t;
+
 extern char **environ;
 
 /**
@@ -48,6 +60,10 @@ typedef struct env_s
 	char *value;
 	struct env_s *next;
 } env_t;
+
+/* history_func.c*/
+hist_t *create_history(env_t *envp);
+
 
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
