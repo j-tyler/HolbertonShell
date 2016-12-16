@@ -6,22 +6,22 @@
  * Description: This function accepts a string such as 'ls -l' and changes 
  *              it to 'ls\0-l'. It puts pointers to 'ls' and '-l' into *av
  */
-void tokenize_buf(char *buf, char ***av)
+void tokenize_buf(buffer *buf, char ***av)
 {
-	int avp, flag, whitespace;
+	int i, avp, flag, whitespace;
 
-	_av_init(buf, av);
-	for (avp = 0, flag = 1; *buf; buf++)
+	_av_init(buf->buf, av);
+	for (i = 0, avp = 0, flag = 1; buf->buf[i]; i++)
 	{
-		whitespace = _is_whitespace(*buf);
+		whitespace = _is_whitespace(buf->buf[i]);
 		if (flag && !whitespace)
 		{
-			(*av)[avp++] = buf;
+			(*av)[avp++] = buf->buf + i;
 			flag = 0;
 		}
 		if (whitespace)
 		{
-			*buf = '\0';
+			buf->buf[i] = '\0';
 			flag = 1;
 		}
 	}
