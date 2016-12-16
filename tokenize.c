@@ -11,6 +11,8 @@ void tokenize_buf(buffer *buf, char ***av)
 	int i, avp, flag, whitespace;
 
 	_av_init(buf->buf + buf->bp, av);
+
+	/* Build the argument vector from the given buffer */
 	for (i = buf->bp, avp = 0, flag = 1; !_is_endofcmd(buf->buf[i]); i++)
 	{
 		whitespace = _is_whitespace(buf->buf[i]);
@@ -25,16 +27,18 @@ void tokenize_buf(buffer *buf, char ***av)
 			flag = 1;
 		}
 	}
+	(*av)[avp] = NULL;
+
+	/* If the reason we ended was because of flow control commands, */
+	/* increment the buffer point and add a null before the character */
 	if (buf->buf[i] == ';' || buf->buf[i] == '|' || buf->buf[i] == '&')
 	{
-		buf->bp = buf->bp + (i - buf->bp);
+		buf->bp += i - buf->bp;
 		_add_null(buf->buf + buf->bp);
 		buf->bp++;
 	}
 	else
 		buf->bp = 0;
-		
-	(*av)[avp] = NULL;
 	/* Command debugging */
 	for (avp = 0; (*av)[avp] != NULL; avp++)
 		printf("Command %d is %s\n", avp, (*av)[avp]);
@@ -58,7 +62,6 @@ void _av_init(char *buf, char ***av)
 	}
 
 	/* ADD: Do not reallocate if array is big enough ! */
-	printf("c is value of %d\n", c);
 	if (*av != NULL)
 		_free(*av);
 	*av = safe_malloc(sizeof(char *) * (c + 1));
@@ -69,13 +72,13 @@ void _av_init(char *buf, char ***av)
  */
 void _add_null(char *buf)
 { 
-	char *tmpbuf;
 	int i;
 
 	/* DEBUG: overwrites by one when buffer is completely full */
+
 	for (i = 0; buf[i] != '\0'; i++)
 		;
-	i++; /* move null as well */
+	i++;
 	for ( ; i > 0; i--)
 		buf[i + 1] = buf[i];
 	buf[i + 1] = buf[i];
