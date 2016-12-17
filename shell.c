@@ -21,6 +21,7 @@ int main(int argc, char **argv, char **envp)
 			print_cmdline();
 			_getline(&b);
 		}
+		test_alias(&b);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;

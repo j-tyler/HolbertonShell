@@ -92,7 +92,7 @@ void _add_null(char *buf)
  */
 int _is_whitespace(char c)
 {
-	if (c == ' ' || c == '\n')
+	if (c == ' ' || c == '\n' || c == '\0')
 		return (1);
 	return (0);
 }

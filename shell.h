@@ -95,7 +95,10 @@ int _atoi(char *s);
 
 /* getline.c */
 int _getline(buffer *buf);
-
+/* buffer_maniputlation.c */
+void buffer_reallocate(buffer *b);
+void buffer_word_erase(buffer *b, int n);
+void buffer_insert(buffer *b, char *s, int n);
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
@@ -108,6 +111,8 @@ int _is_whitespace(char c);
 int _is_endofcmd(char c);
 /* builtin.c */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
+/* alias.c */
+void test_alias(buffer *b);
 
 /* memory_allocation.c */
 void _free(void *address);
