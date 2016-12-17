@@ -4,19 +4,20 @@
  */
 int main(int argc, char **argv, char **envp)
 {
-	buffer b;
+	(void)argc, (void)argv, (void)envp;
 	char **arg_list;
 	env_t *env_p;
 	int return_value;
-	(void)argv, (void)envp, (void)argc;
+	buffer b = {NULL, BUFSIZE, 0};
 
-	env_p = create_envlist();
-	b.size = BUFSIZE, b.bp = return_value = 0;
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
+	env_p = create_envlist();
+	retrn_value = 0;
+
 	while (1)
 	{
-		if (!more_cmds(&b, return_value)) /* need to read return_value from builtin and execute */
+		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
 			_getline(&b);
@@ -32,24 +33,21 @@ int main(int argc, char **argv, char **envp)
 }
 /**
  * more_cmds - check the command line for the next command
- * @buf: buffer structure
- * @return_value: Return value from last command
+ * @b: buffer structure
+ * @retrn_value: Return value from last command
+ * Description: Controls the logic behind if multi-part input has more
+ *				commands to execute. Handles ; && and ||.
+ *				Will advance buffer to next command.
  *
  * Return: 1 if we have more commands to execute, 0 if we don't
  */
-int more_cmds(buffer *b, int return_value)
+int more_cmds(buffer *b, int retrn_value)
 {
 	int i;
-	// if buf->bp == 0, return 0
-	// if buf->buf[buf->bp] == ';', trim off; and return 1
-	// if buf->buf[buf->bp] == '&' && return_value == 0,
-	//	trim off & and return 1
- 	// if buf->buf[buf->bp] == '|' && return_value != 0,
-	//   trim off | and return 1
 
-	// else return 0;
 	if (b->bp == 0)
 		return (0);
+
 	while (b->buf[b->bp] != '\0')
 	{
 		if (b->buf[b->bp] == ';')
@@ -74,9 +72,11 @@ int more_cmds(buffer *b, int return_value)
 }
 /**
  * trim_cmd - move past cmd flowcontrol point at given buffer position
- * @buf: buffer structure
+ * @b: buffer structure
+ * Description: Small helper function for function more_cmds. Advances
+ *				the buffer point past command control characters.
  */
-void trim_cmd(buffer *b)
+static void trim_cmd(buffer *b)
 {
 	while (b->buf[b->bp] == ';')
 		b->bp++;
