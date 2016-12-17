@@ -55,7 +55,7 @@ typedef struct addr_list
 
 typedef struct hist_s
 {
-	void *cmd;
+	char *cmd;
 	struct hist_s *next;
 } hist_t;
 
@@ -73,15 +73,20 @@ typedef struct env_s
 	struct env_s *next;
 } env_t;
 
-<<<<<<< HEAD
 /* history_func.c*/
 hist_t *create_history(env_t *envp);
+int read_file(env_t *envp, char **buf);
+hist_t *add_history(hist_t **head, const char *cmd);
+void print_history(hist_t *head);
 
+/* history_func2.c*/
+hist_t *add_cmdhist(hist_t *history, char *cmd);
+hist_t *pop_head(hist_t **head);
+void write_history(env_t *envp, hist_t *history);
+char *_itoa(int num);
 
-=======
 int more_cmds(buffer *buf, int return_value);
 void trim_cmd(buffer *buf);
->>>>>>> 1f5dffe9a76e8edc54ca625ea126e5e151bb081c
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
@@ -126,7 +131,7 @@ void _add_null(char *buf);
 int _is_whitespace(char c);
 int _is_endofcmd(char c);
 /* builtin.c */
-int run_builtin(char **arg_list, env_t *env_p, int buf_size);
+int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
 
 /* memory_allocation.c */
 void _free(void *address);
@@ -136,12 +141,12 @@ void add_addr_list_node(addr_list *list, void *address);
 void free_addr_list(addr_list *list);
 
 /* list of builtin functions */
-void hsh_exit(char **arg_list);
+void hsh_exit(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
 void hsh_env(char **arg, env_t *env_p);
 void hsh_setenv(char **arg, env_t *env_p);
 void hsh_unsetenv(char **arg, env_t *env_p);
 void hsh_cd(char **arg, env_t *env_p, int buf_size);
-void hsh_history();
+void hsh_history(char **arg, env_t *env_p, int buf_size, hist_t *history);
 void hsh_help(char **arg);
 
 /* list of builtin help printouts */

@@ -42,7 +42,7 @@ void execute_func(char *cmd, char **args)
 
 	if (fork() == 0)
 	{
-		i = execve(cmd, args, NULL);
+		i = execve(cmd, args, environ);
 		if (i < 0)
 		{
 			write (0, "Error: command not found\n", 25);

@@ -8,7 +8,6 @@ int main(int argc, char **argv, char **envp)
 	char **arg_list;
 	env_t *env_p;
 	hist_t *history;
-
 	int return_value;
 	(void)argv, (void)envp, (void)argc;
 
@@ -24,10 +23,11 @@ int main(int argc, char **argv, char **envp)
 			print_cmdline();
 			_getline(&buf);
 		}
+		history = add_cmdhist(history, buf.buf);
 		tokenize_buf(&buf, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		if (run_builtin(arg_list, env_p, buf.size) != 0)
+		if (run_builtin(arg_list, env_p, buf.size, history) != 0)
 			run_execute(arg_list, env_p, buf.size);
 	}
 	return (0);

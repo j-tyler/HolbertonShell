@@ -5,6 +5,7 @@
  */
 void hsh_cd(char **arg_list, env_t *envp, int buf_size)
 {
+	/* bug on . and ..*/
 	char *path, *pwd, *arg1;
 	int n;
 
