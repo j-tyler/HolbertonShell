@@ -8,9 +8,9 @@
 int _getline(buffer *b)
 {
 	int offset, n;
-	char *new_buf;
 
-	/* DEBUG, does not work on realloc the third time */
+	/* ADD: Take fd for using with scripts */
+	/* DEBUG: READ is undefined when taking newline from pipes */
 
 	offset = 0;
 	while ((n = read(0, b->buf + offset, b->size - offset)) > 0 &&
