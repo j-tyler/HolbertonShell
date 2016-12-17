@@ -13,13 +13,9 @@ int _getline(buffer *b)
 	/* DEBUG, does not work on realloc the third time */
 
 	offset = 0;
-	while ((n = read(0, b->buf + offset, b->size - offset)) > 0)
+	while ((n = read(0, b->buf + offset, b->size - offset)) > 0 &&
+			b->buf[n + offset - 1] != '\n')
 	{
-		if (n < b->size - offset)
-		{
-			b->buf[n + offset] = '\0';
-			return (b->size);
-		}
 		buffer_reallocate(b);
 		offset += n;
 	}
@@ -28,5 +24,6 @@ int _getline(buffer *b)
 		defer_free(FREE_ADDRESSES);
 		_exit(0);
 	}
+	b->buf[n + offset] = '\0';
 	return (b->size);
 }
