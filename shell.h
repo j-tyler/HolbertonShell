@@ -62,7 +62,7 @@ typedef struct env_s
 } env_t;
 
 int more_cmds(buffer *buf, int return_value);
-void trim_cmd(buffer *buf);
+static void trim_cmd(buffer *buf);
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
