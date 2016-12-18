@@ -34,6 +34,7 @@ void hsh_cd(char **arg_list, env_t *envp, int buf_size)
 	else
 	{
 		pwd = rm_vname(envp, "PWD=", buf_size);
+		path = update_path(arg_list, envp, path, buf_size);
 		update_env(envp, "OLDPWD=", pwd);
 		update_env(envp, "PWD=", path);
 	}

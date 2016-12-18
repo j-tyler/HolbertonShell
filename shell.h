@@ -103,6 +103,9 @@ void free_args(char **arg_list);
 void execute_func(char *cmd, char **args);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
 
+/* helper2.c */
+char *update_path(char **arg_list, env_t *envp, char *path, int buf_size);
+
 /* helper_str.c*/
 char *_memcpy(char *dest, char *src, unsigned int n);
 char *_memset(char *s, char b, unsigned int n);
