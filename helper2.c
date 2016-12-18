@@ -26,6 +26,7 @@ char *update_path(char **arg_list, env_t *envp, char *path, int buf_size)
 		new_path = rm_vname(envp, "PWD=", buf_size);
 	else if (strcmp(dir, "..") == 0)
 	{
+		/* check for if things behind it + append*/
 		for (flag = 0, i = 0; flag < slash_count - 1; i++)
 		{
 			if (new_path[i] == '/')
