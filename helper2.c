@@ -40,3 +40,30 @@ char *update_path(char **arg_list, env_t *envp, char *path, int buf_size)
 	return (new_path);
 
 }
+
+/**
+ * list_to_array - converts a linked list to an array
+ * @envp: environemental list to convert
+ * Return: a 2D array containing strings contained in linked list
+ */
+
+char **list_to_array(env_t *envp)
+{
+	char **array;
+	env_t *temp;
+	int count, i, len;
+
+	for (temp = envp, count = 0; temp != NULL; temp = temp->next)
+		count++;
+	printf("count is %d\n", count);
+	array = malloc(sizeof(char *) * (count + 1));
+	for (temp = envp, i = 0; temp != NULL; temp = temp->next, i++)
+	{
+		len = _strlen(temp->value);
+		array[i] = safe_malloc(sizeof(char) * (len + 1));
+		memset(array[i], '\0', (len + 1));
+		memcpy(array[i], temp->value, len);
+	}
+	array[i] = NULL;
+	return (array);
+}

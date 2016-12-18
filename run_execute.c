@@ -20,13 +20,13 @@ void run_execute(char **arg_list, env_t *env_p, int cmd_size)
 	path = safe_malloc(sizeof(char) * cmd_size);
 	strcpy(cmd, arg_list[0]);
 	if (strchr(cmd, '/') != NULL)
-		execute_func(cmd, arg_list);
+		execute_func(cmd, arg_list, env_p);
 	else
 	{
 		get_path(path, env_p);
 		search_path = tokenize_path(search_path, path, cmd_size);
 		if (create_path(cmd, search_path) == 0)
-			execute_func(cmd, arg_list);
+			execute_func(cmd, arg_list, env_p);
 	}
 }
 
@@ -36,13 +36,15 @@ void run_execute(char **arg_list, env_t *env_p, int cmd_size)
  * @args: the arguement list (if any) given by the user.
  */
 
-void execute_func(char *cmd, char **args)
+void execute_func(char *cmd, char **args, env_t *envp)
 {
 	int status, i;
+	char **array;
 
 	if (fork() == 0)
 	{
-		i = execve(cmd, args, environ);
+		array = list_to_array(envp);
+		i = execve(cmd, args, array);
 		if (i < 0)
 		{
 			write (0, "Error: command not found\n", 25);

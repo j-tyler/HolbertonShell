@@ -90,6 +90,7 @@ void trim_cmd(buffer *buf);
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
+
 /* linked_env.c*/
 env_t *create_envlist();
 env_t *add_env(env_t **head, const char *value);
@@ -100,11 +101,12 @@ void update_env(env_t *envp, char *name, char *value);
 void print_cmdline();
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
-void execute_func(char *cmd, char **args);
+void execute_func(char *cmd, char **args, env_t *envp);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
 
 /* helper2.c */
 char *update_path(char **arg_list, env_t *envp, char *path, int buf_size);
+char **list_to_array(env_t *envp);
 
 /* helper_str.c*/
 char *_memcpy(char *dest, char *src, unsigned int n);
