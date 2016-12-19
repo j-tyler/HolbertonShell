@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		history = add_cmdhist(history, b.buf);
 		check_alias(&b, env_p);
+		variable_expansion(&b, env_p, retrn_value);
 		_getline_fileread(&b, env_p);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
