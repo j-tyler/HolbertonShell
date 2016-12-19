@@ -2,6 +2,7 @@
 /**
  * hsh_history - builtin command hsh_history, mimics builtin history
  * @??:
+ * Return: Always 0
  */
 int hsh_history(char **arg_list, env_t *envp, int size, hist_t *history)
 {
@@ -12,21 +13,22 @@ int hsh_history(char **arg_list, env_t *envp, int size, hist_t *history)
 	for (i = 0, temp = history; temp != NULL; temp = temp->next, i++)
 	{
 		num_str = _itoa(i);
-		write(0, " ", 1);
-		write(0, num_str, _strlen(num_str));
-		write(0, " ", 1);
-		write(0, temp->cmd, _strlen(temp->cmd));
-		write(0, "\n", 1);
+		_write(" ");
+		_write(num_str);
+		_write(" ");
+		_write(temp->cmd);
+		_write("\n");
 	}
 	return (0);
 }
 /**
  * hsh_history_help - builtin help printout for history
+ * Return: Always 0
  */
 int hsh_history_help(void)
 {
-	write(STDOUT_FILENO,
-	"history usage: history\n    Display the history list with line numbers.\n", 71);
+	_write("history usage: history\n    ");
+	_write("Display the history list with line numbers.\n");
 	return (0);
 }
 

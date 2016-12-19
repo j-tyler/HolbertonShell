@@ -36,11 +36,11 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 }
 /**
  * hsh_unsetenv_help - builtin help printout for unsetenv
+ * Return: Always 0
  */
 int hsh_unsetenv_help(void)
 {
-	write(STDOUT_FILENO,
-	"unsetenv usage: unsetenv VARIABLE:\n    Remove an envirornment variable.\n",
-	72);
+	_write("unsetenv usage: unsetenv VARIABLE:\n    ");
+	_write("Remove an envirornment variable.\n");
 	return (0);
 }

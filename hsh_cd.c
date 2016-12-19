@@ -37,7 +37,10 @@ int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 
 	}
 	if (n < 0)
+	{
 		write(0, "Error: no such file or directory\n", 33);
+		return (1);
+	}
 	else
 	{
 		getcwd(buff, buf_size);
@@ -49,11 +52,11 @@ int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 
 /**
  * hsh_cd_help - builtin help printout for cd
+ * Return: Always 0
  */
 int hsh_cd_help(void)
 {
 	/* Maybe write more here, actualy help printout is a book */
-	write(STDOUT_FILENO,
-	"cd usage: cd DIR\n    Change the current directory to DIR.\n", 58);
+	_write("cd usage: cd DIR\n    Change the current directory to DIR.\n");
 	return (0);
 }

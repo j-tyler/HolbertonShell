@@ -10,10 +10,10 @@ int hsh_env(char **arg_list, env_t *envp)
 }
 /**
  * hsh_env_help - builtin help printout for env
+ * Return: Always 0
  */
 int hsh_env_help(void)
 {
-	write(STDOUT_FILENO,
-	"env usage: env\n    Prints out the current envirornment.\n", 56);
+	_write("env usage: env\n    Prints out the current envirornment.\n");
 	return (0);
 }

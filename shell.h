@@ -121,6 +121,7 @@ void execute_func(char *cmd, char **args, env_t *envp);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
 
 /* helper2.c */
+void _write(char *s);
 char *update_path(char **arg_list, env_t *envp, char *path, int buf_size);
 char **list_to_array(env_t *envp);
 int _strcmp(char *s1, char *s2);
@@ -192,4 +193,5 @@ int hsh_unsetenv_help(void);
 int hsh_cd_help(void);
 int hsh_history_help(void);
 int hsh_help_help(void);
+int hsh_alias_help(void);
 #endif

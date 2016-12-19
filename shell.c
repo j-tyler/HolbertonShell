@@ -31,7 +31,7 @@ int main(int argc, char **argv, char **envp)
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		if (run_builtin(arg_list, env_p, b.size, history) != 0)
+		if ((retrn_value = run_builtin(arg_list, env_p, b.size, history)) != 0)
 			run_execute(arg_list, env_p, b.size);
 
 	}
