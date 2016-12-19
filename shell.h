@@ -103,9 +103,10 @@ char *_itoa(int num);
 
 int more_cmds(buffer *buf, int return_value);
 static void trim_cmd(buffer *buf);
-/* run_execute.c */
-void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
+/* run_execute.c */
+int run_execute(char **arg_list, env_t *env_p, int cmd_size);
+int execute_func(char *cmd, char **args, env_t *envp);
 
 /* linked_env.c*/
 env_t *create_envlist();
@@ -117,7 +118,6 @@ void update_env(env_t *envp, char *name, char *value, int buf_size);
 void print_cmdline();
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
-void execute_func(char *cmd, char **args, env_t *envp);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
 
 /* helper2.c */

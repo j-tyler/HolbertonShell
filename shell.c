@@ -18,7 +18,6 @@ int main(int argc, char **argv, char **envp)
 	history = create_history(env_p);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
-
 	while (1)
 	{
 		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
@@ -33,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 		if (arg_list[0] == NULL)
 			continue;
 		if ((retrn_value = run_builtin(arg_list, env_p, b.size, history)) != 0)
-			run_execute(arg_list, env_p, b.size);
+			retrn_value = run_execute(arg_list, env_p, b.size);
 
 	}
 	return (0);

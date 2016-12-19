@@ -28,7 +28,7 @@ hist_t *add_cmdhist(hist_t *history, char *cmd)
 		new_cmd[i] = cmd[i];
 	if (_strlen(cmd) > 1)
 		add_history(&history, new_cmd);
-	if (hist_index > 4095)
+	if (hist_index > 4096)
 		history = pop_head(&history);
 	hist_index++;
 	_free(new_cmd);
