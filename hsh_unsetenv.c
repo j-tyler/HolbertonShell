@@ -3,6 +3,7 @@
  * hsh_unsetenv - builtin command hsh_unsetenv, mimics builtin unsetenv
  * @arg_list: arguement list for unstenv, contains the variable name
  * @envp: the linked list of all environment variables
+ * Return: 0 on success and 1 on failure
  * Description: This will delete the node that contains the variable given, if
  * node does not exist then function will succeed
  */
@@ -15,7 +16,7 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 	if (arg_list[1] == NULL)
 	{
 		write(0, "Error: wrong number for arguments\n", 34);
-		return (0);
+		return (1);
 	}
 	/* set up for strings */
 	name = safe_malloc(sizeof(char) * _strlen(arg_list[1]) + 3);

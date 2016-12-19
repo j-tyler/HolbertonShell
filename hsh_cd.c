@@ -6,6 +6,7 @@
  * @envp: environemental variable linked list to get current working direcoty
  * and also to update the variables PWD and OLDPWD
  * @buf_size: size to create our buffer for path
+ * Return: 0 on success and 1 on failure
  */
 int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 {

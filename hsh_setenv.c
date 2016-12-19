@@ -4,7 +4,7 @@
  * @arg_list: list of arguements that contain the env name, value and
  * overwrite value
  * @envp: a pointer to the linked list of environmental variables
- * Return: WHO KNOWS. 0 on success and -1 on error
+ * Return: 0 on success and 1 on error
  */
 int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 {
@@ -16,7 +16,7 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	if (arg_list[1] == NULL || arg_list[2] == NULL)
 	{
 		write(0, "Error: wrong number of arguments\n", 37);
-		return (0);
+		return (1);
 	}
 	/* set up all strings up*/
 	name = safe_malloc(sizeof(char) * buf_size);

@@ -1,7 +1,9 @@
 #include "shell.h"
 /**
  * hsh_env - builtin command hsh_env, mimics sh builtin env
- * @??:
+ * @arg_list: arguement list vectors
+ * @envp: environmental variables to print
+ * Return: 0 if success.
  */
 int hsh_env(char **arg_list, env_t *envp)
 {
