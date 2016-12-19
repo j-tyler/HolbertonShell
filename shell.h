@@ -60,6 +60,18 @@ typedef struct env_s
 	char *value;
 	struct env_s *next;
 } env_t;
+/**
+ * struct alias - structure for holding aliases
+ * @key: key to search for when matching
+ * @value: value to replace matched keys
+ * @next: next node in the list
+ */
+typedef struct alias
+{
+	char *key;
+	char *value;
+	struct alias *next;
+} alias; 
 
 int more_cmds(buffer *buf, int return_value);
 static void trim_cmd(buffer *buf);
@@ -99,6 +111,12 @@ int _getline(buffer *buf);
 void buffer_reallocate(buffer *b);
 void buffer_word_erase(buffer *b, int n);
 void buffer_insert(buffer *b, char *s, int n);
+/* hsh_alias.c */
+int hsh_alias(char **argv, env_t *env_p, int mode);
+char *hsh_alias_search(alias *list, char *arg);
+int hsh_alias_printall(alias *list);
+int hsh_alias_print(alias *list, char **argv);
+int hsh_alias_add(alias *list, char **argv);
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
@@ -112,7 +130,7 @@ int _is_endofcmd(char c);
 /* builtin.c */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
 /* alias.c */
-void test_alias(buffer *b);
+void check_alias(buffer *b, env_t *env_p);
 
 /* memory_allocation.c */
 void _free(void *address);

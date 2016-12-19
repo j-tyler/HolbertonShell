@@ -12,7 +12,7 @@ int run_builtin(char **arg_list, env_t *env_p, int buf_size)
 	{"exit", hsh_exit},     {"env", hsh_env},
 	{"setenv", hsh_setenv}, {"unsetenv", hsh_unsetenv},
 	{"cd", hsh_cd},         {"history", hsh_history},
-	{"help", hsh_help}
+	{"help", hsh_help},     {"alias", hsh_alias}
 	};
 
 	size = sizeof(table)/sizeof(table[0]);

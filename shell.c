@@ -7,7 +7,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc, (void)argv, (void)envp;
 	char **arg_list;
 	env_t *env_p;
-	int return_value;
+	int retrn_value;
 	buffer b = {NULL, BUFSIZE, 0};
 
 	b.buf = safe_malloc(sizeof(char) * b.size);
@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **envp)
 			print_cmdline();
 			_getline(&b);
 		}
-		test_alias(&b);
+		check_alias(&b, env_p);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
@@ -45,22 +45,24 @@ int more_cmds(buffer *b, int retrn_value)
 {
 	int i;
 
+	printf("help!");
 	if (b->bp == 0)
 		return (0);
 
 	while (b->buf[b->bp] != '\0')
 	{
+		printf("stuck in here :(");
 		if (b->buf[b->bp] == ';')
 		{
 			trim_cmd(b);
 			return (1);
 		}
-		if (b->buf[b->bp] == '&' && return_value == 0)
+		if (b->buf[b->bp] == '&' && retrn_value == 0)
 		{
 			trim_cmd(b);
 			return (1);
 		}
-		if (b->buf[b->bp] == '|' && return_value != 0)
+		if (b->buf[b->bp] == '|' && retrn_value != 0)
 		{
 			trim_cmd(b);
 			return (1);
