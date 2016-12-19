@@ -9,7 +9,8 @@ int _getline(buffer *b, int fd)
 {
 	int offset, n;
 
-	/* DEBUG: READ is undefined when taking newline from pipes */
+	/* DEBUG: READ is undefined when taking newline from pipes? */
+
 	offset = 0;
 	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
 			b->buf[n + offset - 1] != '\n')
@@ -17,7 +18,7 @@ int _getline(buffer *b, int fd)
 		buffer_reallocate(b);
 		offset += n;
 	}
-	if (n == 0) /* Exit when given EOF */
+	if (n == 0)
 	{
 		if (fd > 2)
 			close(fd);
@@ -52,28 +53,13 @@ int _getline_fileread(buffer *b, env_t *envp)
 	b->buf[i] = '\0';
 	make_path(&fullfilename, filename, "PWD", envp, b->size);
 	fd = open(fullfilename, O_RDONLY);
-	if (fd < 3) /*DEBUG: lol this solution */
+	if (fd == -1)
 	{
 		_write("Cannot open filename specified\n");
 		_getline_file_exit(b);
-		b->bp = 0;
 		return (1);
 	}
 	_getline(b, fd);
-	/*offset = 0;
-	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
-			b->buf[n + offset - 1] != '\n')
-	{
-		buffer_reallocate(b);
-		offset += n;
-	}
-	if (n == 0) /* Exit when given EOF 
-	{
-		close(fd);
-		defer_free(FREE_ADDRESSES);
-		_exit(0);
-	}
-	b->buf[n + offset] = '\0';*/
 	close(fd);
 	return (FILEREADING);
 }
@@ -91,4 +77,5 @@ void _getline_file_exit(buffer *b)
 	b->buf[4] = ' ';
 	b->buf[5] = '1';
 	b->buf[6] = '\0';
+	b->bp = 0;
 }
