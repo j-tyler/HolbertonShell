@@ -52,13 +52,11 @@ int more_cmds(buffer *b, int retrn_value)
 {
 	int i;
 
-	printf("help!");
 	if (b->bp == 0)
 		return (0);
 
 	while (b->buf[b->bp] != '\0')
 	{
-		printf("stuck in here :(");
 		if (b->buf[b->bp] == ';')
 		{
 			trim_cmd(b);
