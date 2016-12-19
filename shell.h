@@ -175,7 +175,7 @@ void free_addr_list(addr_list *list);
 
 /* list of builtin functions */
 int hsh_env(char **arg, env_t *env_p);
-int hsh_setenv(char **arg, env_t *env_p);
+int hsh_setenv(char **arg, env_t *env_p, int buf_size);
 int hsh_unsetenv(char **arg, env_t *env_p);
 int hsh_cd(char **arg, env_t *env_p, int buf_size);
 int hsh_help(char **arg);

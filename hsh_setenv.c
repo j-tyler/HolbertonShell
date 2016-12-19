@@ -6,20 +6,24 @@
  * @envp: a pointer to the linked list of environmental variables
  * Return: WHO KNOWS. 0 on success and -1 on error
  */
-int hsh_setenv(char **arg_list, env_t *envp)
+int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 {
 	int flag;
 	char *name, *value;
 	env_t *temp;
 
+	/* What to do if nothing is entered*/
 	if (arg_list[1] == NULL || arg_list[2] == NULL)
-		exit (1);
+	{
+		write(0, "Error: wrong number of arguments\n", 37);
+		return (0);
+	}
 	/* set up all strings up*/
-	name = safe_malloc(sizeof(char) * (strlen(arg_list[1]) + strlen(arg_list[2]) + 2));
-	memset(name, 0, (strlen(arg_list[1]) + strlen(arg_list[2]) + 2));
+	name = safe_malloc(sizeof(char) * buf_size);
+	memset(name, 0, buf_size);
 	memcpy(name, arg_list[1], strlen(arg_list[1]));
-	value = safe_malloc(sizeof(char) * (strlen(arg_list[2]) + 1));
-	memset(value, 0, strlen(arg_list[2]) + 1);
+	value = safe_malloc(sizeof(char) * buf_size);
+	memset(value, 0, buf_size);
 	memcpy(value, arg_list[2], strlen(arg_list[2]));
 	strcat(name, "=");
 	temp = envp;
