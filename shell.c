@@ -16,6 +16,8 @@ int main(int argc, char **argv, char **envp)
 	buf.buf = safe_malloc(sizeof(char) * buf.size);
 	history = create_history(env_p);
 	arg_list = NULL;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 	while (1)
 	{
 		if (!more_cmds(&buf, return_value)) /* need to read return_value from builtin and execute */

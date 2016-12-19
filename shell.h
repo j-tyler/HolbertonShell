@@ -73,6 +73,10 @@ typedef struct env_s
 	struct env_s *next;
 } env_t;
 
+typedef void (*signhandler_t)(int);
+
+void signal_handler(int signo);
+
 /* history_func.c*/
 hist_t *create_history(env_t *envp);
 int read_file(env_t *envp, char **buf);
