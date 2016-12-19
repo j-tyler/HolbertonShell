@@ -40,7 +40,7 @@ int _getline_fileread(buffer *b, env_t *envp)
 	i = b->bp;
 	while (_is_whitespace(b->buf[b->bp + i]))
 		i++;
-	if (!_str_match(b->buf + b->bp + i, "simple_shell") || b->buf[i] == '\0')
+	if (!_str_match(b->buf + b->bp + i, "simple_shell") || b->buf[b->bp + i] == '\0')
 		return (0);
 	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
 		i++;
@@ -52,11 +52,6 @@ int _getline_fileread(buffer *b, env_t *envp)
 	b->buf[i] = '\0';
 	make_path(&fullfilename, filename, "PWD", envp, b->size);
 	fd = open(fullfilename, O_RDONLY);
-	printf("%d\n", fd);
-	perror("Error: ");
-	_write("--");
-     _write(fullfilename);
-     _write("--");
 	if (fd < 3) /*DEBUG: lol this solution */
 	{
 		_write("Cannot open filename specified\n");
@@ -80,7 +75,7 @@ int _getline_fileread(buffer *b, env_t *envp)
 	}
 	b->buf[n + offset] = '\0';*/
 	close(fd);
-	return (b->size);
+	return (FILEREADING);
 }
 /**
  * _getline_file_exit - janky solution to correctly exit on fileread failure

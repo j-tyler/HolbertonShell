@@ -28,7 +28,9 @@ void tokenize_buf(buffer *b, char ***argv)
 		}
 	}
 	(*argv)[ap] = NULL;
-
+	/* If we ended because of newline, we MAY have more content */
+	if (b->buf[i] == '\n' && b->buf[i + 1] != '\0')
+		b->buf[i] = ';';
 	/* If the reason we ended was because of flow control commands, */
 	/* increment the buffer point and add a null before the character */
 	if (b->buf[i] == ';' || b->buf[i] == '|' || b->buf[i] == '&')
@@ -104,7 +106,7 @@ int _is_whitespace(char c)
  */
 int _is_endofcmd(char c)
 {
-	if (c == '\0' || c == '|' || c == '&' || c == ';' || c == '#')
+	if (c == '\0' || c == '\n' || c == '|' || c == '&' || c == ';' || c == '#')
 		return (1);
 	return (0);
 }

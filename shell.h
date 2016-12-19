@@ -12,7 +12,7 @@
 #include <fcntl.h>
 
 #define BUFSIZE 1024
-#define ARGLISTINIT 5
+#define FILEREADING 55
 #define FREE_ADDRESSES ((void *)3)
 /**
  * struct buffer - structure for controlling buffer

@@ -7,14 +7,14 @@ int main(int argc, char **argv, char **envp)
 	(void)argc, (void)argv, (void)envp;
 	char **arg_list;
 	env_t *env_p;
-	int retrn_value;
+	int retrn_value, filereading;
 	hist_t *history;
 	buffer b = {NULL, BUFSIZE, 0};
 
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
 	env_p = create_envlist();
-	retrn_value = 0;
+	retrn_value = filereading = 0;
 	history = create_history(env_p);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
