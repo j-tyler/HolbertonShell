@@ -5,11 +5,14 @@
  */
 void hsh_cd(char **arg_list, env_t *envp, int buf_size)
 {
+	/* bug on . and ..*/
 	char *path, *pwd, *arg1;
+	char buff[buf_size];
 	int n;
 
 	path = safe_malloc(sizeof(char) * buf_size), memset(path, '\0', buf_size);
 	pwd = safe_malloc(sizeof(char) * buf_size), memset(path,'\0', buf_size);
+	memset(buff, '\0', buf_size);
 	if (arg_list[1] == NULL || (n = strcmp(arg_list[1], "~")) == 0)
 	{
 		path = rm_vname(envp, "HOME=", buf_size);
@@ -33,8 +36,9 @@ void hsh_cd(char **arg_list, env_t *envp, int buf_size)
 	else
 	{
 		pwd = rm_vname(envp, "PWD=", buf_size);
+		getcwd(buff, buf_size);
 		update_env(envp, "OLDPWD=", pwd);
-		update_env(envp, "PWD=", path);
+		update_env(envp, "PWD=", buff);
 	}
 }
 

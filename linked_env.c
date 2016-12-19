@@ -24,13 +24,13 @@ env_t *create_envlist(void)
  * Return: the address of the new element, or NULL if it failed
  */
 
-env_t *add_env(env_t **head, const char *env)
+env_t *add_env(env_t **head, const char *str)
 {
 	env_t *new_node;
-	env_t *temp;
+        env_t *temp;
 
 	new_node = safe_malloc(sizeof(env_t));
-	new_node->value = strdup(env);
+	new_node->value = strdup(str);
 	new_node->next = NULL;
 	if (*head == NULL)
 		*head = new_node;

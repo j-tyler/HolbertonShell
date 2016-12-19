@@ -45,6 +45,7 @@ char *rm_vname(env_t *envp, char *name, int buf_size)
 	int i;
 
 	pwd = safe_malloc(sizeof(char) * buf_size);
+	memset(pwd, '\0', buf_size);
 	temp = envp;
 	for (i = 0; temp->next != NULL; temp = temp->next)
 	{

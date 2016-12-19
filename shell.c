@@ -7,6 +7,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc, (void)argv, (void)envp;
 	char **arg_list;
 	env_t *env_p;
+	hist_t *history;
 	int return_value;
 	buffer b = {NULL, BUFSIZE, 0};
 
@@ -15,6 +16,9 @@ int main(int argc, char **argv, char **envp)
 	env_p = create_envlist();
 	retrn_value = 0;
 
+  signal(SIGINT, SIG_IGN);
+	signal(SIGINT, signal_handler);
+
 	while (1)
 	{
 		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
@@ -22,12 +26,14 @@ int main(int argc, char **argv, char **envp)
 			print_cmdline();
 			_getline(&b);
 		}
+		history = add_cmdhist(history, b.buf);
 		test_alias(&b);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
 		if (run_builtin(arg_list, env_p, b.size) != 0)
 			run_execute(arg_list, env_p, b.size);
+
 	}
 	return (0);
 }

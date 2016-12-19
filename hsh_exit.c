@@ -3,11 +3,12 @@
  * hsh_exit - builtin command hsh_exit, mimics exit()
  * @??:
  */
-void hsh_exit(char **arg_list)
+void hsh_exit(char **arg_list, env_t *envp, int buf_size, hist_t *history)
 {
 	int tmp;
 
 	tmp = _atoi(arg_list[1]);
+	write_history(envp, history);
 	defer_free(FREE_ADDRESSES);
 	_exit(tmp);
 }
