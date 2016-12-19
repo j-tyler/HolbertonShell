@@ -5,31 +5,25 @@
  * string.
  *
  */
-int _getline(buffer *buf)
+int _getline(buffer *b)
 {
 	int offset, n;
-	char *new_buf;
 
-	/* DEBUG, does not work on realloc the third time */
+	/* ADD: Take fd for using with scripts */
+	/* DEBUG: READ is undefined when taking newline from pipes */
 
 	offset = 0;
-	while ((n = read(0, buf->buf + offset, buf->size - offset)) > 0)
+	while ((n = read(0, b->buf + offset, b->size - offset)) > 0 &&
+			b->buf[n + offset - 1] != '\n')
 	{
-		if (n < buf->size - offset)
-		{
-			buf->buf[n + offset] = '\0';
-			return (buf->size);
-		}
-		buf->size *= 2;
-		new_buf = safe_malloc((buf->size) * sizeof(char));
+		buffer_reallocate(b);
 		offset += n;
-		memcpy(new_buf, buf->buf, buf->size / 2); /* DEBUG: rewrite this non-stdlib */
-		buf->buf = new_buf;
 	}
 	if (n == 0) /* Exit when given EOF */
 	{
 		defer_free(FREE_ADDRESSES);
 		_exit(0);
 	}
-	return (buf->size);
+	b->buf[n + offset] = '\0';
+	return (b->size);
 }

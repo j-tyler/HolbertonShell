@@ -1,54 +1,54 @@
 #include "shell.h"
 /**
  * tokenize_buf - tokenize buffer by inputting NULLs and filling **av
- * @buf: The buffer with the command string
- * @av: Command argument vector
+ * @b: The buffer with the command string
+ * @argv: Pointer to the command argument vector
  * Description: This function accepts a string such as 'ls -l' and changes 
  *              it to 'ls\0-l'. It puts pointers to 'ls' and '-l' into *av
  */
-void tokenize_buf(buffer *buf, char ***av)
+void tokenize_buf(buffer *b, char ***argv)
 {
-	int i, avp, flag, whitespace;
+	int i, ap, flag, whitespace;
 
-	_av_init(buf->buf + buf->bp, av);
+	_av_init(b->buf + b->bp, argv);
 
 	/* Build the argument vector from the given buffer */
-	for (i = buf->bp, avp = 0, flag = 1; !_is_endofcmd(buf->buf[i]); i++)
+	for (i = b->bp, ap = 0, flag = 1; !_is_endofcmd(b->buf[i]); i++)
 	{
-		whitespace = _is_whitespace(buf->buf[i]);
+		whitespace = _is_whitespace(b->buf[i]);
 		if (flag && !whitespace)
 		{
-			(*av)[avp++] = buf->buf + i;
+			(*argv)[ap++] = b->buf + i;
 			flag = 0;
 		}
 		if (whitespace)
 		{
-			buf->buf[i] = '\0';
+			b->buf[i] = '\0';
 			flag = 1;
 		}
 	}
-	(*av)[avp] = NULL;
+	(*argv)[ap] = NULL;
 
 	/* If the reason we ended was because of flow control commands, */
 	/* increment the buffer point and add a null before the character */
-	if (buf->buf[i] == ';' || buf->buf[i] == '|' || buf->buf[i] == '&')
+	if (b->buf[i] == ';' || b->buf[i] == '|' || b->buf[i] == '&')
 	{
-		buf->bp += i - buf->bp;
-		_add_null(buf->buf + buf->bp);
-		buf->bp++;
+		b->bp += i - b->bp;
+		_add_null(b->buf + b->bp);
+		b->bp++;
 	}
 	else
-		buf->bp = 0;
+		b->bp = 0;
 	/* Command debugging */
-	for (avp = 0; (*av)[avp] != NULL; avp++)
-		printf("Command %d is %s\n", avp, (*av)[avp]);
+	for (ap = 0; (*argv)[ap] != NULL; ap++)
+		printf("Command %d is %s\n", ap, (*argv)[ap]);
 }
 /**
  * _av_init - resize av if needed
  * @buf: The buffer with the command string
- * @av: Command argument vector
+ * @argv: Command argument vector
  */
-void _av_init(char *buf, char ***av)
+void _av_init(char *buf, char ***argv)
 {
 	int c, flag, whitespace;
 
@@ -62,9 +62,9 @@ void _av_init(char *buf, char ***av)
 	}
 
 	/* ADD: Do not reallocate if array is big enough ! */
-	if (*av != NULL)
-		_free(*av);
-	*av = safe_malloc(sizeof(char *) * (c + 1));
+	if (*argv != NULL)
+		_free(*argv);
+	*argv = safe_malloc(sizeof(char *) * (c + 1));
 }
 /**
  * _add_null - Add a null before the multi-command operator
@@ -92,7 +92,7 @@ void _add_null(char *buf)
  */
 int _is_whitespace(char c)
 {
-	if (c == ' ' || c == '\n')
+	if (c == ' ' || c == '\n' || c == '\0')
 		return (1);
 	return (0);
 }

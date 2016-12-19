@@ -90,7 +90,7 @@ void write_history(env_t *envp, hist_t *history);
 char *_itoa(int num);
 
 int more_cmds(buffer *buf, int return_value);
-void trim_cmd(buffer *buf);
+static void trim_cmd(buffer *buf);
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
@@ -128,7 +128,10 @@ int _atoi(char *s);
 
 /* getline.c */
 int _getline(buffer *buf);
-
+/* buffer_maniputlation.c */
+void buffer_reallocate(buffer *b);
+void buffer_word_erase(buffer *b, int n);
+void buffer_insert(buffer *b, char *s, int n);
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
@@ -140,7 +143,10 @@ void _add_null(char *buf);
 int _is_whitespace(char c);
 int _is_endofcmd(char c);
 /* builtin.c */
+
 int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
+/* alias.c */
+void test_alias(buffer *b);
 
 /* memory_allocation.c */
 void _free(void *address);
