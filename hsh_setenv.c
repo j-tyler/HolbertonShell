@@ -6,7 +6,7 @@
  * @envp: a pointer to the linked list of environmental variables
  * Return: WHO KNOWS. 0 on success and -1 on error
  */
-void hsh_setenv(char **arg_list, env_t *envp)
+int hsh_setenv(char **arg_list, env_t *envp)
 {
 	int flag;
 	char *name, *value;
@@ -39,14 +39,16 @@ void hsh_setenv(char **arg_list, env_t *envp)
 		strcat(name, value);
 		add_env(&envp, name);
 	}
+	return (0);
 }
 /**
  * hsh_setenv_help - builtin help printout for setenv
  */
-void hsh_setenv_help(void)
+int hsh_setenv_help(void)
 {
 	write(STDOUT_FILENO,
 	"setenv usage: setenv VARIABLE VALUE\n    Initialize a new", 56);
 	write(STDOUT_FILENO,
 	" environment variable, or modify an existing one.\n", 50);
+	return (0);
 }

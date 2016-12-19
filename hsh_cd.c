@@ -3,7 +3,7 @@
  * hsh_cd - builtin command hsh_cd, mimics cd
  * @??:
  */
-void hsh_cd(char **arg_list, env_t *envp, int buf_size)
+int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 {
 	char *path, *pwd, *arg1;
 	int n;
@@ -36,14 +36,16 @@ void hsh_cd(char **arg_list, env_t *envp, int buf_size)
 		update_env(envp, "OLDPWD=", pwd);
 		update_env(envp, "PWD=", path);
 	}
+	return (0);
 }
 
 /**
  * hsh_cd_help - builtin help printout for cd
  */
-void hsh_cd_help(void)
+int hsh_cd_help(void)
 {
 	/* Maybe write more here, actualy help printout is a book */
 	write(STDOUT_FILENO,
 	"cd usage: cd DIR\n    Change the current directory to DIR.\n", 58);
+	return (0);
 }

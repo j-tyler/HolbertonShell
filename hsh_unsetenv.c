@@ -6,7 +6,7 @@
  * Description: This will delete the node that contains the variable given, if
  * node does not exist then function will succeed
  */
-void hsh_unsetenv(char **arg_list, env_t *envp)
+int hsh_unsetenv(char **arg_list, env_t *envp)
 {
 	int count;
 	env_t *temp;
@@ -29,13 +29,15 @@ void hsh_unsetenv(char **arg_list, env_t *envp)
 		}
 		count++;
 	}
+	return (0);
 }
 /**
  * hsh_unsetenv_help - builtin help printout for unsetenv
  */
-void hsh_unsetenv_help(void)
+int hsh_unsetenv_help(void)
 {
 	write(STDOUT_FILENO,
 	"unsetenv usage: unsetenv VARIABLE:\n    Remove an envirornment variable.\n",
 	72);
+	return (0);
 }

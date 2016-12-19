@@ -4,7 +4,7 @@
  * @??:
  * Return: ??
  */
-void hsh_help(char **arg)
+int hsh_help(char **arg)
 {
 	int i, size;
 	builtin table[] = {
@@ -29,12 +29,14 @@ void hsh_help(char **arg)
 		}
 	}
 	write(STDOUT_FILENO, "No help topics match your query (._.)\n", 38);
+	return (0);
 }
 /**
  * hsh_help_help - builtin help printout for help
  */
-void hsh_help_help(void)
+int hsh_help_help(void)
 {
 	write(STDOUT_FILENO,
 	"help usage: help COMMAND\n    Display helpful information about builtins.\n",73);
+	return (0);
 }

@@ -3,18 +3,19 @@
  * hsh_exit - builtin command hsh_exit, mimics exit()
  * @??:
  */
-void hsh_exit(char **arg_list)
+int hsh_exit(char **arg_list)
 {
 	int tmp;
 
 	tmp = _atoi(arg_list[1]);
 	defer_free(FREE_ADDRESSES);
 	_exit(tmp);
+	return (0);
 }
 /**
  * hsh_exit_help - builtin help printout for exit
  */
-void hsh_exit_help(void)
+int hsh_exit_help(void)
 {
 	write(STDOUT_FILENO,
 	"exit usage: exit N\n    Exit the shell.\n\n    ", 44);
@@ -22,4 +23,5 @@ void hsh_exit_help(void)
 	"Exits the shell with a status of N.  If N is omitted, ", 54);
 	write(STDOUT_FILENO,
 	"the exit status\n    is that of the last command executed.\n", 58);
+	return (0);
 }

@@ -34,7 +34,7 @@ typedef struct buffer
 typedef struct builtin
 {
 	char *name;
-	void (*func)();
+	int (*func)();
 } builtin;
 /**
  * struct addr_list
@@ -140,20 +140,20 @@ void add_addr_list_node(addr_list *list, void *address);
 void free_addr_list(addr_list *list);
 
 /* list of builtin functions */
-void hsh_exit(char **arg_list);
-void hsh_env(char **arg, env_t *env_p);
-void hsh_setenv(char **arg, env_t *env_p);
-void hsh_unsetenv(char **arg, env_t *env_p);
-void hsh_cd(char **arg, env_t *env_p, int buf_size);
-void hsh_history();
-void hsh_help(char **arg);
+int hsh_exit(char **arg_list);
+int hsh_env(char **arg, env_t *env_p);
+int hsh_setenv(char **arg, env_t *env_p);
+int hsh_unsetenv(char **arg, env_t *env_p);
+int hsh_cd(char **arg, env_t *env_p, int buf_size);
+int hsh_history();
+int hsh_help(char **arg);
 
 /* list of builtin help printouts */
-void hsh_exit_help(void);
-void hsh_env_help(void);
-void hsh_setenv_help(void);
-void hsh_unsetenv_help(void);
-void hsh_cd_help(void);
-void hsh_history_help(void);
-void hsh_help_help(void);
+int hsh_exit_help(void);
+int hsh_env_help(void);
+int hsh_setenv_help(void);
+int hsh_unsetenv_help(void);
+int hsh_cd_help(void);
+int hsh_history_help(void);
+int hsh_help_help(void);
 #endif
