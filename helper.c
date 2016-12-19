@@ -51,6 +51,11 @@ char *rm_vname(env_t *envp, char *name, int buf_size)
 	{
 		if (_str_match(temp->value, name))
 			_strcpy(pwd, temp->value);
+		else if (temp->next == NULL)
+		{
+			_free(pwd);
+			return (NULL);
+		}
 	}
 	while (*pwd != '=')
 		pwd++;
