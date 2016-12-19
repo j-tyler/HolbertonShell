@@ -15,7 +15,7 @@ int main(int argc, char **argv, char **envp)
 	arg_list = NULL;
 	env_p = create_envlist();
 	retrn_value = 0;
-
+	history = create_history(env_p);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 
