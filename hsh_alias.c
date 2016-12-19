@@ -117,9 +117,9 @@ int hsh_alias_add(alias *list, char **argv)
 		key[j] = argv[1][j];
 	key[j] = '\0';
 
-	while (list->next != NULL || _str_match(key, list->key))
+	while (list->next != NULL && !_str_match(key, list->key))
 		list = list->next;
-	if (list->key == NULL)
+	if (list->key == NULL || _str_match(key, list->key))
 	{
 		list->key = key;
 		list->value = value;

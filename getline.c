@@ -11,7 +11,6 @@ int _getline(buffer *b)
 
 	/* ADD: Take fd for using with scripts */
 	/* DEBUG: READ is undefined when taking newline from pipes */
-
 	offset = 0;
 	while ((n = read(0, b->buf + offset, b->size - offset)) > 0 &&
 			b->buf[n + offset - 1] != '\n')
