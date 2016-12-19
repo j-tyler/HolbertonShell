@@ -94,7 +94,7 @@ hist_t *create_history(env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t **head, char *cmd);
 void print_history(hist_t *head);
-void make_path(char **path, char *filename, env_t *envp, int size);
+char *make_path(char **path, char *filename, char *key, env_t *envp, int size);
 /* history_func2.c*/
 hist_t *add_cmdhist(hist_t *history, char *cmd);
 hist_t *pop_head(hist_t **head);
@@ -106,7 +106,8 @@ static void trim_cmd(buffer *buf);
 /* run_execute.c */
 void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
-
+/* variable_expansion.c */
+void variable_expansion(buffer *b, env_t *envp, int retrn_value);
 /* linked_env.c*/
 env_t *create_envlist();
 env_t *add_env(env_t **head, char *value);
@@ -140,6 +141,9 @@ char *_strchr(char *s, char c);
 int _strlen(char *s);
 int _str_match(char *s1, char *s2);
 int _atoi(char *s);
+
+/* hepler_str3.c */
+int _strstr_int(char *haystack, char *needle);
 
 /* getline.c */
 int _getline(buffer *b, int fd);
