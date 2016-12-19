@@ -8,12 +8,16 @@ int main(int argc, char **argv, char **envp)
 	char **arg_list;
 	env_t *env_p;
 	int retrn_value;
+	hist_t *history;
 	buffer b = {NULL, BUFSIZE, 0};
 
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
 	env_p = create_envlist();
 	retrn_value = 0;
+
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 
 	while (1)
 	{
@@ -22,12 +26,14 @@ int main(int argc, char **argv, char **envp)
 			print_cmdline();
 			_getline(&b);
 		}
+		history = add_cmdhist(history, b.buf);
 		check_alias(&b, env_p);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		if (run_builtin(arg_list, env_p, b.size) != 0)
+		if (run_builtin(arg_list, env_p, b.size, history) != 0)
 			run_execute(arg_list, env_p, b.size);
+
 	}
 	return (0);
 }
