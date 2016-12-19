@@ -47,10 +47,13 @@ char *rm_vname(env_t *envp, char *name, int buf_size)
 	pwd = safe_malloc(sizeof(char) * buf_size);
 	_memset(pwd, '\0', buf_size);
 	temp = envp;
-	for (i = 0; temp->next != NULL; temp = temp->next)
+	for (i = 0; ; temp = temp->next)
 	{
 		if (_str_match(temp->value, name))
+		{
 			_strcpy(pwd, temp->value);
+			break;
+		}
 		else if (temp->next == NULL)
 		{
 			_free(pwd);

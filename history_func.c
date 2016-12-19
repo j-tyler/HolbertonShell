@@ -99,8 +99,6 @@ int read_file(env_t *envp, char **buf)
 	int offset, n, fd;
 	char *path, *new_buf;
 
-	path = safe_malloc(sizeof(char) * BUFSIZE);
-	_memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_RDWR | 0600);
