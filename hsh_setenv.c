@@ -20,19 +20,19 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	}
 	/* set up all strings up*/
 	name = safe_malloc(sizeof(char) * buf_size);
-	memset(name, 0, buf_size);
-	memcpy(name, arg_list[1], strlen(arg_list[1]));
+	_memset(name, 0, buf_size);
+	_memcpy(name, arg_list[1], strlen(arg_list[1]));
 	value = safe_malloc(sizeof(char) * buf_size);
-	memset(value, 0, buf_size);
-	memcpy(value, arg_list[2], strlen(arg_list[2]));
-	strcat(name, "=");
+	_memset(value, 0, buf_size);
+	_memcpy(value, arg_list[2], strlen(arg_list[2]));
+	_strcat(name, "=");
 	temp = envp;
 	flag = 0;
 	while (temp != NULL)
 	{
-		if (strstr(temp->value, name) != NULL)
+		if (_strstr(temp->value, name) != NULL)
 		{
-			strcat(name, value);
+			_strcat(name, value);
 			temp->value = name;
 			flag = 1;
 		}
@@ -40,7 +40,7 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	}
 	if (flag == 0)
 	{
-		strcat(name, value);
+		_strcat(name, value);
 		add_env(&envp, name);
 	}
 	return (0);

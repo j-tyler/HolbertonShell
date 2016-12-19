@@ -16,21 +16,22 @@ hist_t *add_cmdhist(hist_t *history, char *cmd)
 	hist_t *temp;
 	char *new_cmd;
 
-	new_cmd = safe_malloc(sizeof(char) * strlen(cmd));
-	memset(new_cmd, '\0', strlen(cmd));
+	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd));
+	memset(new_cmd, '\0', _strlen(cmd));
 	temp = history;
 	if (hist_index == 0)
 	{
 		for (temp = history; temp != NULL; temp = temp->next)
 			hist_index++;
 	}
-	for (i = 0; i < (strlen(cmd) - 1); i++)
+	for (i = 0; i < (_strlen(cmd) - 1); i++)
 		new_cmd[i] = cmd[i];
-	if (strlen(cmd) > 1)
+	if (_strlen(cmd) > 1)
 		add_history(&history, new_cmd);
 	if (hist_index > 4095)
 		history = pop_head(&history);
 	hist_index++;
+	_free(new_cmd);
 	return (history);
 }
 
@@ -62,13 +63,13 @@ void write_history(env_t *envp, hist_t *history)
 	path = safe_malloc(sizeof(char) * BUFSIZE);
 	memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
-	strcat(path, "/.simple_shell_history");
+	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (strcmp(history->cmd, "") == 0)
+	if (_strcmp(history->cmd, "") == 0)
 		history = pop_head(&history);
 	for (temp = history; temp != NULL; temp = temp->next)
 	{
-		write(fd, temp->cmd, strlen(temp->cmd));
+		write(fd, temp->cmd, _strlen(temp->cmd));
 		write(fd, "\n", 1);
 	}
 	_free(history);

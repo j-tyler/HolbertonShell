@@ -13,8 +13,8 @@ void get_path(char *path, env_t *list)
 	temp = list;
 	for (i = 0; temp->next != NULL; temp = temp->next)
 	{
-		if (strstr(temp->value, "PATH") != NULL)
-			strcpy(path, temp->value);
+		if (_strstr(temp->value, "PATH") != NULL)
+			_strcpy(path, temp->value);
 	}
 }
 
@@ -34,7 +34,7 @@ char **tokenize_path(char **search_path, char *path, int size)
 	char *temp;
 	char buffer[size];
 
-	memset(buffer, '\0', size);
+	_memset(buffer, '\0', size);
 	for (i = 0, count = 1; path[i] != '\0'; i++)
 	{
 		if (path[i] == ':')
@@ -49,20 +49,20 @@ char **tokenize_path(char **search_path, char *path, int size)
 	{
 		if (*temp == ':')
 		{
-			strncat(buffer, "/", 1);
+			_strncat(buffer, "/", 1);
 			search_path[s_index] = safe_malloc(sizeof(char) * size);
-			memset(search_path[s_index], 0, size);
-			strncat(search_path[s_index], buffer, strlen(buffer));
+			_memset(search_path[s_index], 0, size);
+			_strncat(search_path[s_index], buffer, _strlen(buffer));
 			s_index++;
-			memset(buffer, '\0', size);
+			_memset(buffer, '\0', size);
 		}
 		else
-			strncat(buffer, temp, 1);
+			_strncat(buffer, temp, 1);
 	}
-	strncat(buffer, "/", 1);
+	_strncat(buffer, "/", 1);
 	search_path[s_index] = safe_malloc(sizeof(char) * size);
-	memset(search_path[s_index], 0, size);
-	strncat(search_path[s_index], buffer, strlen(buffer));
+	_memset(search_path[s_index], 0, size);
+	_strncat(search_path[s_index], buffer, strlen(buffer));
 	s_index++;
 	search_path[s_index] = safe_malloc(sizeof(char *));
 	search_path[s_index] = NULL;
@@ -84,13 +84,12 @@ int create_path(char *cmd, char **search_path)
 
 	for (i = 0; search_path[i] != NULL; i++)
 	{
-		strncat(search_path[i], cmd, strlen(cmd));
+		_strncat(search_path[i], cmd, _strlen(cmd));
 		fd = open(search_path[i], O_RDONLY);
 		if (fd > 0)
 		{
 			close(fd);
-			strcpy(cmd, search_path[i]);
-/*			strncat(cmd, "\0", 1); */
+			_strcpy(cmd, search_path[i]);
 			return (0);
 		}
 	}

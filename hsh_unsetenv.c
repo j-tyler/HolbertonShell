@@ -18,14 +18,14 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 		return (0);
 	}
 	/* set up for strings */
-	name = safe_malloc(sizeof(char) * strlen(arg_list[1]) + 2);
-	memset(name, 0, (strlen(arg_list[1]) + 2));
-	memcpy(name, arg_list[1], strlen(arg_list[1]));
-	strcat(name, "=");
+	name = safe_malloc(sizeof(char) * _strlen(arg_list[1]) + 3);
+	_memset(name, '\0', (_strlen(arg_list[1]) + 3));
+	_memcpy(name, arg_list[1], _strlen(arg_list[1]));
+	_strcat(name, "=");
 	/* go through loop to search for environemental variable*/
 	for (temp = envp, count = 0; temp != NULL; temp = temp->next)
 	{
-		if (strstr(temp->value, name) != NULL)
+		if (_strstr(temp->value, name) != NULL)
 		{
 			remove_env(&envp, count);
 			break;

@@ -41,8 +41,8 @@ char *_itoa(int num)
 	char *num_str;
 	int index, exp, temp_exp;
 
-	num_str = malloc(sizeof(char) * BUFSIZE);
-	memset(num_str, '\0', BUFSIZE);
+	num_str = safe_malloc(sizeof(char) * BUFSIZE);
+	_memset(num_str, '\0', BUFSIZE);
 	exp = 1000000000;
 	index = 0;
 	if (num != 0)

@@ -24,13 +24,13 @@ env_t *create_envlist(void)
  * Return: the address of the new element, or NULL if it failed
  */
 
-env_t *add_env(env_t **head, const char *str)
+env_t *add_env(env_t **head, char *str)
 {
 	env_t *new_node;
         env_t *temp;
 
 	new_node = safe_malloc(sizeof(env_t));
-	new_node->value = strdup(str);
+	new_node->value = _strdup(str);
 	new_node->next = NULL;
 	if (*head == NULL)
 		*head = new_node;
@@ -87,7 +87,7 @@ void print_env(env_t *head)
 {
 	while (head != NULL)
 	{
-		write(0, head->value, strlen(head->value));
+		write(0, head->value, _strlen(head->value));
 		write(0, "\n", 1);
 		head = head->next;
 	}
@@ -100,19 +100,19 @@ void print_env(env_t *head)
  * @value: the value to update env with
  */
 
-void update_env(env_t *envp, char *name, char *value)
+void update_env(env_t *envp, char *name, char *value, int buf_size)
 {
 	char *rep;
 	int i;
 	env_t *temp;
 
-	rep = safe_malloc(sizeof(char) * (strlen(name) + strlen(value) + 1));
-	memset(rep, '\0', (strlen(name) + strlen(value) + 1));
-	strcat(rep, name);
-	strcat(rep, value);
+	rep = safe_malloc(sizeof(char) * buf_size);
+	_memset(rep, '\0', buf_size);
+	_strcat(rep, name);
+	_strcat(rep, value);
 	for (temp = envp; temp != NULL; temp = temp->next)
 	{
-		if (strstr(temp->value, name) != NULL && temp->value[0] == name[0])
+		if (_strstr(temp->value, name) != NULL && temp->value[0] == name[0])
 		{
 			temp->value = rep;
 			break;

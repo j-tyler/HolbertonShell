@@ -18,8 +18,8 @@ void run_execute(char **arg_list, env_t *env_p, int cmd_size)
 	search_path = NULL;
 	cmd = safe_malloc(sizeof(char) * cmd_size);
 	path = safe_malloc(sizeof(char) * cmd_size);
-	strcpy(cmd, arg_list[0]);
-	if (strchr(cmd, '/') != NULL)
+	_strcpy(cmd, arg_list[0]);
+	if (_strchr(cmd, '/') != NULL)
 		execute_func(cmd, arg_list, env_p);
 	else
 	{
