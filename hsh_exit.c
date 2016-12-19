@@ -15,14 +15,12 @@ int hsh_exit(char **arg_list, env_t *envp, int buf_size, hist_t *history)
 }
 /**
  * hsh_exit_help - builtin help printout for exit
+ * Return: Always 0
  */
 int hsh_exit_help(void)
 {
-	write(STDOUT_FILENO,
-	"exit usage: exit N\n    Exit the shell.\n\n    ", 44);
-	write(STDOUT_FILENO,
-	"Exits the shell with a status of N.  If N is omitted, ", 54);
-	write(STDOUT_FILENO,
-	"the exit status\n    is that of the last command executed.\n", 58);
+	_write("exit usage: exit N\n    Exit the shell.\n\n    ");
+	_write("Exits the shell with a status of N.  If N is omitted, ");
+	_write("the exit status\n    is that of the last command executed.\n");
 	return (0);
 }

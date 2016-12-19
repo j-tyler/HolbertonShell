@@ -43,12 +43,11 @@ int hsh_setenv(char **arg_list, env_t *envp)
 }
 /**
  * hsh_setenv_help - builtin help printout for setenv
+ * Return: Always 0
  */
 int hsh_setenv_help(void)
 {
-	write(STDOUT_FILENO,
-	"setenv usage: setenv VARIABLE VALUE\n    Initialize a new", 56);
-	write(STDOUT_FILENO,
-	" environment variable, or modify an existing one.\n", 50);
+	_write("setenv usage: setenv VARIABLE VALUE\n    Initialize a new");
+	_write(" environment variable, or modify an existing one.\n");
 	return (0);
 }

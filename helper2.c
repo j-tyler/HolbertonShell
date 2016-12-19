@@ -1,5 +1,11 @@
 #include "shell.h"
-
+/**
+ * _write - Write information to STDOUT
+ */
+void _write(char *s)
+{
+	write(STDOUT_FILENO, s, _strlen(s));
+}
 /**
  * update_path - rewrites PWD path to not include sybols
  * @arg_list: arguement list given by the user to determine directory
