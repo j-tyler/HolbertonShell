@@ -15,13 +15,13 @@ hist_t *create_history(env_t *envp)
 
 	/* create a buf of what is in the file */
 	buf = safe_malloc(sizeof(char) * BUFSIZE);
-	memset(buf, '\0', BUFSIZE);
+	_memset(buf, '\0', BUFSIZE);
 	n = read_file(envp, &buf);
 	head = NULL;
 	if (n > 0)
 	{
-		str = safe_malloc(sizeof(char) * strlen(buf));
-		memset(str, '\0', strlen(buf));
+		str = safe_malloc(sizeof(char) * _strlen(buf));
+		_memset(str, '\0', _strlen(buf));
 		if (*buf == '\0')
 		{
 			add_history(&head, "");
@@ -33,7 +33,7 @@ hist_t *create_history(env_t *envp)
 			{
 				add_history(&head, str);
 				count++, j = 0;
-				memset(str, '\0', strlen(str));
+				_memset(str, '\0', _strlen(str));
 			}
 			else
 				str[j++] = buf[i];
@@ -53,7 +53,7 @@ void print_history(hist_t *head)
 {
 	while (head != NULL)
 	{
-		write(0, head->cmd, strlen(head->cmd));
+		write(0, head->cmd, _strlen(head->cmd));
 		write(0, "\n", 1);
 		head = head->next;
 	}
@@ -67,13 +67,13 @@ void print_history(hist_t *head)
  * Description: this function will add node to the end of the list
  */
 
-hist_t *add_history(hist_t **head, const char *cmd)
+hist_t *add_history(hist_t **head, char *cmd)
 {
 	hist_t *new_node;
 	hist_t *temp;
 
 	new_node = safe_malloc(sizeof(hist_t));
-	new_node->cmd = strdup(cmd);
+	new_node->cmd = _strdup(cmd);
 	new_node->next = NULL;
 	if (*head == NULL)
 		*head = new_node;
@@ -100,9 +100,9 @@ int read_file(env_t *envp, char **buf)
 	char *path, *new_buf;
 
 	path = safe_malloc(sizeof(char) * BUFSIZE);
-	memset(path, '\0', BUFSIZE);
+	_memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
-	strcat(path, "/.simple_shell_history");
+	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_RDWR | 0600);
 	if (fd > 0)
 	{

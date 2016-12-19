@@ -92,7 +92,7 @@ void signal_handler(int signo);
 /* history_func.c*/
 hist_t *create_history(env_t *envp);
 int read_file(env_t *envp, char **buf);
-hist_t *add_history(hist_t **head, const char *cmd);
+hist_t *add_history(hist_t **head, char *cmd);
 void print_history(hist_t *head);
 void make_path(char **path, char *filename, env_t *envp, int size);
 /* history_func2.c*/
@@ -109,9 +109,9 @@ void run_execute(char **arg_list, env_t *env_p, int cmd_size);
 
 /* linked_env.c*/
 env_t *create_envlist();
-env_t *add_env(env_t **head, const char *value);
+env_t *add_env(env_t **head, char *value);
 void  remove_env(env_t **head, int index);
-void update_env(env_t *envp, char *name, char *value);
+void update_env(env_t *envp, char *name, char *value, int buf_size);
 
 /* helpers.c */
 void print_cmdline();
@@ -124,6 +124,8 @@ char *rm_vname(env_t *envp, char *arg, int buf_size);
 void _write(char *s);
 char *update_path(char **arg_list, env_t *envp, char *path, int buf_size);
 char **list_to_array(env_t *envp);
+int _strcmp(char *s1, char *s2);
+char *_strcpy(char *dest, char *src);
 
 /* helper_str.c*/
 char *_memcpy(char *dest, char *src, unsigned int n);
@@ -178,7 +180,7 @@ void free_addr_list(addr_list *list);
 
 /* list of builtin functions */
 int hsh_env(char **arg, env_t *env_p);
-int hsh_setenv(char **arg, env_t *env_p);
+int hsh_setenv(char **arg, env_t *env_p, int buf_size);
 int hsh_unsetenv(char **arg, env_t *env_p);
 int hsh_cd(char **arg, env_t *env_p, int buf_size);
 int hsh_help(char **arg);
