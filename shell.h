@@ -94,7 +94,7 @@ hist_t *create_history(env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t **head, const char *cmd);
 void print_history(hist_t *head);
-
+void make_path(char **path, char *filename, env_t *envp, int size);
 /* history_func2.c*/
 hist_t *add_cmdhist(hist_t *history, char *cmd);
 hist_t *pop_head(hist_t **head);
@@ -140,7 +140,9 @@ int _str_match(char *s1, char *s2);
 int _atoi(char *s);
 
 /* getline.c */
-int _getline(buffer *buf);
+int _getline(buffer *b, int fd);
+int _getline_fileread(buffer *b, env_t *envp);
+void _getline_file_exit(buffer *b);
 /* buffer_maniputlation.c */
 void buffer_reallocate(buffer *b);
 void buffer_word_erase(buffer *b, int n);

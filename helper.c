@@ -49,7 +49,7 @@ char *rm_vname(env_t *envp, char *name, int buf_size)
 	temp = envp;
 	for (i = 0; temp->next != NULL; temp = temp->next)
 	{
-		if (strstr(temp->value, name) != NULL)
+		if (_str_match(temp->value, name))
 			strcpy(pwd, temp->value);
 	}
 	while (*pwd != '=')

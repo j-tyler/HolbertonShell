@@ -24,10 +24,11 @@ int main(int argc, char **argv, char **envp)
 		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
-			_getline(&b);
+			_getline(&b, STDIN_FILENO);
 		}
 		history = add_cmdhist(history, b.buf);
 		check_alias(&b, env_p);
+		_getline_fileread(&b, env_p);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;

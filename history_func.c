@@ -124,3 +124,17 @@ int read_file(env_t *envp, char **buf)
 	}
 	return (0);
 }
+/**
+ * make_path
+ */
+void make_path(char **path, char *filename, env_t *envp, int size)
+{
+     *path = safe_malloc(sizeof(char) * BUFSIZE);
+     memset(*path, '\0', BUFSIZE);
+     *path = rm_vname(envp, "PWD", BUFSIZE);
+	_write(*path);
+     strcat(*path, "/");
+	strcat(*path, filename);
+	_write(*path);
+	_write("||||||||||||\n");
+}
