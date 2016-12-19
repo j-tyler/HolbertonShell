@@ -50,12 +50,14 @@ int _getline_fileread(buffer *b, env_t *envp)
 	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
 		i++;
 	b->buf[i] = '\0';
-	make_path(&fullfilename, filename, envp, b->size);
-	fd = open("./testfile", O_RDONLY);
+	make_path(&fullfilename, filename, "PWD", envp, b->size);
+	fd = open(fullfilename, O_RDONLY);
+	printf("%d\n", fd);
+	perror("Error: ");
 	_write("--");
      _write(fullfilename);
      _write("--");
-	if (fd < 0); /*DEBUG: lol this solution */
+	if (fd < 3) /*DEBUG: lol this solution */
 	{
 		_write("Cannot open filename specified\n");
 		_getline_file_exit(b);
