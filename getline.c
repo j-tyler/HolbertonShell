@@ -37,20 +37,19 @@ int _getline_fileread(buffer *b, env_t *envp)
      int fd, offset, n, i;
 	char *filename, *fullfilename;
 
-	i = 0;
+	i = b->bp;
 	while (_is_whitespace(b->buf[b->bp + i]))
 		i++;
-	if (!_str_match(b->buf + b->bp + i, "simple_shell"))
+	if (!_str_match(b->buf + b->bp + i, "simple_shell") || b->buf[i] == '\0')
 		return (0);
-	b->bp += i;
-	while (!_is_whitespace(b->buf[b->bp]))
-		b->bp++;
-	while (_is_whitespace(b->buf[b->bp]))
-		b->bp++;
-	filename = b->buf + b->bp;
-	while (!_is_whitespace(b->buf[b->bp]))
-		b->bp++;
-	b->buf[b->bp] = '\0';
+	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
+		i++;
+	while (_is_whitespace(b->buf[i]) && b->buf != '\0')
+		i++;
+	filename = b->buf + i;
+	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
+		i++;
+	b->buf[i] = '\0';
 	make_path(&fullfilename, filename, envp, b->size);
 	fd = open("./testfile", O_RDONLY);
 	_write("--");
