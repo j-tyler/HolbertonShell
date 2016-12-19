@@ -89,14 +89,17 @@ typedef void (*signhandler_t)(int);
 
 void signal_handler(int signo);
 
+/* history.c */
+void history_wrapper(char *cmd, env_t *envp, char mode);
+void print_history_2(hist_t *history);
 /* history_func.c*/
-hist_t *create_history(env_t *envp);
+void create_history(hist_t *history, env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t **head, char *cmd);
 void print_history(hist_t *head);
 void make_path(char **path, char *filename, env_t *envp, int size);
 /* history_func2.c*/
-hist_t *add_cmdhist(hist_t *history, char *cmd);
+void add_cmdhist(hist_t *history, char *cmd);
 hist_t *pop_head(hist_t **head);
 void write_history(env_t *envp, hist_t *history);
 char *_itoa(int num);
@@ -185,7 +188,7 @@ int hsh_unsetenv(char **arg, env_t *env_p);
 int hsh_cd(char **arg, env_t *env_p, int buf_size);
 int hsh_help(char **arg);
 int hsh_exit(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
-int hsh_history(char **arg, env_t *env_p, int buf_size, hist_t *history);
+int hsh_history(char **arg, env_t *env_p, int buf_size);
 
 /* list of builtin help printouts */
 int hsh_exit_help(void);

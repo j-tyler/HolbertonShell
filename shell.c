@@ -15,7 +15,8 @@ int main(int argc, char **argv, char **envp)
 	arg_list = NULL;
 	env_p = create_envlist();
 	retrn_value = 0;
-	history = create_history(env_p);
+	history_wrapper("", env_p, 'c');
+/*	history = create_history(env_p); */
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	while (1)
@@ -25,7 +26,8 @@ int main(int argc, char **argv, char **envp)
 			print_cmdline();
 			_getline(&b, STDIN_FILENO);
 		}
-		history = add_cmdhist(history, b.buf);
+		history_wrapper(b.buf, env_p, 'a');
+/*		history = add_cmdhist(history, b.buf); */
 		check_alias(&b, env_p);
 		_getline_fileread(&b, env_p);
 		tokenize_buf(&b, &arg_list);

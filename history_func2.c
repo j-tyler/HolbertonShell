@@ -9,7 +9,7 @@
  * if the list execeeds, 4096, then the head will pop off
  */
 
-hist_t *add_cmdhist(hist_t *history, char *cmd)
+void add_cmdhist(hist_t *history, char *cmd)
 {
 	static int hist_index = 0;
 	int i;
@@ -32,7 +32,6 @@ hist_t *add_cmdhist(hist_t *history, char *cmd)
 		history = pop_head(&history);
 	hist_index++;
 	_free(new_cmd);
-	return (history);
 }
 
 /**

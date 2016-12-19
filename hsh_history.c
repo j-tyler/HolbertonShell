@@ -4,7 +4,28 @@
  * @??:
  * Return: Always 0
  */
-int hsh_history(char **arg_list, env_t *envp, int size, hist_t *history)
+int hsh_history(char **arg_list, env_t *envp, int mode)
+{
+	static hist_t history = {NULL, NULL};
+	int i;
+	char *num_str;
+	hist_t *temp;
+
+	if (mode == 0)
+		create_history(&history, envp);
+	else if (mode == 1)
+		add_cmdhist(&history, arg_list[0]);
+	else if (mode == 2)
+		write_history(envp, &history);
+	else
+	{
+		print_history(&history);
+	}
+	printf("IM IN HSH_HISTORY\n");
+	return (0);
+}
+
+void print_history_2(hist_t *history)
 {
 	int i;
 	char *num_str;
@@ -19,7 +40,6 @@ int hsh_history(char **arg_list, env_t *envp, int size, hist_t *history)
 		_write(temp->cmd);
 		_write("\n");
 	}
-	return (0);
 }
 /**
  * hsh_history_help - builtin help printout for history

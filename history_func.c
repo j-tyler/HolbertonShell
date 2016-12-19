@@ -6,7 +6,7 @@
  * Return: a pointer to the history linked list
  */
 
-hist_t *create_history(env_t *envp)
+void create_history(hist_t *history, env_t *envp)
 {
 
 	hist_t *head, *new_node;
@@ -17,6 +17,7 @@ hist_t *create_history(env_t *envp)
 	buf = safe_malloc(sizeof(char) * BUFSIZE);
 	_memset(buf, '\0', BUFSIZE);
 	n = read_file(envp, &buf);
+	printf("IM HERE AND n is %d\n", n);
 	head = NULL;
 	if (n > 0)
 	{
@@ -24,14 +25,14 @@ hist_t *create_history(env_t *envp)
 		_memset(str, '\0', _strlen(buf));
 		if (*buf == '\0')
 		{
-			add_history(&head, "");
+			add_history(&history, "");
 		}
 		/* create linked list and fill in with what is in file*/
 		for (i = 0, j = 0, count = 0; buf[i] != '\0'; i++)
 		{
 			if (buf[i] == '\n')
 			{
-				add_history(&head, str);
+				add_history(&history, str);
 				count++, j = 0;
 				_memset(str, '\0', _strlen(str));
 			}
@@ -40,8 +41,8 @@ hist_t *create_history(env_t *envp)
 		}
 	}
 	else
-		add_history(&head, "");
-	return (head);
+		add_history(&history, "");
+	print_history(history);
 }
 
 /**
@@ -51,9 +52,12 @@ hist_t *create_history(env_t *envp)
 
 void print_history(hist_t *head)
 {
+	char *str;
 	while (head != NULL)
 	{
-		write(0, head->cmd, _strlen(head->cmd));
+		str = _strdup(head->cmd);
+		printf("what is in here %s\n", str);
+		write(0, str, strlen(str));
 		write(0, "\n", 1);
 		head = head->next;
 	}
