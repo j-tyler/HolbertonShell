@@ -1,6 +1,13 @@
 #include "shell.h"
 /**
- * hsh_alias
+ * hsh_alias - builtin for alias function
+ * @argv: argument vector
+ * @env_p: env list
+ * @mode: Execution mode for the program, 0 or !0
+ * Description: Complicated parent function for the alias functionality
+ *				of hsh. Uses two modes to allow it being called from
+ *				multiple points from within our program.
+ * Return: 0 on success, 1 on failure.
  */
 int hsh_alias(char **argv, env_t *env_p, int mode)
 {
@@ -17,14 +24,17 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 		if (argv[1] == NULL)
 			retrn = hsh_alias_printall(&list);
 		else
-			if ((retrn = hsh_alias_print(&list, argv)) == 2)
+		{
+			retrn = hsh_alias_print(&list, argv);
+			if (retrn == 2)
 				retrn = hsh_alias_add(&list, argv);
+		}
 	}
 	return (retrn);
-}	
+}
 /**
  * hsh_alias_search - find and replace aliases
- * @list - alias linked list
+ * @list: alias linked list
  * @arg: alias to search for
  *
  * Return: matching alias value, or NULL
@@ -33,7 +43,7 @@ char *hsh_alias_search(alias *list, char *arg)
 {
 	while (list != NULL && list->key != NULL)
 	{
-		if (_str_match(arg, list->key))
+		if (_str_match_strict(arg, list->key))
 			return (list->value);
 		list = list->next;
 	}
@@ -53,7 +63,7 @@ int hsh_alias_printall(alias *list)
 		write(STDOUT_FILENO, list->key, _strlen(list->key));
 		write(STDOUT_FILENO, "='", 2);
 		write(STDOUT_FILENO, list->value, _strlen(list->value));
-     	write(STDOUT_FILENO, "'\n", 2);
+		write(STDOUT_FILENO, "'\n", 2);
 		list = list->next;
 	}
 	return (0);
@@ -111,7 +121,8 @@ int hsh_alias_add(alias *list, char **argv)
 
 	value = _strdup(value);
 
-	for (i = 0; argv[1][i] != '='; i++);
+	for (i = 0; argv[1][i] != '='; i++)
+		;
 	key = safe_malloc(sizeof(char) * (i + 1));
 	for (j = 0; j < i; j++)
 		key[j] = argv[1][j];
@@ -135,4 +146,4 @@ int hsh_alias_add(alias *list, char **argv)
 	else
 		list->value = value;
 	return (0);
-}	
+}
