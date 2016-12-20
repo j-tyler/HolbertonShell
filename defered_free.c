@@ -92,10 +92,8 @@ void add_addr_list_node(addr_list *list, void *address)
 void free_addr_list(addr_list *list)
 {
 	addr_list *tmp;
-	printf("Freeing the list\n");
 	while (list != NULL)
 	{
-/*		printf("Freeing Address: %p\n", list->address); */
 		tmp = list;
 		list = list->next;
 		if (tmp->address != NULL)

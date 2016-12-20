@@ -97,8 +97,6 @@ int read_file(env_t *envp, char **buf)
 	int offset, n, fd;
 	char *path, *new_buf;
 
-	path = safe_malloc(sizeof(char) * BUFSIZE);
-	_memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_RDWR | 0600);
@@ -125,14 +123,12 @@ int read_file(env_t *envp, char **buf)
 /**
  * make_path
  */
-void make_path(char **path, char *filename, env_t *envp, int size)
+char *make_path(char **path, char *filename, char *key, env_t *envp, int size)
 {
      *path = safe_malloc(sizeof(char) * BUFSIZE);
      memset(*path, '\0', BUFSIZE);
-     *path = rm_vname(envp, "PWD", BUFSIZE);
-	_write(*path);
+     *path = rm_vname(envp, key, BUFSIZE);
      strcat(*path, "/");
 	strcat(*path, filename);
-	_write(*path);
-	_write("||||||||||||\n");
+	return (*path);
 }

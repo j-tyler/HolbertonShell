@@ -28,8 +28,12 @@ void tokenize_buf(buffer *b, char ***argv)
 		}
 	}
 	(*argv)[ap] = NULL;
-
-	/* If the reason we ended was because of flow control commands, */
+	/* If we ended because of newline, we MAY have more content */
+	if (b->buf[i] == '\n' && b->buf[i + 1] != '\0')
+		b->buf[i] = ';';
+	else
+		b->buf[i] = '\0';
+	/* If we ended because of flow control commands, */
 	/* increment the buffer point and add a null before the character */
 	if (b->buf[i] == ';' || b->buf[i] == '|' || b->buf[i] == '&')
 	{
@@ -40,8 +44,8 @@ void tokenize_buf(buffer *b, char ***argv)
 	else
 		b->bp = 0;
 	/* Command debugging */
-	for (ap = 0; (*argv)[ap] != NULL; ap++)
-		printf("Command %d is %s\n", ap, (*argv)[ap]);
+	/*for (ap = 0; (*argv)[ap] != NULL; ap++)
+		printf("Command %d is %s\n", ap, (*argv)[ap]);*/
 }
 /**
  * _av_init - resize av if needed
@@ -104,7 +108,7 @@ int _is_whitespace(char c)
  */
 int _is_endofcmd(char c)
 {
-	if (c == '\0' || c == '|' || c == '&' || c == ';' || c == '#')
+	if (c == '\0' || c == '\n' || c == '|' || c == '&' || c == ';' || c == '#')
 		return (1);
 	return (0);
 }

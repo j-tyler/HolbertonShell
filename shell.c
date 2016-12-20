@@ -7,15 +7,15 @@ int main(int argc, char **argv, char **envp)
 	(void)argc, (void)argv, (void)envp;
 	char **arg_list;
 	env_t *env_p;
-	int retrn_value;
+	int retrn_value, filereading;
 	hist_t *history;
 	buffer b = {NULL, BUFSIZE, 0};
 
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
 	env_p = create_envlist();
-	retrn_value = 0;
 	history_wrapper("", env_p, 'c');
+	retrn_value = filereading = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	while (1)
@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		history_wrapper(b.buf, env_p, 'a');
 		check_alias(&b, env_p);
+		variable_expansion(&b, env_p, retrn_value);
 		_getline_fileread(&b, env_p);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)

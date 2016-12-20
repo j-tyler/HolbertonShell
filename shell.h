@@ -12,7 +12,7 @@
 #include <fcntl.h>
 
 #define BUFSIZE 1024
-#define ARGLISTINIT 5
+#define FILEREADING 55
 #define FREE_ADDRESSES ((void *)3)
 /**
  * struct buffer - structure for controlling buffer
@@ -97,7 +97,7 @@ void create_history(hist_t *history, env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t *head, char *cmd);
 void print_history(hist_t *head);
-void make_path(char **path, char *filename, env_t *envp, int size);
+char *make_path(char **path, char *filename, char *key, env_t *envp, int size);
 /* history_func2.c*/
 void add_cmdhist(hist_t *history, char *cmd);
 void pop_head(hist_t *head);
@@ -107,6 +107,8 @@ char *_itoa(int num);
 int more_cmds(buffer *buf, int return_value);
 static void trim_cmd(buffer *buf);
 
+/* variable_expansion.c */
+void variable_expansion(buffer *b, env_t *envp, int retrn_value);
 /* run_execute.c */
 int run_execute(char **arg_list, env_t *env_p, int cmd_size);
 int execute_func(char *cmd, char **args, env_t *envp);
@@ -144,8 +146,12 @@ int _strlen(char *s);
 int _str_match(char *s1, char *s2);
 int _atoi(char *s);
 
+/* hepler_str3.c */
+int _strstr_int(char *haystack, char *needle);
+
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
+int _endread(char c);
 int _getline_fileread(buffer *b, env_t *envp);
 void _getline_file_exit(buffer *b);
 /* buffer_maniputlation.c */
