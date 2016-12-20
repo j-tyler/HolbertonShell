@@ -14,6 +14,7 @@
 #define BUFSIZE 1024
 #define FILEREADING 55
 #define FREE_ADDRESSES ((void *)3)
+#define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof((ARRAY)[0]))
 /**
  * struct buffer - structure for controlling buffer
  * @buf: pointer the buffer
@@ -37,7 +38,7 @@ typedef struct builtin
 	int (*func)();
 } builtin;
 /**
- * struct addr_list
+ * struct addr_list - List for saving addresses for freeing on exit
  * @address: an address of any type
  * @next: the next node in the list
  */
@@ -48,7 +49,7 @@ typedef struct addr_list
 } addr_list;
 
 /**
- * struct history_list
+ * struct hist_s - history linked list for saving commands
  * @cmd: command given as input
  * @next: pointer to next node on list
  */
@@ -83,7 +84,7 @@ typedef struct alias
 	char *key;
 	char *value;
 	struct alias *next;
-} alias; 
+} alias;
 
 typedef void (*signhandler_t)(int);
 
@@ -120,7 +121,7 @@ void  remove_env(env_t **head, int index);
 void update_env(env_t *envp, char *name, char *value, int buf_size);
 
 /* helpers.c */
-void print_cmdline();
+void print_cmdline(void);
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
@@ -148,7 +149,7 @@ int _atoi(char *s);
 
 /* hepler_str3.c */
 int _strstr_int(char *haystack, char *needle);
-
+int _str_match_strict(char *s1, char *s2);
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
@@ -178,7 +179,7 @@ int _is_endofcmd(char c);
 
 int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
 /* alias.c */
-void check_alias(buffer *b, env_t *env_p);
+void alias_expansion(buffer *b, env_t *env_p);
 
 /* memory_allocation.c */
 void _free(void *address);

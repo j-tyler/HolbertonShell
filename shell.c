@@ -26,15 +26,15 @@ int main(int argc, char **argv, char **envp)
 			_getline(&b, STDIN_FILENO, env_p);
 		}
 		history_wrapper(b.buf, env_p, 'a');
-		check_alias(&b, env_p);
+		alias_expansion(&b, env_p);
 		variable_expansion(&b, env_p, retrn_value);
 		_getline_fileread(&b, env_p);
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		if ((retrn_value = run_builtin(arg_list, env_p, b.size, history)) != 0)
+		retrn_value = run_builtin(arg_list, env_p, b.size, history);
+		if (retrn_value != 0)
 			retrn_value = run_execute(arg_list, env_p, b.size);
-
 	}
 	return (0);
 }
