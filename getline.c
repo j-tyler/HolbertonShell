@@ -15,7 +15,8 @@ int _getline(buffer *b, int fd, env_t *envp)
 
 	offset = 0;
 	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
-			!_endread(b->buf + offset + n))
+			b->buf[b->bp + offset + n - 1] != '\n' &&
+			b->buf[b->bp + offset + n] != '\0')
 	{
 		buffer_reallocate(b);
 		offset += n;
@@ -29,17 +30,6 @@ int _getline(buffer *b, int fd, env_t *envp)
 		_exit(0);
 	}
 	b->buf[n + offset] = '\0';
-	return (0);
-}
-/**
- * _endread - Boolean check for end of getline read
- * @s: character to evaluate
- * Return: 1 if endread is TRUE, else 0
- */
-int _endread(char *s)
-{
-	if (*s == '\0' || *(s - 1) == '\n')
-		return (1);
 	return (0);
 }
 /**
