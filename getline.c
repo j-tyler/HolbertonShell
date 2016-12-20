@@ -15,8 +15,7 @@ int _getline(buffer *b, int fd)
 	_write("-\n");*/
 	offset = 0;
 	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
-			!_endread(b->buf[n + offset - 1]) &&
-			!_endread(b->buf[n + offset]))
+			!_endread(b->buf + offset + n))
 	{
 		buffer_reallocate(b);
 		offset += n;
@@ -33,12 +32,14 @@ int _getline(buffer *b, int fd)
 }
 /**
  * _endread - Boolean check for end of getline read
- * @c: character to evaluate
+ * @s: character to evaluate
  * Return: 1 if endread is TRUE, else 0
  */
-int _endread(char c)
+int _endread(char *s)
 {
-	if (c == '\n' || c == '\0')
+	if (*s == '\0' || *s == '\n')
+		return (1);
+	if (*(s - 1) == '\0' || *(s - 1) == '\n')
 		return (1);
 	return (0);
 }

@@ -148,7 +148,7 @@ int _strstr_int(char *haystack, char *needle);
 
 /* getline.c */
 int _getline(buffer *b, int fd);
-int _endread(char c);
+int _endread(char *s);
 int _getline_fileread(buffer *b, env_t *envp);
 void _getline_file_exit(buffer *b);
 /* buffer_maniputlation.c */
