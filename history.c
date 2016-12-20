@@ -13,7 +13,7 @@ void history_wrapper(char *cmd, env_t *envp, char mode)
 		hsh_history(NULL, envp, 0);
 	else if (mode == 'a')
 	{
-		arg[0] = malloc(sizeof(char) * (_strlen(cmd) + 1));
+		arg[0] = safe_malloc(sizeof(char) * (_strlen(cmd) + 1));
 		_memset(arg[0], '\0', (_strlen(cmd) + 1));
 		_memcpy(arg[0], cmd, _strlen(cmd));
 		hsh_history(arg, envp, 1);
