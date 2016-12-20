@@ -5,7 +5,7 @@
  * string.
  *
  */
-int _getline(buffer *b, int fd)
+int _getline(buffer *b, int fd, env_t *envp)
 {
 	int offset, n;
 
@@ -24,6 +24,7 @@ int _getline(buffer *b, int fd)
 	{
 		if (fd > 2)
 			close(fd);
+		history_wrapper("", envp, 'w');
 		defer_free(FREE_ADDRESSES);
 		_exit(0);
 	}
@@ -74,7 +75,7 @@ int _getline_fileread(buffer *b, env_t *envp)
 		_getline_file_exit(b);
 		return (1);
 	}
-	_getline(b, fd);
+	_getline(b, fd, envp);
 	close(fd);
 	return (FILEREADING);
 }

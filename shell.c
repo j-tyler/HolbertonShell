@@ -14,8 +14,8 @@ int main(int argc, char **argv, char **envp)
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
 	env_p = create_envlist();
+	history_wrapper("", env_p, 'c');
 	retrn_value = filereading = 0;
-	history = create_history(env_p);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	while (1)
@@ -23,9 +23,9 @@ int main(int argc, char **argv, char **envp)
 		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
-			_getline(&b, STDIN_FILENO);
+			_getline(&b, STDIN_FILENO, env_p);
 		}
-		history = add_cmdhist(history, b.buf);
+		history_wrapper(b.buf, env_p, 'a');
 		check_alias(&b, env_p);
 		variable_expansion(&b, env_p, retrn_value);
 		_getline_fileread(&b, env_p);
