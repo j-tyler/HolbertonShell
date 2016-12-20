@@ -1,9 +1,11 @@
 #include "shell.h"
 
 /**
- * _getline - a function that grabs stdin and puts in buffer and returns
- * string.
- *
+ * _getline - Read input and put in buffer
+ * @b: buffer structure
+ * @fd: file descriptor to read from
+ * @envp: enviornment structure
+ * Return: Always 0. Exit on failure or EOF
  */
 int _getline(buffer *b, int fd, env_t *envp)
 {
@@ -11,8 +13,6 @@ int _getline(buffer *b, int fd, env_t *envp)
 
 	/* DEBUG: READ is undefined when taking newline from pipes? */
 
-	/*_write(b->buf + b->bp);
-	_write("-\n");*/
 	offset = 0;
 	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
 			!_endread(b->buf + offset + n))
@@ -29,7 +29,7 @@ int _getline(buffer *b, int fd, env_t *envp)
 		_exit(0);
 	}
 	b->buf[n + offset] = '\0';
-	return (b->size);
+	return (0);
 }
 /**
  * _endread - Boolean check for end of getline read
@@ -38,20 +38,20 @@ int _getline(buffer *b, int fd, env_t *envp)
  */
 int _endread(char *s)
 {
-	if (*s == '\0' || *s == '\n')
-		return (1);
-	if (*(s - 1) == '\0' || *(s - 1) == '\n')
+	if (*s == '\0' || *(s - 1) == '\n')
 		return (1);
 	return (0);
 }
 /**
- * _getline_fileread - a function that reads a file in buffer and returns
- * string.
- * 
+ * _getline_fileread - wrapper function that reads a file into buffer
+ * @b: buffer structure
+ * @envp: enviornment structure
+ *
+ * Return: 1 on file not exist, else 0
  */
 int _getline_fileread(buffer *b, env_t *envp)
-{    
-     int fd, offset, n, i;
+{
+	int fd, offset, n, i;
 	char *filename, *fullfilename;
 
 	i = b->bp;
