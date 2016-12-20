@@ -44,8 +44,8 @@ void tokenize_buf(buffer *b, char ***argv)
 	else
 		b->bp = 0;
 	/* Command debugging */
-	for (ap = 0; (*argv)[ap] != NULL; ap++)
-		printf("Command %d is %s\n", ap, (*argv)[ap]);
+	/*for (ap = 0; (*argv)[ap] != NULL; ap++)
+		printf("Command %d is %s\n", ap, (*argv)[ap]);*/
 }
 /**
  * _av_init - resize av if needed
