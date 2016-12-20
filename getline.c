@@ -11,9 +11,12 @@ int _getline(buffer *b, int fd)
 
 	/* DEBUG: READ is undefined when taking newline from pipes? */
 
+	/*_write(b->buf + b->bp);
+	_write("-\n");*/
 	offset = 0;
 	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
-			b->buf[n + offset - 1] != '\n')
+			!_endread(b->buf[n + offset - 1]) &&
+			!_endread(b->buf[n + offset]))
 	{
 		buffer_reallocate(b);
 		offset += n;
@@ -29,6 +32,17 @@ int _getline(buffer *b, int fd)
 	return (b->size);
 }
 /**
+ * _endread - Boolean check for end of getline read
+ * @c: character to evaluate
+ * Return: 1 if endread is TRUE, else 0
+ */
+int _endread(char c)
+{
+	if (c == '\n' || c == '\0')
+		return (1);
+	return (0);
+}
+/**
  * _getline_fileread - a function that reads a file in buffer and returns
  * string.
  * 
@@ -39,9 +53,9 @@ int _getline_fileread(buffer *b, env_t *envp)
 	char *filename, *fullfilename;
 
 	i = b->bp;
-	while (_is_whitespace(b->buf[b->bp + i]))
+	while (_is_whitespace(b->buf[i]))
 		i++;
-	if (!_str_match(b->buf + b->bp + i, "simple_shell") || b->buf[b->bp + i] == '\0')
+	if (!_str_match(b->buf + i, "simple_shell") || b->buf[i] == '\0')
 		return (0);
 	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
 		i++;
