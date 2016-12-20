@@ -95,12 +95,12 @@ void print_history_2(hist_t *history);
 /* history_func.c*/
 void create_history(hist_t *history, env_t *envp);
 int read_file(env_t *envp, char **buf);
-hist_t *add_history(hist_t **head, char *cmd);
+hist_t *add_history(hist_t *head, char *cmd);
 void print_history(hist_t *head);
 void make_path(char **path, char *filename, env_t *envp, int size);
 /* history_func2.c*/
 void add_cmdhist(hist_t *history, char *cmd);
-hist_t *pop_head(hist_t **head);
+void pop_head(hist_t *head);
 void write_history(env_t *envp, hist_t *history);
 char *_itoa(int num);
 
@@ -145,7 +145,7 @@ int _str_match(char *s1, char *s2);
 int _atoi(char *s);
 
 /* getline.c */
-int _getline(buffer *b, int fd);
+int _getline(buffer *b, int fd, env_t *envp);
 int _getline_fileread(buffer *b, env_t *envp);
 void _getline_file_exit(buffer *b);
 /* buffer_maniputlation.c */

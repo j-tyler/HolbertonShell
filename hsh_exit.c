@@ -9,7 +9,6 @@ int hsh_exit(char **arg_list, env_t *envp, int buf_size, hist_t *history)
 
 	tmp = _atoi(arg_list[1]);
 	history_wrapper("", envp, 'w');
-/*	write_history(envp, history); */
 	defer_free(FREE_ADDRESSES);
 	_exit(tmp & 0377);
 	return (0);

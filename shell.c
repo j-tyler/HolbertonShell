@@ -16,7 +16,6 @@ int main(int argc, char **argv, char **envp)
 	env_p = create_envlist();
 	retrn_value = 0;
 	history_wrapper("", env_p, 'c');
-/*	history = create_history(env_p); */
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	while (1)
@@ -24,10 +23,9 @@ int main(int argc, char **argv, char **envp)
 		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
-			_getline(&b, STDIN_FILENO);
+			_getline(&b, STDIN_FILENO, env_p);
 		}
 		history_wrapper(b.buf, env_p, 'a');
-/*		history = add_cmdhist(history, b.buf); */
 		check_alias(&b, env_p);
 		_getline_fileread(&b, env_p);
 		tokenize_buf(&b, &arg_list);

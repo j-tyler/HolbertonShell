@@ -19,25 +19,36 @@ int hsh_history(char **arg_list, env_t *envp, int mode)
 		write_history(envp, &history);
 	else
 	{
-		print_history(&history);
+		print_history_2(&history);
 	}
-	printf("IM IN HSH_HISTORY\n");
 	return (0);
 }
 
 void print_history_2(hist_t *history)
 {
-	int i;
+	int i, count;
 	char *num_str;
-	hist_t *temp;
+	hist_t *temp, *temp2;
 
-	for (i = 0, temp = history; temp != NULL; temp = temp->next, i++)
+	history = history->next;
+	for (count = 0, temp = history; temp != NULL; temp = temp->next, count++)
+		;
+	if (count >= 4096)
+		count = count - 4096;
+	else
+		count = count - 10;
+	while (count > 0)
+	{
+		history = history->next;
+		count--;
+	}
+	for (i = 0, temp2 = history; temp2 != NULL, i < 10; temp2 = temp2->next, i++)
 	{
 		num_str = _itoa(i);
 		_write(" ");
 		_write(num_str);
 		_write(" ");
-		_write(temp->cmd);
+		_write(temp2->cmd);
 		_write("\n");
 	}
 }
@@ -61,7 +72,7 @@ int hsh_history_help(void)
 char *_itoa(int num)
 {
 	char *num_str;
-	int index, exp, temp_exp;
+	int index, exp, i, temp_exp;
 
 	num_str = safe_malloc(sizeof(char) * BUFSIZE);
 	_memset(num_str, '\0', BUFSIZE);
@@ -85,6 +96,9 @@ char *_itoa(int num)
 		}
 	}
 	else
-		num_str[index] = 0 + '0';
+	{
+		for (i = 0; i < 4; i++)
+			num_str[i] = 0 + '0';
+	}
 	return (num_str);
 }

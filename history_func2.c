@@ -27,9 +27,7 @@ void add_cmdhist(hist_t *history, char *cmd)
 	for (i = 0; i < (_strlen(cmd) - 1); i++)
 		new_cmd[i] = cmd[i];
 	if (_strlen(cmd) > 1)
-		add_history(&history, new_cmd);
-	if (hist_index > 4096)
-		history = pop_head(&history);
+		add_history(history, new_cmd);
 	hist_index++;
 	_free(new_cmd);
 }
@@ -40,10 +38,9 @@ void add_cmdhist(hist_t *history, char *cmd)
  * Return: the head node's data
  */
 
-hist_t *pop_head(hist_t **head)
+void pop_head(hist_t *head)
 {
-	*head = (*head)->next;
-	return (*head);
+	head = (head)->next;
 }
 
 
@@ -59,13 +56,14 @@ void write_history(env_t *envp, hist_t *history)
 	char *path;
 	int n, fd;
 
+	history = history->next;
 	path = safe_malloc(sizeof(char) * BUFSIZE);
 	memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (_strcmp(history->cmd, "") == 0)
-		history = pop_head(&history);
+/*	if (_strcmp(history->cmd, "") == 0) */
+/*		pop_head(history); */
 	for (temp = history; temp != NULL; temp = temp->next)
 	{
 		write(fd, temp->cmd, _strlen(temp->cmd));
