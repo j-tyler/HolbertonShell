@@ -45,7 +45,6 @@ int execute_func(char *cmd, char **args, env_t *envp)
 	char **array;
 
 
-
 	pid = fork();
 	if (pid == 0)
 	{
@@ -59,6 +58,7 @@ int execute_func(char *cmd, char **args, env_t *envp)
 	}
 	else
 	{
+
 		pid = wait(&status);
 		if (WIFEXITED(status))
 			return (status);

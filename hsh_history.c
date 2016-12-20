@@ -18,9 +18,7 @@ int hsh_history(char **arg_list, env_t *envp, int mode)
 	else if (mode == 2)
 		write_history(envp, &history);
 	else
-	{
 		print_history_2(&history);
-	}
 	return (0);
 }
 
@@ -28,7 +26,7 @@ void print_history_2(hist_t *history)
 {
 	int i, count;
 	char *num_str;
-	hist_t *temp, *temp2;
+	hist_t *temp, *temp2, *temp_h;
 
 	history = history->next;
 	for (count = 0, temp = history; temp != NULL; temp = temp->next, count++)

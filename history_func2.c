@@ -31,19 +31,6 @@ void add_cmdhist(hist_t *history, char *cmd)
 	hist_index++;
 	_free(new_cmd);
 }
-
-/**
- * pop_head - function to delete the head node of a linked list
- * @head: head of the linked list
- * Return: the head node's data
- */
-
-void pop_head(hist_t *head)
-{
-	head = (head)->next;
-}
-
-
 /**
  * write_history - writing the history linked list to the file: .simple_shell_history
  * @envp: environemental variable linked list to find the path of file
@@ -62,8 +49,6 @@ void write_history(env_t *envp, hist_t *history)
 	path = rm_vname(envp, "HOME", BUFSIZE);
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-/*	if (_strcmp(history->cmd, "") == 0) */
-/*		pop_head(history); */
 	for (temp = history; temp != NULL; temp = temp->next)
 	{
 		write(fd, temp->cmd, _strlen(temp->cmd));

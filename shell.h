@@ -109,6 +109,8 @@ static void trim_cmd(buffer *buf);
 
 /* variable_expansion.c */
 void variable_expansion(buffer *b, env_t *envp, int retrn_value);
+char *_getpid(void);
+char * _getTok(char *stat, int n);
 /* run_execute.c */
 int run_execute(char **arg_list, env_t *env_p, int cmd_size);
 int execute_func(char *cmd, char **args, env_t *envp);
