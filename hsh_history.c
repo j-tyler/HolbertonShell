@@ -18,7 +18,14 @@ int hsh_history(char **arg_list, env_t *envp, int mode)
 	else if (mode == 2)
 		write_history(envp, &history);
 	else
+	{
+		if (arg_list[1] != NULL)
+		{
+			_write("Error: no such command\n");
+			return (2);
+		}
 		print_history_2(&history);
+	}
 	return (0);
 }
 
@@ -42,7 +49,7 @@ void print_history_2(hist_t *history)
 	}
 	for (i = 0, temp2 = history; temp2 != NULL, i < 10; temp2 = temp2->next, i++)
 	{
-		num_str = _itoa(i);
+		num_str = _itoa(i, 2);
 		_write(" ");
 		_write(num_str);
 		_write(" ");
@@ -67,7 +74,7 @@ int hsh_history_help(void)
  * Return: a string for the number
  */
 
-char *_itoa(int num)
+char *_itoa(int num, int mode)
 {
 	char *num_str;
 	int index, exp, i, temp_exp;
@@ -81,7 +88,7 @@ char *_itoa(int num)
 		while ((num / exp) == 0)
 			exp /= 10;
 		temp_exp = exp;
-		while(temp_exp < 1000)
+		while(temp_exp < 1000 && mode == 2)
 		{
 			num_str[index++] = 0 + '0';
 			temp_exp *= 10;
@@ -95,8 +102,13 @@ char *_itoa(int num)
 	}
 	else
 	{
-		for (i = 0; i < 4; i++)
-			num_str[i] = 0 + '0';
+		if (mode == 2)
+		{
+			for (i = 0; i < 4; i++)
+				num_str[i] = 0 + '0';
+		}
+		else
+			num_str[0] = 0 + '0';
 	}
 	return (num_str);
 }

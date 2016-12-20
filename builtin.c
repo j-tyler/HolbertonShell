@@ -9,7 +9,7 @@
  */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history)
 {
-	int i, size;
+	int i, size, status;
 	builtin table[] = {
 	{"exit", hsh_exit},     {"env", hsh_env},
 	{"setenv", hsh_setenv}, {"unsetenv", hsh_unsetenv},
@@ -22,8 +22,8 @@ int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history)
 	{
 		if (_str_match_strict(arg_list[0], table[i].name))
 		{
-			table[i].func(arg_list, env_p, buf_size, history);
-			return (0);
+			status = table[i].func(arg_list, env_p, buf_size, history);
+			return (status);
 		}
 	}
 	return (1);

@@ -15,8 +15,8 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	/* What to do if nothing is entered*/
 	if (arg_list[1] == NULL || arg_list[2] == NULL)
 	{
-		write(0, "Error: wrong number of arguments\n", 37);
-		return (1);
+		_write("Error: wrong number of arguments\n");
+		return (2);
 	}
 	/* set up all strings up*/
 	name = safe_malloc(sizeof(char) * buf_size);

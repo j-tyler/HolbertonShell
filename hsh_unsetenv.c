@@ -16,7 +16,7 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 	if (arg_list[1] == NULL)
 	{
 		write(0, "Error: wrong number for arguments\n", 34);
-		return (1);
+		return (2);
 	}
 	/* set up for strings */
 	name = safe_malloc(sizeof(char) * _strlen(arg_list[1]) + 3);

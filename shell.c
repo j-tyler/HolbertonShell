@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **envp)
 		if (arg_list[0] == NULL)
 			continue;
 		retrn_value = run_builtin(arg_list, env_p, b.size, history);
-		if (retrn_value != 0)
+		if (retrn_value != 0 && retrn_value != 2)
 			retrn_value = run_execute(arg_list, env_p, b.size);
 	}
 	return (0);

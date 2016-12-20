@@ -22,7 +22,7 @@ void variable_expansion(buffer *b, env_t *envp, int retrn_value)
 		offset = index + 1;
 		if (b->buf[b->bp + index + 1] == '?')
 		{
-			hold = _itoa(retrn_value);
+			hold = _itoa(retrn_value, 1);
 			buffer_word_erase(b, b->bp + index);
 			buffer_insert(b, hold, b->bp + index);
 			_free(hold);
@@ -32,7 +32,6 @@ void variable_expansion(buffer *b, env_t *envp, int retrn_value)
 			buffer_word_erase(b, b->bp + index);
 			hold =  _getpid();
 			buffer_insert(b, hold, b->bp + index);
-			// insert PID at b->bp + index
 		}
 		else if (!_is_whitespace(b->buf[b->bp + index + 1]))
 		{
@@ -66,7 +65,7 @@ char *_getpid(void)
 	}
 	else
 	{
-		hold = _itoa(pid);
+		hold = _itoa(pid, 1);
 		_strcat(path, "/proc/");
 		_strcat(path, hold);
 		_strcat(path, "/stat");
