@@ -26,6 +26,8 @@ int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 		path = rm_vname(envp, "HOME=", buf_size), l = chdir(path);
 	else if (arg_list[1] != NULL && m == 0)
 		path = rm_vname(envp, "OLDPWD=", buf_size), l = chdir(path);
+	else if (arg_list[1][0] == '/')
+		l = chdir(arg_list[1]);
 	else
 	{
 		getcwd(buff, buf_size);
@@ -45,6 +47,8 @@ int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 		update_env(envp, "OLDPWD=", pwd, buf_size);
 		update_env(envp, "PWD=", buff, buf_size);
 	}
+	_write(buff);
+	_write("\n");
 	return (0);
 }
 
