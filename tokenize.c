@@ -31,7 +31,7 @@ void tokenize_buf(buffer *b, char ***argv)
 	/* If we ended because of newline, we MAY have more content */
 	if (b->buf[i] == '\n' && b->buf[i + 1] != '\0')
 		b->buf[i] = ';';
-	else
+	else if (b->buf[i] == '\n')
 		b->buf[i] = '\0';
 	/* If we ended because of flow control commands, */
 	/* increment the buffer point and add a null before the character */
