@@ -3,6 +3,7 @@
 /**
  * create_envlist - creates a linked list with all environment
  * variables in the extern environ variable
+ * Return: head of created list
  */
 
 env_t *create_envlist(void)
@@ -20,14 +21,14 @@ env_t *create_envlist(void)
  * add_env - adds another environmental variable to the beginning
  * of the environemental variable linked list
  * @head: head of the linked list
- * @env: environmental variable value to store
+ * @str: environmental variable value to store
  * Return: the address of the new element, or NULL if it failed
  */
 
 env_t *add_env(env_t **head, char *str)
 {
 	env_t *new_node;
-        env_t *temp;
+	env_t *temp;
 
 	new_node = safe_malloc(sizeof(env_t));
 	new_node->value = _strdup(str);
@@ -95,15 +96,15 @@ void print_env(env_t *head)
 
 /**
  * update_env - updates an environemental variable
- * @env-: linked list of environemental variables
+ * @envp: linked list of environemental variables
  * @name: the name of variable to update;
  * @value: the value to update env with
+ * @buf_size: buffer size
  */
 
 void update_env(env_t *envp, char *name, char *value, int buf_size)
 {
 	char *rep;
-	int i;
 	env_t *temp;
 
 	rep = safe_malloc(sizeof(char) * buf_size);

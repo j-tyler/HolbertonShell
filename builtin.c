@@ -4,10 +4,9 @@
  * @arg_list: argument list
  * @env_p: enviorn list
  * @buf_size: buffer size
- * @history: history list
  * Return: 0 on found builtin, 1 on found nothing
  */
-int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history)
+int run_builtin(char **arg_list, env_t *env_p, int buf_size)
 {
 	int i, size, status;
 	builtin table[] = {
@@ -22,7 +21,7 @@ int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history)
 	{
 		if (_str_match_strict(arg_list[0], table[i].name))
 		{
-			status = table[i].func(arg_list, env_p, buf_size, history);
+			status = table[i].func(arg_list, env_p, buf_size);
 			return (status);
 		}
 	}

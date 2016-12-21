@@ -3,7 +3,7 @@
  * tokenize_buf - tokenize buffer by inputting NULLs and filling **av
  * @b: The buffer with the command string
  * @argv: Pointer to the command argument vector
- * Description: This function accepts a string such as 'ls -l' and changes 
+ * Description: This function accepts a string such as 'ls -l' and changes
  *              it to 'ls\0-l'. It puts pointers to 'ls' and '-l' into *av
  */
 void tokenize_buf(buffer *b, char ***argv)
@@ -44,8 +44,8 @@ void tokenize_buf(buffer *b, char ***argv)
 	else
 		b->bp = 0;
 	/* Command debugging */
-	/*for (ap = 0; (*argv)[ap] != NULL; ap++)
-		printf("Command %d is %s\n", ap, (*argv)[ap]);*/
+	/*for (ap = 0; (*argv)[ap] != NULL; ap++)*/
+/*		printf("Command %d is %s\n", ap, (*argv)[ap]);*/
 }
 /**
  * _av_init - resize av if needed
@@ -75,7 +75,7 @@ void _av_init(char *buf, char ***argv)
  * @buf: buffer structure to add null into
  */
 void _add_null(char *buf)
-{ 
+{
 	int i;
 
 	/* DEBUG: overwrites by one when buffer is completely full */
@@ -87,7 +87,7 @@ void _add_null(char *buf)
 		buf[i + 1] = buf[i];
 	buf[i + 1] = buf[i];
 	buf[i] = '\0';
-}	
+}
 /**
  * _is_whitespace - Boolean true for false for whitespace
  * @c: char to evalute.

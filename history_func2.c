@@ -11,7 +11,7 @@
 
 void add_cmdhist(hist_t *history, char *cmd)
 {
-	static int hist_index = 0;
+	static int hist_index = 1;
 	int i;
 	hist_t *temp;
 	char *new_cmd;
@@ -19,7 +19,7 @@ void add_cmdhist(hist_t *history, char *cmd)
 	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd));
 	_memset(new_cmd, '\0', _strlen(cmd));
 	temp = history;
-	if (hist_index == 0)
+	if (hist_index == 1)
 	{
 		for (temp = history; temp != NULL; temp = temp->next)
 			hist_index++;
@@ -32,7 +32,8 @@ void add_cmdhist(hist_t *history, char *cmd)
 	_free(new_cmd);
 }
 /**
- * write_history - writing the history linked list to the file: .simple_shell_history
+ * write_history - writing the history linked list to the file:
+ * .simple_shell_history
  * @envp: environemental variable linked list to find the path of file
  * @history: history link list to find what to write in
  */
@@ -41,7 +42,7 @@ void write_history(env_t *envp, hist_t *history)
 {
 	hist_t *temp;
 	char *path;
-	int n, fd;
+	int fd;
 
 	history = history->next;
 	path = safe_malloc(sizeof(char) * BUFSIZE);

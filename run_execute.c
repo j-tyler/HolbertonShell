@@ -1,13 +1,14 @@
 #include "shell.h"
 
 /**
- * run_ execute - an execution function for the command given
+ * run_execute - an execution function for the command given
  * @arg_list: argument list of what is inputed by user
  * @env_p: the linked list containing environmental variables
  * @cmd_size: size that cmd should be allocated for
  * Description: Checks if the command given is given the path (i.e /bin/ls)
  * if not, then the function will find the path for the command and if it fails
  * to find the command, an Error: command not found will be printed.
+ * Return: status if success or 127 if failure.
  */
 
 int run_execute(char **arg_list, env_t *env_p, int cmd_size)
@@ -27,7 +28,8 @@ int run_execute(char **arg_list, env_t *env_p, int cmd_size)
 	{
 		get_path(path, env_p);
 		search_path = tokenize_path(search_path, path, cmd_size);
-		if ((n = create_path(cmd, search_path)) == 0)
+		n = create_path(cmd, search_path);
+		if (n == 0)
 			status = execute_func(cmd, arg_list, env_p);
 	}
 	if (n == 0)
@@ -40,12 +42,14 @@ int run_execute(char **arg_list, env_t *env_p, int cmd_size)
  * execute_func - function that runs the execve system call.
  * @cmd: full path to the command
  * @args: the arguement list (if any) given by the user.
+ * @envp: environemental variable list
+ * Return: 0 on success and 2 on failure
  */
 
 int execute_func(char *cmd, char **args, env_t *envp)
 {
-	pid_t pid, real_pid;
-	int status, i, count;
+	pid_t pid;
+	int status, i;
 	char **array;
 
 
@@ -56,7 +60,7 @@ int execute_func(char *cmd, char **args, env_t *envp)
 		i = execve(cmd, args, array);
 		if (i < 0)
 		{
-			write (0, "Error: command not found\n", 25);
+			write(0, "Error: command not found\n", 25);
 			return (2);
 			_exit(1);
 		}
@@ -66,8 +70,7 @@ int execute_func(char *cmd, char **args, env_t *envp)
 
 		pid = wait(&status);
 		if (WIFEXITED(status))
-		{
 			return (status);
-		}
 	}
+	return (2);
 }

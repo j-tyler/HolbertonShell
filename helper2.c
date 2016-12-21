@@ -1,6 +1,7 @@
 #include "shell.h"
 /**
  * _write - Write information to STDOUT
+ * @s: string;
  */
 void _write(char *s)
 {
@@ -11,6 +12,7 @@ void _write(char *s)
  * @arg_list: arguement list given by the user to determine directory
  * @envp: environemental variable linked list
  * @path: current path to be updated
+ * @buf_size: the size of the current path
  * Return: a path without any symbols such as (., .., ~, or -)
  */
 

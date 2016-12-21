@@ -22,7 +22,7 @@ void buffer_reallocate(buffer *b)
  */
 void buffer_word_erase(buffer *b, int n)
 {
-	int i, flag;
+	int i;
 
 	i = 0;
 	while (!(_is_whitespace(b->buf[n + i]) || _is_endofcmd(b->buf[n + i])))
@@ -43,7 +43,8 @@ void buffer_word_erase(buffer *b, int n)
  */
 void buffer_insert(buffer *b, char *s, int n)
 {
-	int i, j, total_len, s_len;
+	unsigned int i, total_len, s_len;
+	int j;
 
 	buffer_word_erase(b, n);
 

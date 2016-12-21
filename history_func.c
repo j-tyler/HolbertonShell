@@ -1,15 +1,15 @@
 #include "shell.h"
 
 /**
- * create_history - creates a linked list for user command history, size is 4096
+ * create_history - creates a linked list for user
+ * command history, size is 4096
+ * @history: history linked list to pass
  * @envp: environmental variable linked list
  * Return: a pointer to the history linked list
  */
 
 void create_history(hist_t *history, env_t *envp)
 {
-
-	hist_t *new_node;
 	char *str, *buf;
 	int i, j, count, n;
 
@@ -48,6 +48,7 @@ void create_history(hist_t *history, env_t *envp)
 void print_history(hist_t *head)
 {
 	char *str;
+
 	while (head != NULL)
 	{
 		str = _strdup(head->cmd);
@@ -63,6 +64,7 @@ void print_history(hist_t *head)
  * @head: head of the history linked list
  * @cmd: command to store in list
  * Description: this function will add node to the end of the list
+ * Return: a pointer to the new node
  */
 
 hist_t *add_history(hist_t *head, char *cmd)
@@ -87,8 +89,9 @@ hist_t *add_history(hist_t *head, char *cmd)
 
 /**
  * read_file - reads the simple_shell_history file and put it in a buffer
- * @envp: environemental variable linked list to get the HOME directory for file
+ * @envp: environemental variable linked list to get the HOME directory
  * @buf: buffer to input what is read
+ * Return: 1 if success and 0 if failed
  */
 
 int read_file(env_t *envp, char **buf)
@@ -121,14 +124,22 @@ int read_file(env_t *envp, char **buf)
 	return (0);
 }
 /**
- * make_path
+ * make_path - makes the path
+ * @path: path to create
+ * @filename: filename to open
+ * @key: key to create
+ * @envp: environemental linked list
+ * @size: size of oath
+ * Return: the path str
  */
 char *make_path(char **path, char *filename, char *key, env_t *envp, int size)
 {
-     *path = safe_malloc(sizeof(char) * BUFSIZE);
-     _memset(*path, '\0', BUFSIZE);
-     *path = rm_vname(envp, key, BUFSIZE);
-     strcat(*path, "/");
+	(void) size;
+
+	*path = safe_malloc(sizeof(char) * BUFSIZE);
+	_memset(*path, '\0', BUFSIZE);
+	*path = rm_vname(envp, key, BUFSIZE);
+	strcat(*path, "/");
 	strcat(*path, filename);
 	return (*path);
 }
