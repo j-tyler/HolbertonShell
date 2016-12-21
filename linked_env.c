@@ -87,8 +87,8 @@ void print_env(env_t *head)
 {
 	while (head != NULL)
 	{
-		write(0, head->value, _strlen(head->value));
-		write(0, "\n", 1);
+		_write(head->value);
+		_write("\n");
 		head = head->next;
 	}
 }
