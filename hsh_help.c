@@ -33,7 +33,7 @@ int hsh_help(char **arg)
 		}
 	}
 	_write("No help topics match your query (._.)\n");
-	return (1);
+	return (22);
 }
 /**
  * hsh_help_help - builtin help printout for help
