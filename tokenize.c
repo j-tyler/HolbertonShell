@@ -28,6 +28,10 @@ void tokenize_buf(buffer *b, char ***argv)
 		}
 	}
 	(*argv)[ap] = NULL;
+	/* If we end because of comments */
+	if (b->buf[i] == '#')
+		while (b->buf[i] != '\n' && b->buf[i] != '\0')
+			i++;
 	/* If we ended because of newline, we MAY have more content */
 	if (b->buf[i] == '\n' && b->buf[i + 1] != '\0')
 		b->buf[i] = ';';
@@ -43,9 +47,6 @@ void tokenize_buf(buffer *b, char ***argv)
 	}
 	else
 		b->bp = 0;
-	/* Command debugging */
-	/*for (ap = 0; (*argv)[ap] != NULL; ap++)*/
-/*		printf("Command %d is %s\n", ap, (*argv)[ap]);*/
 }
 /**
  * _av_init - resize av if needed
