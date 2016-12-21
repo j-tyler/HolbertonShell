@@ -17,7 +17,7 @@ int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 	buff = safe_malloc(sizeof(char) * buf_size), _memset(buff, '\0', buf_size);
 	pwd = safe_malloc(sizeof(char) * buf_size), _memset(pwd, '\0', buf_size);
 	getcwd(pwd, buf_size);
-	if (arg_list != NULL)
+	if (arg_list[1] != NULL)
 	{
 		n = _strcmp(arg_list[1], "~");
 		m = _strcmp(arg_list[1], "-");
