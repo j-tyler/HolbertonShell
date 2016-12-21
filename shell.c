@@ -85,7 +85,7 @@ int more_cmds(buffer *b, int retrn_value)
  * Description: Small helper function for function more_cmds. Advances
  *				the buffer point past command control characters.
  */
-static void trim_cmd(buffer *b)
+void trim_cmd(buffer *b)
 {
 	while (b->buf[b->bp] == ';')
 		b->bp++;

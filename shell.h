@@ -106,7 +106,7 @@ void write_history(env_t *envp, hist_t *history);
 char *_itoa(int num, int mode);
 
 int more_cmds(buffer *buf, int return_value);
-static void trim_cmd(buffer *buf);
+void trim_cmd(buffer *buf);
 /*void trim_cmd(buffer *buf); */
 
 /* variable_expansion.c */
