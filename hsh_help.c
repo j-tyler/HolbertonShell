@@ -4,7 +4,7 @@
  * @??:
  * Return: ??
  */
-void hsh_help(char **arg)
+int hsh_help(char **arg)
 {
 	int i, size;
 	builtin table[] = {
@@ -15,7 +15,11 @@ void hsh_help(char **arg)
 	};
 
 	if (arg[1] == NULL)
-		printf("We executed help (◕‿◕✿)\n");
+	{
+		_write("help usage: help COMMAND\n    ");
+		_write("Prints out useful information on builtin commands\n");
+		return (0);
+	}
 	else
 	{
 		size = sizeof(table)/sizeof(table[0]);
@@ -24,17 +28,19 @@ void hsh_help(char **arg)
 			if (_str_match(arg[1], table[i].name))
 			{
 				table[i].func();
-				return;
+				return (0);
 			}
 		}
 	}
-	write(STDOUT_FILENO, "No help topics match your query (._.)\n", 38);
+	_write("No help topics match your query (._.)\n");
+	return (1);
 }
 /**
  * hsh_help_help - builtin help printout for help
+ * Return: Always 0
  */
-void hsh_help_help(void)
+int hsh_help_help(void)
 {
-	write(STDOUT_FILENO,
-	"help usage: help COMMAND\n    Display helpful information about builtins.\n",73);
+	_write("help usage: help COMMAND\n    Display helpful information about builtins.\n");
+	return (0);
 }

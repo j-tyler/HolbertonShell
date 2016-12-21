@@ -1,0 +1,99 @@
+.TH HSH 1
+.SH NAME
+hsh \- the Holberton Shell
+.SH SYNOPSIS
+.B hsh
+[file or arguements]
+.SH DESCRIPTION
+.I  hsh
+is a command language interpreter that executes commands read
+from standard input or from a file. A full manual on docomentation can
+be found in the readme file.
+.B hsh
+does not handle any option processing like bash or zsh.
+.SH ARGUEMENTS
+The first argument read from standard inputis assumed to be the command 
+and following arguments are its parameters. To invoke a script or file,
+the first arguement is assumed to be the filename, no other options are
+necessary.
+.B hsh
+reads and executes commands from standard input or the file, then exits.
+.B hsh
+exit status is the exit status of the last command executed in the input.
+If no commands are executed, the exit status is 0. An attempt is first 
+made to open the file in the current directory, and, if no file is found
+, then the shell searches the directories in PATH for the script.
+.SH Shell Grammar
+.B Simple Command
+is a sequence of optional variable assignments followed by a blank separated
+words or redirectors, and terminated by a control operator. Blanks include
+new lines, tabs. The first word specifies the command to be executed, and is
+passed as arguement zero, the remaining words are passed as arguements to the
+command.
+.PP
+The return value of a command is its exit status, genearlly 0 if success and
+127 or 2 (builtin's) for failure.
+.PP
+.B Lists
+.PP
+A list is a sequence of one or more pipeline operators
+.B ;, &&, ||
+.
+.PP
+Of the list, the
+.B &&
+and
+.B ||
+have equal precedence.
+.PP
+The AND (&&) and OR (||) lists are executed with left associativity.
+An AND list has the form
+.PP
+.I command1
+.B &&
+.I command2
+.PP
+command2 is executed if, and only if command1 returns an exit status of 0.
+.PP
+.I command1
+.B ||
+.I command2
+.PP
+command2 is executed if, and only if command1 returns an a non-zero exit status.
+The return status of AND and OR is the exit status of the last command executed.
+.PP
+.I command1
+.B ;
+.I command2
+.PP
+command2 is executed regardless of command1's exit status.
+.SH Parameters
+
+.SH "SEE ALSO"
+bash(1), zsh(1)
+.SH "BUGS"
+.I Zless
+does not work with compressed data that is piped to it via standard
+input; it requires that input files be specified as arguments.
+To read compressed data from a pipe, you can use
+.RB ".\|.\|." "|gunzip|less"
+instead of
+.RB ".\|.\|." "|zless" .
+.SH "COPYRIGHT NOTICE"
+Copyright \(co 2006, 2007 Free Software Foundation, Inc.
+.br
+Copyright \(co 1992, 1993 Jean-loup Gailly
+.PP
+Permission is granted to make and distribute verbatim copies of
+this manual provided the copyright notice and this permission notice
+are preserved on all copies.
+.PP
+Permission is granted to copy and distribute modified versions of this
+manual under the conditions for verbatim copying, provided that the entire
+resulting derived work is distributed under the terms of a permission
+notice identical to this one.
+.PP
+Permission is granted to copy and distribute translations of this manual
+into another language, under the above conditions for modified versions,
+except that this permission notice may be stated in a translation approved
+by the Foundation.

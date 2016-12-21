@@ -10,24 +10,30 @@
  * to find the command, an Error: command not found will be printed.
  */
 
-void run_execute(char **arg_list, env_t *env_p, int cmd_size)
+int run_execute(char **arg_list, env_t *env_p, int cmd_size)
 {
 	char *cmd, *path;
 	char **search_path;
+	int status, n;
 
 	search_path = NULL;
+	n = 0;
 	cmd = safe_malloc(sizeof(char) * cmd_size);
 	path = safe_malloc(sizeof(char) * cmd_size);
-	strcpy(cmd, arg_list[0]);
-	if (strchr(cmd, '/') != NULL)
-		execute_func(cmd, arg_list);
+	_strcpy(cmd, arg_list[0]);
+	if (_strchr(cmd, '/') != NULL)
+		status = execute_func(cmd, arg_list, env_p);
 	else
 	{
 		get_path(path, env_p);
 		search_path = tokenize_path(search_path, path, cmd_size);
-		if (create_path(cmd, search_path) == 0)
-			execute_func(cmd, arg_list);
+		if ((n = create_path(cmd, search_path)) == 0)
+			status = execute_func(cmd, arg_list, env_p);
 	}
+	if (n == 0)
+		return (status);
+	else
+		return (127);
 }
 
 /**
@@ -36,19 +42,32 @@ void run_execute(char **arg_list, env_t *env_p, int cmd_size)
  * @args: the arguement list (if any) given by the user.
  */
 
-void execute_func(char *cmd, char **args)
+int execute_func(char *cmd, char **args, env_t *envp)
 {
-	int status, i;
+	pid_t pid, real_pid;
+	int status, i, count;
+	char **array;
 
-	if (fork() == 0)
+
+	pid = fork();
+	if (pid == 0)
 	{
-		i = execve(cmd, args, NULL);
+		array = list_to_array(envp);
+		i = execve(cmd, args, array);
 		if (i < 0)
 		{
 			write (0, "Error: command not found\n", 25);
-			exit(1);
+			return (2);
+			_exit(1);
 		}
 	}
 	else
-		wait(&status);
+	{
+
+		pid = wait(&status);
+		if (WIFEXITED(status))
+		{
+			return (status);
+		}
+	}
 }

@@ -1,27 +1,29 @@
 #include "shell.h"
 /**
- * run_builtin - frame for checking command vs builtins and executing found cmd.
- * @??:
- *
+ * run_builtin - checking arg_list for builtins and executing found cmd.
+ * @arg_list: argument list
+ * @env_p: enviorn list
+ * @buf_size: buffer size
+ * @history: history list
  * Return: 0 on found builtin, 1 on found nothing
  */
-int run_builtin(char **arg_list, env_t *env_p)
+int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history)
 {
-	int i, size;
+	int i, size, status;
 	builtin table[] = {
 	{"exit", hsh_exit},     {"env", hsh_env},
 	{"setenv", hsh_setenv}, {"unsetenv", hsh_unsetenv},
 	{"cd", hsh_cd},         {"history", hsh_history},
-	{"help", hsh_help}
+	{"help", hsh_help},     {"alias", hsh_alias}
 	};
 
-	size = sizeof(table)/sizeof(table[0]);
+	size = ARRAY_SIZE(table);
 	for (i = 0; i < size; i++)
 	{
-		if (_str_match(arg_list[0], table[i].name))
+		if (_str_match_strict(arg_list[0], table[i].name))
 		{
-			table[i].func(arg_list, env_p);
-			return (0);
+			status = table[i].func(arg_list, env_p, buf_size, history);
+			return (status);
 		}
 	}
 	return (1);
