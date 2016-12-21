@@ -13,6 +13,7 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 {
 	static alias list = {NULL, NULL, NULL};
 	int retrn;
+	(void) env_p;
 
 	if (mode == 0)
 	{

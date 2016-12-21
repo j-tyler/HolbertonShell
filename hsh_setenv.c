@@ -4,6 +4,7 @@
  * @arg_list: list of arguements that contain the env name, value and
  * overwrite value
  * @envp: a pointer to the linked list of environmental variables
+ * @buf_size: buf size to set malloc space
  * Return: 0 on success and 1 on error
  */
 int hsh_setenv(char **arg_list, env_t *envp, int buf_size)

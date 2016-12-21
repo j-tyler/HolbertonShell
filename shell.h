@@ -107,11 +107,12 @@ char *_itoa(int num, int mode);
 
 int more_cmds(buffer *buf, int return_value);
 static void trim_cmd(buffer *buf);
+/*void trim_cmd(buffer *buf); */
 
 /* variable_expansion.c */
 void variable_expansion(buffer *b, env_t *envp, int retrn_value);
 char *_getpid(void);
-char * _getTok(char *stat, int n);
+char *_getTok(char *stat, int n);
 /* run_execute.c */
 int run_execute(char **arg_list, env_t *env_p, int cmd_size);
 int execute_func(char *cmd, char **args, env_t *envp);
@@ -121,7 +122,7 @@ env_t *create_envlist();
 env_t *add_env(env_t **head, char *value);
 void  remove_env(env_t **head, int index);
 void update_env(env_t *envp, char *name, char *value, int buf_size);
-
+void print_env(env_t *head);
 /* helpers.c */
 void print_cmdline(void);
 void *safe_malloc(size_t size);
@@ -170,7 +171,7 @@ int hsh_alias_add(alias *list, char **argv);
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
-
+int create_path(char *cmd, char **search_path);
 /* tokenize.c */
 void tokenize_buf(buffer *buf, char ***av);
 void _av_init(char *buf, char ***av);
@@ -179,7 +180,7 @@ int _is_whitespace(char c);
 int _is_endofcmd(char c);
 /* builtin.c */
 
-int run_builtin(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
+int run_builtin(char **arg_list, env_t *env_p, int buf_size);
 /* alias.c */
 void alias_expansion(buffer *b, env_t *env_p);
 
@@ -196,7 +197,7 @@ int hsh_setenv(char **arg, env_t *env_p, int buf_size);
 int hsh_unsetenv(char **arg, env_t *env_p);
 int hsh_cd(char **arg, env_t *env_p, int buf_size);
 int hsh_help(char **arg);
-int hsh_exit(char **arg_list, env_t *env_p, int buf_size, hist_t *history);
+int hsh_exit(char **arg_list, env_t *env_p, int buf_size);
 int hsh_history(char **arg, env_t *env_p, int buf_size);
 
 /* list of builtin help printouts */

@@ -10,34 +10,34 @@
  */
 int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 {
-	char *path;
-	char buff[buf_size], pwd[buf_size];
-	int n;
+	char *path, *buff, *pwd;
+	int n, m, l;
 
-	path = safe_malloc(sizeof(char) * buf_size);
-	_memset(path, '\0', buf_size);
-	_memset(pwd, '\0', buf_size);
-	_memset(buff, '\0', buf_size);
+	path = safe_malloc(sizeof(char) * buf_size), _memset(path, '\0', buf_size);
+	buff = safe_malloc(sizeof(char) * buf_size), _memset(buff, '\0', buf_size);
+	pwd = safe_malloc(sizeof(char) * buf_size), _memset(pwd, '\0', buf_size);
 	getcwd(pwd, buf_size);
-	if (arg_list[1] == NULL || (n = _strcmp(arg_list[1], "~")) == 0)
+	n = _strcmp(arg_list[1], "~");
+	m = _strcmp(arg_list[1], "-");
+	if (arg_list[1] == NULL || n == 0)
 	{
 		path = rm_vname(envp, "HOME=", buf_size);
-		n = chdir(path);
+		l = chdir(path);
 	}
-	else if (arg_list[1] != NULL && ((n = _strcmp(arg_list[1], "-")) == 0))
+	else if (arg_list[1] != NULL && m == 0)
 	{
 		path = rm_vname(envp, "OLDPWD=", buf_size);
-		n = chdir(path);
+		l = chdir(path);
 	}
 	else
 	{
 		getcwd(buff, buf_size);
-		_strcat(buff,"/");
+		_strcat(buff, "/");
 		_strcat(buff, arg_list[1]);
-		n = chdir(buff);
+		l = chdir(buff);
 
 	}
-	if (n < 0)
+	if (l < 0)
 	{
 		write(0, "Error: no such file or directory\n", 33);
 		return (2);

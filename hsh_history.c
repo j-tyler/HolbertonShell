@@ -1,15 +1,14 @@
 #include "shell.h"
 /**
  * hsh_history - builtin command hsh_history, mimics builtin history
- * @??:
+ * @arg_list: argrument list of input
+ * @envp: environemental variable list
+ * @mode: mode to direct which function to execute
  * Return: Always 0
  */
 int hsh_history(char **arg_list, env_t *envp, int mode)
 {
 	static hist_t history = {NULL, NULL};
-	int i;
-	char *num_str;
-	hist_t *temp;
 
 	if (mode == 0)
 		create_history(&history, envp);
@@ -29,11 +28,16 @@ int hsh_history(char **arg_list, env_t *envp, int mode)
 	return (0);
 }
 
+/**
+ * print_history_2 - prints out the history with index
+ * @history: history linked list
+ */
+
 void print_history_2(hist_t *history)
 {
 	int i, count;
 	char *num_str;
-	hist_t *temp, *temp2, *temp_h;
+	hist_t *temp, *temp2;
 
 	history = history->next;
 	for (count = 0, temp = history; temp != NULL; temp = temp->next, count++)
@@ -47,7 +51,8 @@ void print_history_2(hist_t *history)
 		history = history->next;
 		count--;
 	}
-	for (i = 0, temp2 = history; temp2 != NULL, i < 10; temp2 = temp2->next, i++)
+	for (i = 0, temp2 = history; temp2 != NULL || i < 10;
+	     temp2 = temp2->next, i++)
 	{
 		num_str = _itoa(i, 2);
 		_write(" ");
@@ -71,6 +76,7 @@ int hsh_history_help(void)
 /**
  * _itoa - interger to string converter
  * @num: number to convert
+ * @mode: mode to determine how to deal with 0
  * Return: a string for the number
  */
 
@@ -88,7 +94,7 @@ char *_itoa(int num, int mode)
 		while ((num / exp) == 0)
 			exp /= 10;
 		temp_exp = exp;
-		while(temp_exp < 1000 && mode == 2)
+		while (temp_exp < 1000 && mode == 2)
 		{
 			num_str[index++] = 0 + '0';
 			temp_exp *= 10;

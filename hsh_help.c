@@ -1,8 +1,8 @@
 #include "shell.h"
 /**
  * hsh_help - help command for hsh_shell builtins
- * @??:
- * Return: ??
+ * @arg - argument lists;
+ * Return: 0 if success and 1 if failed
  */
 int hsh_help(char **arg)
 {
@@ -22,7 +22,7 @@ int hsh_help(char **arg)
 	}
 	else
 	{
-		size = sizeof(table)/sizeof(table[0]);
+		size = sizeof(table) / sizeof(table[0]);
 		for (i = 0; i < size; i++)
 		{
 			if (_str_match(arg[1], table[i].name))
@@ -41,6 +41,6 @@ int hsh_help(char **arg)
  */
 int hsh_help_help(void)
 {
-	_write("help usage: help COMMAND\n    Display helpful information about builtins.\n");
+	_write("help usage: help COMMAND\n    Display helpful info about builtins\n");
 	return (0);
 }

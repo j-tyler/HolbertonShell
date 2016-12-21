@@ -41,7 +41,7 @@ int _getline(buffer *b, int fd, env_t *envp)
  */
 int _getline_fileread(buffer *b, env_t *envp)
 {
-	int fd, offset, n, i;
+	int fd, i;
 	char *filename, *fullfilename;
 
 	i = b->bp;

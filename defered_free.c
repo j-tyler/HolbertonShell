@@ -9,22 +9,23 @@ void _free(void *address)
 	free(address);
 }
 /**
- * defer_free - sets an address to be free'd on exit, removes from list if exists
+ * defer_free - sets an address to be free'd on exit,
+ *removes from list if exists
  * @address: address to set
  */
 void defer_free(void *address)
 {
 	static addr_list list = {NULL, NULL};
-	addr_list *tmp, *tmp2;
+	addr_list *tmp;
 
 /*	printf("DEBUG: We are defer_freeing address: %p\n", address); */
 	tmp = &list;
-	/*tmp2 = tmp;
-	while (tmp2 != NULL)
-	{
-		printf("Addresses in the list: %p\n", tmp2->address);
-		tmp2 = tmp2->next;
-	}*/
+	/*tmp2 = tmp;*/
+/*	while (tmp2 != NULL) */
+/*	{*/
+/*		printf("Addresses in the list: %p\n", tmp2->address);*/
+/*		tmp2 = tmp2->next;*/
+/*	}*/
 	/* If not given signal to free all, and address not already in list, add it */
 	if (address != FREE_ADDRESSES && clear_addr_list_node(tmp, address))
 	{
@@ -92,6 +93,7 @@ void add_addr_list_node(addr_list *list, void *address)
 void free_addr_list(addr_list *list)
 {
 	addr_list *tmp;
+
 	while (list != NULL)
 	{
 		tmp = list;

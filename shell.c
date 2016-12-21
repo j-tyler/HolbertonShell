@@ -1,15 +1,18 @@
 #include "shell.h"
 /**
  * main - Holberton Shell
+ * @argc: argument count
+ * @argv: a list of all arguments
+ * @envp: environmental variable list from the parent
+ * Return: 0 on success.
  */
 int main(int argc, char **argv, char **envp)
 {
-	(void)argc, (void)argv, (void)envp;
 	char **arg_list;
 	env_t *env_p;
 	int retrn_value, filereading;
-	hist_t *history;
 	buffer b = {NULL, BUFSIZE, 0};
+	(void)argc, (void)argv, (void)envp;
 
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
@@ -20,7 +23,8 @@ int main(int argc, char **argv, char **envp)
 	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		if (!more_cmds(&b, retrn_value)) /* need to read return_value from builtin and execute */
+		if (!more_cmds(&b, retrn_value))
+/* need to read return_value from builtin and execute */
 		{
 			print_cmdline();
 			_getline(&b, STDIN_FILENO, env_p);
@@ -32,7 +36,7 @@ int main(int argc, char **argv, char **envp)
 		tokenize_buf(&b, &arg_list);
 		if (arg_list[0] == NULL)
 			continue;
-		retrn_value = run_builtin(arg_list, env_p, b.size, history);
+		retrn_value = run_builtin(arg_list, env_p, b.size);
 		if (retrn_value != 0 && retrn_value != 2)
 			retrn_value = run_execute(arg_list, env_p, b.size);
 	}
@@ -50,8 +54,6 @@ int main(int argc, char **argv, char **envp)
  */
 int more_cmds(buffer *b, int retrn_value)
 {
-	int i;
-
 	if (b->bp == 0)
 		return (0);
 

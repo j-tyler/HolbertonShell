@@ -3,15 +3,15 @@
 /**
  * get_path - copies the $PATH into the string path
  * @path: string to copy the $PATH into
+ * @list: environemental variable list
  */
 
 void get_path(char *path, env_t *list)
 {
-	int i;
 	env_t *temp;
 
 	temp = list;
-	for (i = 0; temp->next != NULL; temp = temp->next)
+	for (; temp->next != NULL; temp = temp->next)
 	{
 		if (_strstr(temp->value, "PATH") != NULL)
 			_strcpy(path, temp->value);
@@ -24,16 +24,18 @@ void get_path(char *path, env_t *list)
  * @search_path: array of strings that contains a searchable path for each
  * string space.
  * @path: the string containing $PATH
+ * @size: size of buffer
  * Description: This also mallocs search_path with how many directories are
  * found in path.
+ * Return: a 2D array of tokens
  */
 
 char **tokenize_path(char **search_path, char *path, int size)
 {
-	int i, count, b_index, s_index;
-	char *temp;
-	char buffer[size];
+	int i, count, s_index;
+	char *temp, *buffer;
 
+	buffer = safe_malloc(sizeof(char) * size);
 	_memset(buffer, '\0', size);
 	for (i = 0, count = 1; path[i] != '\0'; i++)
 	{
@@ -43,7 +45,8 @@ char **tokenize_path(char **search_path, char *path, int size)
 	count++;
 	search_path = safe_malloc(sizeof(char *) * count);
 	/* skip the PATH= */
-	for (temp = path; *temp != '='; temp++);
+	for (temp = path; *temp != '='; temp++)
+		;
 	temp++;
 	for (s_index = 0; *temp; temp++)
 	{
@@ -73,7 +76,7 @@ char **tokenize_path(char **search_path, char *path, int size)
  * create_path - checks whether or not the command exist or not
  * @cmd: command given by user, need to append to end of path strings
  * @search_path: array of path strings to check for existance of command
- * Description: Checks whether or not a command exist by trying to open commands
+ * Description: Checks whether or not a cmd exist by trying to open commands
  * in the different path directories.
  * Return: 0 if found and -1 if not;
  */
