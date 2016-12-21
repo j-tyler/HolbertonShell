@@ -21,10 +21,10 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	/* set up all strings up*/
 	name = safe_malloc(sizeof(char) * buf_size);
 	_memset(name, 0, buf_size);
-	_memcpy(name, arg_list[1], strlen(arg_list[1]));
+	_memcpy(name, arg_list[1], _strlen(arg_list[1]));
 	value = safe_malloc(sizeof(char) * buf_size);
 	_memset(value, 0, buf_size);
-	_memcpy(value, arg_list[2], strlen(arg_list[2]));
+	_memcpy(value, arg_list[2], _strlen(arg_list[2]));
 	_strcat(name, "=");
 	temp = envp;
 	flag = 0;

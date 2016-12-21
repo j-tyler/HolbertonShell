@@ -51,8 +51,8 @@ void print_history(hist_t *head)
 	while (head != NULL)
 	{
 		str = _strdup(head->cmd);
-		write(0, str, strlen(str));
-		write(0, "\n", 1);
+		_write(str);
+		_write("\n");
 		head = head->next;
 	}
 }
@@ -112,7 +112,7 @@ int read_file(env_t *envp, char **buf)
 			b_size *= 2;
 			new_buf = safe_malloc((b_size) * sizeof(char));
 			offset += n;
-			memcpy(new_buf, *buf, b_size / 2);
+			_memcpy(new_buf, *buf, b_size / 2);
 			*buf = new_buf;
 		}
 		close(fd);
@@ -126,7 +126,7 @@ int read_file(env_t *envp, char **buf)
 char *make_path(char **path, char *filename, char *key, env_t *envp, int size)
 {
      *path = safe_malloc(sizeof(char) * BUFSIZE);
-     memset(*path, '\0', BUFSIZE);
+     _memset(*path, '\0', BUFSIZE);
      *path = rm_vname(envp, key, BUFSIZE);
      strcat(*path, "/");
 	strcat(*path, filename);

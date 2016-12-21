@@ -20,7 +20,7 @@ char *update_path(char **arg_list, env_t *envp, char *path, int buf_size)
 	char *dir, *new_path;
 
 	new_path = safe_malloc(sizeof(char) * buf_size);
-	memset(new_path, '\0', buf_size);
+	_memset(new_path, '\0', buf_size);
 	_strcpy(new_path, path);
 	for (i = 0, slash_count = 0; new_path[i] != '\0'; i++)
 	{
@@ -67,8 +67,8 @@ char **list_to_array(env_t *envp)
 	{
 		len = _strlen(temp->value);
 		array[i] = safe_malloc(sizeof(char) * (len + 1));
-		memset(array[i], '\0', (len + 1));
-		memcpy(array[i], temp->value, len);
+		_memset(array[i], '\0', (len + 1));
+		_memcpy(array[i], temp->value, len);
 	}
 	array[i] = NULL;
 	return (array);

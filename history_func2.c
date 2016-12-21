@@ -17,7 +17,7 @@ void add_cmdhist(hist_t *history, char *cmd)
 	char *new_cmd;
 
 	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd));
-	memset(new_cmd, '\0', _strlen(cmd));
+	_memset(new_cmd, '\0', _strlen(cmd));
 	temp = history;
 	if (hist_index == 0)
 	{
@@ -45,7 +45,7 @@ void write_history(env_t *envp, hist_t *history)
 
 	history = history->next;
 	path = safe_malloc(sizeof(char) * BUFSIZE);
-	memset(path, '\0', BUFSIZE);
+	_memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);

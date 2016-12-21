@@ -62,7 +62,7 @@ char **tokenize_path(char **search_path, char *path, int size)
 	_strncat(buffer, "/", 1);
 	search_path[s_index] = safe_malloc(sizeof(char) * size);
 	_memset(search_path[s_index], 0, size);
-	_strncat(search_path[s_index], buffer, strlen(buffer));
+	_strncat(search_path[s_index], buffer, _strlen(buffer));
 	s_index++;
 	search_path[s_index] = safe_malloc(sizeof(char *));
 	search_path[s_index] = NULL;

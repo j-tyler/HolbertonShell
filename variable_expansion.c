@@ -97,7 +97,7 @@ char * _getTok(char *stat, int n)
 	{
 		if (stat[i] == ' ' && space_count != n - 1)
 		{
-			memset(buf, '\0', BUFSIZE);
+			_memset(buf, '\0', BUFSIZE);
 			j = 0;
 			space_count++;
 		}

@@ -59,11 +59,11 @@ int hsh_alias_printall(alias *list)
 {
 	while (list != NULL && list->key != NULL)
 	{
-		write(STDOUT_FILENO, "alias ", 6);
-		write(STDOUT_FILENO, list->key, _strlen(list->key));
-		write(STDOUT_FILENO, "='", 2);
-		write(STDOUT_FILENO, list->value, _strlen(list->value));
-		write(STDOUT_FILENO, "'\n", 2);
+		_write("alias ");
+		_write(list->key);
+		_write("='");
+		_write(list->value);
+		_write("'\n");
 		list = list->next;
 	}
 	return (0);
@@ -89,16 +89,16 @@ int hsh_alias_print(alias *list, char **argv)
 	value = hsh_alias_search(list, argv[0]);
 	if (value == NULL)
 	{
-		write(STDOUT_FILENO, "alias not found\n", 16);
+		_write("alias not found\n");
 		return (1);
 	}
 	else
 	{
-		write(STDOUT_FILENO, "alias ", 6);
-		write(STDOUT_FILENO, argv[1], _strlen(argv[1]));
-		write(STDOUT_FILENO, "='", 2);
-		write(STDOUT_FILENO, value, _strlen(value));
-		write(STDOUT_FILENO, "'\n", 2);
+		_write("alias ");
+		_write(argv[1]);
+		_write("='");
+		_write(value);
+		_write("'\n");
 	}
 	return (0);
 }
