@@ -11,7 +11,7 @@ int hsh_help(char **arg)
 	{"exit", hsh_exit_help},     {"env", hsh_env_help},
 	{"setenv", hsh_setenv_help}, {"unsetenv", hsh_unsetenv_help},
 	{"cd", hsh_cd_help},         {"history", hsh_history_help},
-	{"help", hsh_help_help}
+	{"help", hsh_help_help},     {"alias", hsh_alias_help}
 	};
 
 	if (arg[1] == NULL)
@@ -44,3 +44,4 @@ int hsh_help_help(void)
 	_write("help usage: help COMMAND\n    Display helpful info about builtins\n");
 	return (0);
 }
+
