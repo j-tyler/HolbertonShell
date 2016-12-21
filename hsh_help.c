@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * hsh_help - help command for hsh_shell builtins
- * @arg - argument lists;
+ * @arg: argument lists;
  * Return: 0 if success and 1 if failed
  */
 int hsh_help(char **arg)
@@ -22,7 +22,7 @@ int hsh_help(char **arg)
 	}
 	else
 	{
-		size = sizeof(table) / sizeof(table[0]);
+		size = ARRAY_SIZE(table);
 		for (i = 0; i < size; i++)
 		{
 			if (_str_match(arg[1], table[i].name))
