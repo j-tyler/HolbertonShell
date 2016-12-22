@@ -177,7 +177,7 @@ void _av_init(char *buf, char ***av);
 void _add_null(char *buf);
 int _is_whitespace(char c);
 int _is_endofcmd(char c);
-/* builtin.c */
+/* run_builtin.c */
 
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
 /* alias.c */
