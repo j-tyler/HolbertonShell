@@ -53,3 +53,18 @@ int _str_match_strict(char *s1, char *s2)
 	return (0);
 }
 
+/**
+ * is_alpha - checks whether or not a char is alpha
+ * @c: character to check
+ * Return: 1 if true, 0 if false
+ */
+
+int is_alpha(char c)
+{
+	if (c >= 'a' && c <= 'z')
+		return (1);
+	else if (c >= 'A' && c <= 'Z')
+		return (1);
+	else
+		return (0);
+}

@@ -14,22 +14,26 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	env_t *temp;
 
 	/* What to do if nothing is entered*/
-	if (arg_list[1] == NULL || arg_list[2] == NULL)
+	if (arg_list[1] == NULL && arg_list[2] == NULL)
 	{
 		_write("Error: wrong number of arguments\n");
 		return (2);
 	}
+	if (!(is_alpha(arg_list[1][0])))
+	{
+		_write("setenv: variable name must begin with a letter\n");
+		return (2);
+	}
 	/* set up all strings up*/
-	name = safe_malloc(sizeof(char) * buf_size);
-	_memset(name, 0, buf_size);
+	name = safe_malloc(sizeof(char) * buf_size), _memset(name, 0, buf_size);
 	_memcpy(name, arg_list[1], _strlen(arg_list[1]));
-	value = safe_malloc(sizeof(char) * buf_size);
-	_memset(value, 0, buf_size);
-	_memcpy(value, arg_list[2], _strlen(arg_list[2]));
+	value = safe_malloc(sizeof(char) * buf_size), _memset(value, 0, buf_size);
+	if (arg_list[2] != NULL)
+		_memcpy(value, arg_list[2], _strlen(arg_list[2]));
+	else
+		value[0] = ' ';
 	_strcat(name, "=");
-	temp = envp;
-	flag = 0;
-	while (temp != NULL)
+	for (temp = envp, flag = 0; temp != NULL; temp = temp->next)
 	{
 		if (_strstr(temp->value, name) != NULL)
 		{
@@ -37,7 +41,6 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 			temp->value = name;
 			flag = 1;
 		}
-		temp = temp->next;
 	}
 	if (flag == 0)
 	{
@@ -46,6 +49,7 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	}
 	return (0);
 }
+
 /**
  * hsh_setenv_help - builtin help printout for setenv
  * Return: Always 0

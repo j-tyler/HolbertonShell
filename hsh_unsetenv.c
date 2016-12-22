@@ -15,7 +15,7 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 
 	if (arg_list[1] == NULL)
 	{
-		write(0, "Error: wrong number for arguments\n", 34);
+		_write("unsetenv: Too few arguments.\n");
 		return (2);
 	}
 	/* set up for strings */
