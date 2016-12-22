@@ -25,8 +25,9 @@ void *safe_malloc(size_t size)
 	tmp = malloc(size);
 	if (tmp == NULL)
 	{
-		write(STDOUT_FILENO, "Out of Memory (._.)\n", 20);
-		/* ADD: Exit! */
+		_write("Out of Memory, Exiting (._.)\n");
+		defer_free(FREE_ADDRESSES);
+		_exit(4);	
 	}
 	defer_free(tmp);
 	return (tmp);
