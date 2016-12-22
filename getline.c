@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * _getline - Read input and put in buffer
  * @b: buffer structure
@@ -10,8 +9,6 @@
 int _getline(buffer *b, int fd, env_t *envp)
 {
 	int offset, n;
-
-	/* DEBUG: READ is undefined when taking newline from pipes? */
 
 	offset = 0;
 	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
@@ -27,7 +24,6 @@ int _getline(buffer *b, int fd, env_t *envp)
 			close(fd);
 		history_wrapper("", envp, 'w');
 		defer_free(FREE_ADDRESSES);
-		/*_write("\n");*/
 		_exit(0);
 	}
 	b->buf[n + offset] = '\0';
