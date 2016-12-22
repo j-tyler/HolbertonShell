@@ -156,6 +156,7 @@ int _atoi(char *s);
 int _strstr_int(char *haystack, char *needle);
 int _str_match_strict(char *s1, char *s2);
 int is_alpha(char c);
+int is_digit(char c);
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
