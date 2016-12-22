@@ -86,32 +86,34 @@ typedef struct alias
 } alias;
 
 typedef void (*signhandler_t)(int);
-
 void signal_handler(int signo);
 
 /* history.c */
 void history_wrapper(char *cmd, env_t *envp, char mode);
 void print_history_2(hist_t *history);
+
 /* history_func.c*/
 void create_history(hist_t *history, env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t *head, char *cmd);
 void print_history(hist_t *head);
 char *make_path(char **path, char *filename, char *key, env_t *envp, int size);
+
 /* history_func2.c*/
 void add_cmdhist(hist_t *history, char *cmd);
 void pop_head(hist_t *head);
 void write_history(env_t *envp, hist_t *history);
 char *_itoa(int num, int mode);
 
+/* shell.c */
 int more_cmds(buffer *buf, int return_value);
 void trim_cmd(buffer *buf);
-/*void trim_cmd(buffer *buf); */
 
 /* variable_expansion.c */
 void variable_expansion(buffer *b, env_t *envp, int retrn_value);
 char *_getpid(void);
 char *_getTok(char *stat, int n);
+
 /* run_execute.c */
 int run_execute(char **arg_list, env_t *env_p, int cmd_size);
 int execute_func(char *cmd, char **args, env_t *envp);
@@ -122,6 +124,7 @@ env_t *add_env(env_t **head, char *value);
 void  remove_env(env_t **head, int index);
 void update_env(env_t *envp, char *name, char *value, int buf_size);
 void print_env(env_t *head);
+
 /* helpers.c */
 void print_cmdline(void);
 void *safe_malloc(size_t size);
@@ -152,34 +155,40 @@ int _atoi(char *s);
 /* hepler_str3.c */
 int _strstr_int(char *haystack, char *needle);
 int _str_match_strict(char *s1, char *s2);
+
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
 int _getline_fileread(buffer *b, env_t *envp);
 void _getline_file_exit(buffer *b);
+
 /* buffer_maniputlation.c */
 void buffer_reallocate(buffer *b);
 void buffer_word_erase(buffer *b, int n);
 void buffer_insert(buffer *b, char *s, int n);
+
 /* hsh_alias.c */
 int hsh_alias(char **argv, env_t *env_p, int mode);
 char *hsh_alias_search(alias *list, char *arg);
 int hsh_alias_printall(alias *list);
 int hsh_alias_print(alias *list, char **argv);
 int hsh_alias_add(alias *list, char **argv);
+
 /* path_funcs.c */
 void get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
 int create_path(char *cmd, char **search_path);
+
 /* tokenize.c */
 void tokenize_buf(buffer *buf, char ***av);
 void _av_init(char *buf, char ***av);
 void _add_null(char *buf);
 int _is_whitespace(char c);
 int _is_endofcmd(char c);
-/* builtin.c */
 
+/* run_builtin.c */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
+
 /* alias.c */
 int alias_expansion(buffer *b, env_t *env_p);
 
