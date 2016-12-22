@@ -27,7 +27,7 @@ int _getline(buffer *b, int fd, env_t *envp)
 			close(fd);
 		history_wrapper("", envp, 'w');
 		defer_free(FREE_ADDRESSES);
-		_write("\n");
+		/*_write("\n");*/
 		_exit(0);
 	}
 	b->buf[n + offset] = '\0';
