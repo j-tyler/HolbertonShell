@@ -61,7 +61,6 @@ typedef struct hist_s
 } hist_t;
 
 extern char **environ;
-
 /**
  * struct env_s - structure for each environmental variable
  * @value: value of the environmental variable
@@ -182,7 +181,7 @@ int _is_endofcmd(char c);
 
 int run_builtin(char **arg_list, env_t *env_p, int buf_size);
 /* alias.c */
-void alias_expansion(buffer *b, env_t *env_p);
+int alias_expansion(buffer *b, env_t *env_p);
 
 /* memory_allocation.c */
 void _free(void *address);
