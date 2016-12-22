@@ -8,7 +8,13 @@
 
 HSH works like any other shell, like bash or zsh. Detailed user documentation on specific commands is available by running help within hsh.
 
-HSH builds successfully with a GCC 4.8.5 compiler or later. 
+HSH builds successfully with a GCC 4.8.5 compiler or later. HSH can compile using `gcc 4.8.4 -Wall -Werror -Wextra -pedantic *.c -o simple_shell`.
+
+To start up HSH, simply type in 
+```
+./simple_shell
+``` 
+the terminal.
 
 #### Syntax Overview
 
