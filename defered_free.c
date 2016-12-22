@@ -83,7 +83,7 @@ void add_addr_list_node(addr_list *list, void *address)
 	node = malloc(sizeof(addr_list));
 	if (node == NULL)
 	{
-		_write("Out of Memory, Exiting (._.)\n"
+		_write("Out of Memory, Exiting (._.)\n");
 		defer_free(FREE_ADDRESSES);
 		_exit(4);
 	}
