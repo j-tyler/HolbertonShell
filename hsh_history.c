@@ -42,17 +42,8 @@ void print_history_2(hist_t *history)
 	history = history->next;
 	for (count = 0, temp = history; temp != NULL; temp = temp->next, count++)
 		;
-	if (count >= 4096)
-		count = count - 4096;
-	else
-		count = count - 10;
-	while (count > 0)
-	{
-		history = history->next;
-		count--;
-	}
-	for (i = 0, temp2 = history; temp2 != NULL || i < 10;
-	     temp2 = temp2->next, i++)
+	history = history->next;
+	for (i = 0, temp2 = history; temp2 != NULL; temp2 = temp2->next, i++)
 	{
 		num_str = _itoa(i, 2);
 		_write(" ");

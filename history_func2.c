@@ -40,11 +40,23 @@ void add_cmdhist(hist_t *history, char *cmd)
 
 void write_history(env_t *envp, hist_t *history)
 {
-	hist_t *temp;
+	hist_t *temp, *temp_c;
 	char *path;
-	int fd;
+	int fd, count;
 
+	count = 0;
 	history = history->next;
+	for (temp_c = history; temp_c != NULL; temp_c = temp_c->next)
+		count++;
+	if (count > 4096)
+	{
+		count = count - 4096;
+		while (count > 0)
+		{
+			history = history->next;
+			count--;
+		}
+	}
 	path = safe_malloc(sizeof(char) * BUFSIZE);
 	_memset(path, '\0', BUFSIZE);
 	path = rm_vname(envp, "HOME", BUFSIZE);
