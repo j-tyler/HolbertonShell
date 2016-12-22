@@ -7,7 +7,7 @@
  */
 int alias_expansion(buffer *b, env_t *env_p)
 {
-	static stop = 0;
+	static int stop = 0;
 	int i, size;
 	char *argv, *argv_copy;
 
