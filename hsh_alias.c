@@ -27,7 +27,7 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 		else
 		{
 			retrn = hsh_alias_print(&list, argv);
-			if (retrn == 2)
+			if (retrn == 1)
 				retrn = hsh_alias_add(&list, argv);
 		}
 	}
@@ -74,7 +74,7 @@ int hsh_alias_printall(alias *list)
  * @list: alias linked list
  * @argv: argument vector
  *
- * Return: 2 if no match needed, 1 on alias not found, 0 on success
+ * Return: 1 if no match needed, 2 on alias not found, 0 on success
  */
 int hsh_alias_print(alias *list, char **argv)
 {
@@ -84,14 +84,14 @@ int hsh_alias_print(alias *list, char **argv)
 	if (value != NULL)
 	{
 		value += 1;
-		return (2);
+		return (1);
 	}
 
 	value = hsh_alias_search(list, argv[0]);
 	if (value == NULL)
 	{
 		_write("alias not found\n");
-		return (1);
+		return (2);
 	}
 	else
 	{
@@ -129,9 +129,9 @@ int hsh_alias_add(alias *list, char **argv)
 		key[j] = argv[1][j];
 	key[j] = '\0';
 
-	while (list->next != NULL && !_str_match(key, list->key))
+	while (list->next != NULL && !_str_match_strict(key, list->key))
 		list = list->next;
-	if (list->key == NULL || _str_match(key, list->key))
+	if (list->key == NULL || _str_match_strict(key, list->key))
 	{
 		list->key = key;
 		list->value = value;

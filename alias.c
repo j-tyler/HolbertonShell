@@ -3,9 +3,11 @@
  * alias_expansion - wrapper function for checking and replacing aliases
  * @b: buffer structure
  * @env_p: enviornment struct to pass along
+ * Return: 1 on alias replacement, 0 if no replacement
  */
-void alias_expansion(buffer *b, env_t *env_p)
+int alias_expansion(buffer *b, env_t *env_p)
 {
+	static stop = 0;
 	int i, size;
 	char *argv, *argv_copy;
 
@@ -29,7 +31,15 @@ void alias_expansion(buffer *b, env_t *env_p)
 		buffer_word_erase(b, b->bp);
 		buffer_insert(b, argv, b->bp);
 		_free(argv_copy);
+		if (stop++ == 10)
+		{
+			stop = 0;
+			return (0);
+		}
+		return (1);
 	}
 	else
 		_free(argv);
+	stop = 0;
+	return (0);
 }
