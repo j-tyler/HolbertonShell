@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **envp)
 {
 	char **arg_list;
 	env_t *env_p;
-	int retrn_value, filereading;
+	int retrn_value;
 	buffer b = {NULL, BUFSIZE, 0};
 	(void)argc, (void)argv, (void)envp;
 
