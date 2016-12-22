@@ -68,3 +68,16 @@ int is_alpha(char c)
 	else
 		return (0);
 }
+
+/**
+ * is_digit - checks whether something is a digit
+ * @c - character to check
+ * Return: 1 if true, 0 if false
+ */
+
+int is_digit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
