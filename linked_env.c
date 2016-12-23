@@ -86,11 +86,14 @@ void remove_env(env_t **head, int index)
 
 void print_env(env_t *head)
 {
-	while (head != NULL)
+	env_t *temp;
+
+	temp = head;
+	while (temp != NULL)
 	{
-		_write(head->value);
+		_write(temp->value);
 		_write("\n");
-		head = head->next;
+		temp = temp->next;
 	}
 }
 

@@ -11,10 +11,13 @@ int hsh_exit(char **arg_list, env_t *envp, int buf_size)
 	int tmp;
 	(void) buf_size;
 
-	if (!(is_digit(arg_list[1][0])))
+	if (arg_list[1] != NULL)
 	{
-		_write("exit: Expression Syntax.\n");
-		return (2);
+		if (!(is_digit(arg_list[1][0])))
+		{
+			_write("exit: Expression Syntax.\n");
+			return (2);
+		}
 	}
 	tmp = _atoi(arg_list[1]);
 	history_wrapper("", envp, 'w');
