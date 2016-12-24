@@ -38,7 +38,7 @@ int hsh_cd(char **arg_list, env_t *envp, int buf_size)
 	}
 	if (l < 0)
 	{
-		write(0, "Error: no such file or directory\n", 33);
+		/*write(0, "Error: no such file or directory\n", 33);*/
 		return (2);
 	}
 	else
