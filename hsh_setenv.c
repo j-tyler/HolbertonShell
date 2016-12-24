@@ -14,14 +14,14 @@ int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 	env_t *temp;
 
 	/* What to do if nothing is entered*/
-	if (arg_list[1] == NULL && arg_list[2] == NULL)
+	if (arg_list[1] == NULL || arg_list[2] == NULL)
 	{
-		_write("Error: wrong number of arguments\n");
+		/*_write("Error: wrong number of arguments\n");*/
 		return (2);
 	}
 	if (!(is_alpha(arg_list[1][0])))
 	{
-		_write("setenv: variable name must begin with a letter\n");
+		/*_write("setenv: variable name must begin with a letter\n");*/
 		return (2);
 	}
 	/* set up all strings up*/
