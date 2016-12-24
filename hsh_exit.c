@@ -15,7 +15,7 @@ int hsh_exit(char **arg_list, env_t *envp, int buf_size)
 	{
 		if (!(is_digit(arg_list[1][0])))
 		{
-			_write("exit: Expression Syntax.\n");
+			/*_write("exit: Expression Syntax.\n");*/
 			return (2);
 		}
 	}
