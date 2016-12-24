@@ -15,7 +15,7 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 
 	if (arg_list[1] == NULL)
 	{
-		_write("unsetenv: Too few arguments.\n");
+		/*_write("unsetenv: Too few arguments.\n");*/
 		return (2);
 	}
 	/* set up for strings */
@@ -29,11 +29,11 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 		if (_strstr(temp->value, name) != NULL)
 		{
 			remove_env(&envp, count);
-			break;
+			return (0);
 		}
 		count++;
 	}
-	return (0);
+	return (2);
 }
 /**
  * hsh_unsetenv_help - builtin help printout for unsetenv
