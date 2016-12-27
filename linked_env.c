@@ -56,7 +56,7 @@ void remove_env(env_t **head, int index)
 	env_t *temp;
 	env_t *dnode;
 	int i;
-
+	/*DEBUG: Shouldn't this just remove env by name, why by index?*/
 	i = 0;
 	temp = *head;
 	if (index == 0)
