@@ -60,7 +60,7 @@ char *_strcat(char *dest, char *src)
 		j++;
 		i++;
 	}
-	i++;
+	/*i++;*/
 	dest[i] = '\0';
 	return (dest);
 }
@@ -89,7 +89,7 @@ char *_strncat(char *dest, char *src, int n)
 		i++;
 		j++;
 	}
-	dest[i] = '\0'
+	dest[i] = '\0';
 	return (dest);
 }
 
