@@ -18,11 +18,11 @@ env_t *create_envlist(void)
 }
 
 /**
- * add_env - adds another environmental variable to the beginning
+ * add_env - adds another environmental variable to the end
  * of the environemental variable linked list
  * @head: head of the linked list
  * @str: environmental variable value to store
- * Return: the address of the new element, or NULL if it failed
+ * Return: the address of the new element, on fail, program exits
  */
 
 env_t *add_env(env_t **head, char *str)
@@ -62,6 +62,7 @@ void remove_env(env_t **head, int index)
 	if (index == 0)
 	{
 		*head = (*head)->next;
+		_free(tmp->value);
 		_free(temp);
 	}
 	else
@@ -71,8 +72,7 @@ void remove_env(env_t **head, int index)
 			temp = temp->next;
 			i++;
 		}
-		dnode = temp;
-		dnode = dnode->next;
+		dnode = temp->next;
 		temp->next = dnode->next;
 		_free(dnode);
 	}
