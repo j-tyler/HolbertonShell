@@ -94,6 +94,30 @@ int _str_match(char *s1, char *s2)
 		return (1);
 	return (0);
 }
+
+/**
+ * _str_match_tonull - See if two strings are matching
+ * @s1: string 1
+ * @s2: string 2
+ * Description: Returns a match if either string reaches \0 or space
+ *
+ * Return: 1 if match, 0 if not match
+ */
+int _str_match_tonull(char *s1, char *s2)
+{
+	int i;
+
+	if (s1 == NULL || s2 == NULL)
+		return (0);
+	for (i = 0; s1[i] == s2[i]; i++)
+	{
+		if (s1[i] == '\0' || s2[i] == '\0')
+			return (1);
+	}
+	if (s1[i] == '\0' || s2[i] == '\0')
+		return (1);
+	return (0);
+}
 /**
  * _atoi - convert a string to a number
  * @s: string to convert

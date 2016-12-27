@@ -150,6 +150,7 @@ char *_strdup(char *str);
 char *_strchr(char *s, char c);
 int _strlen(char *s);
 int _str_match(char *s1, char *s2);
+int _str_match_tonull(char *s1, char *s2);
 int _atoi(char *s);
 
 /* hepler_str3.c */
