@@ -9,7 +9,7 @@
  */
 int hsh_unsetenv(char **arg_list, env_t *envp)
 {
-	int count;
+	int count, len;
 	env_t *temp;
 	char *name;
 
@@ -18,11 +18,10 @@ int hsh_unsetenv(char **arg_list, env_t *envp)
 		/*_write("unsetenv: Too few arguments.\n");*/
 		return (2);
 	}
-	/* set up for strings */
-	name = safe_malloc(sizeof(char) * _strlen(arg_list[1]) + 3);
-	_memset(name, '\0', (_strlen(arg_list[1]) + 3));
-	_memcpy(name, arg_list[1], _strlen(arg_list[1]));
-	_strcat(name, "=");
+	len = _strlen(arg_list[1]);
+	name = safe_malloc(sizeof(char) * (len + 2));
+	_memcpy(name, arg_list[1], len + 1);
+	_strncat(name, "=", 1);
 	/* go through loop to search for environemental variable*/
 	for (temp = envp, count = 0; temp != NULL; temp = temp->next)
 	{
