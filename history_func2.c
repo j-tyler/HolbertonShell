@@ -22,8 +22,9 @@ void add_cmdhist(hist_t *history, char *cmd)
 		for (temp = history; temp != NULL; temp = temp->next)
 			hist_index++;
 	len = _strlen(cmd);
-	for (i = 0; i < len; i++)
+	for (i = 0; i < len - 1; i++)
 		new_cmd[i] = cmd[i];
+	new_cmd[i] = '\0';
 	if (len > 1)
 		add_history(history, new_cmd);
 	hist_index++;
