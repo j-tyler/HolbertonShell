@@ -62,7 +62,7 @@ void remove_env(env_t **head, int index)
 	if (index == 0)
 	{
 		*head = (*head)->next;
-		_free(tmp->value);
+		_free(temp->value);
 		_free(temp);
 	}
 	else
