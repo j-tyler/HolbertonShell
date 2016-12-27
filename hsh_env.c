@@ -10,8 +10,11 @@ int hsh_env(char **arg_list, env_t *envp)
 {
 	(void) arg_list;
 	if (arg_list[1] == NULL)
+	{
 		print_env(envp);
-	return (0);
+		return (0);
+	}
+	return (127);
 }
 /**
  * hsh_env_help - builtin help printout for env
