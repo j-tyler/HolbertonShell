@@ -56,8 +56,7 @@ char *_getpid(void)
 	pid_t pid;
 	int fd;
 
-	_memset(path, '\0', BUFSIZE);
-	_memset(id, '\0', BUFSIZE);
+	path[0] = id[0] = '\0';
 	pid = fork();
 	if (pid == 0)
 	{
@@ -94,19 +93,18 @@ char *_getTok(char *stat, int n)
 	char *buf;
 
 	buf = safe_malloc(sizeof(char) * BUFSIZE);
-	_memset(buf, '\0', BUFSIZE);
 	space_count = 0;
 	for (i = 0, j = 0; stat[i] != '\0' || space_count <= n; i++)
 	{
 		if (stat[i] == ' ' && space_count == n - 1)
-			return (buf);
-		if (stat[i] == ' ' && space_count != n - 1)
 		{
-			_memset(buf, '\0', BUFSIZE);
-			j = 0;
-			space_count++;
+			buf[j] = '\0';
+			return (buf);
 		}
-		else
+
+		if (stat[i] == ' ' && space_count != n - 1)
+			space_count++;
+		else if (stat[i] != ' ' && space_count == n - 1)
 			buf[j++] = stat[i];
 	}
 	return (NULL);
