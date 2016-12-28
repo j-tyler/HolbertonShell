@@ -7,7 +7,7 @@
  * Description: Complicated parent function for the alias functionality
  *				of hsh. Uses two modes to allow it being called from
  *				multiple points from within our program.
- * Return: 0 on success, 1 on failure.
+ * Return: 0 on success, 2 on failure.
  */
 int hsh_alias(char **argv, env_t *env_p, int mode)
 {
@@ -27,7 +27,7 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 		else if (argv[2] != NULL)
 		{
 			_write("Error. Too many arguments.");
-			return (1);
+			return (2);
 		}
 		else
 		{
