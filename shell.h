@@ -177,6 +177,9 @@ int hsh_alias_printall(alias *list);
 int hsh_alias_print(alias *list, char **argv);
 int hsh_alias_add(alias *list, char **argv);
 
+/* cd_func.c */
+char *cd_path(char **arg_list, env_t *envp, int buf_size);
+
 /* path_funcs.c */
 int get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);

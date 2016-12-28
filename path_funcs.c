@@ -15,7 +15,7 @@ int get_path(char *path, env_t *list)
 	temp = list;
 	for (; temp->next != NULL; temp = temp->next)
 	{
-		if (_strstr(temp->value, "PATH") != NULL)
+		if (_str_match_tonull(temp->value, "PATH=") != 0)
 		{
 			_strcpy(path, temp->value);
 			return (0);
