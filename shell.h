@@ -12,7 +12,6 @@
 #include <fcntl.h>
 
 #define BUFSIZE 1024
-#define FILEREADING 55
 #define FREE_ADDRESSES ((void *)3)
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof((ARRAY)[0]))
 /**
