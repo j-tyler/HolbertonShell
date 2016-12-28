@@ -10,8 +10,9 @@
 int hsh_setenv(char **arg_list, env_t *envp, int buf_size)
 {
 	int flag, len, len2;
-	char *name, *value;
+	char *name;
 	env_t *temp;
+	(void) buf_size;
 
 	if (arg_list[1] == NULL || arg_list[2] == NULL || arg_list[3] != NULL)
 		return (2);
