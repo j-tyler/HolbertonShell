@@ -79,12 +79,12 @@ char *get_env_value(env_t *envp, char *name)
 
 	while (1)
 	{
-		if (_str_match(temp->value, name))
+		if (_str_match(envp->value, name))
 		{
-			value = temp->value;
+			value = envp->value;
 			break;
 		}
-		else if (temp->next == NULL)
+		else if (envp->next == NULL)
 			return (NULL);
 		envp = envp->next;
 	}
