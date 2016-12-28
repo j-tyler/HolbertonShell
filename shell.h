@@ -163,7 +163,6 @@ int is_digit(char c);
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
 int _getline_fileread(buffer *b, env_t *envp);
-void _getline_file_exit(buffer *b);
 
 /* buffer_maniputlation.c */
 void buffer_reallocate(buffer *b);

@@ -58,27 +58,11 @@ int _getline_fileread(buffer *b, env_t *envp)
 	fd = open(fullfilename, O_RDONLY);
 	if (fd == -1)
 	{
-		_write("Cannot open filename specified\n");
-		_getline_file_exit(b);
-		return (1);
+		history_wrapper("", envp, 'w');
+		defer_free(FREE_ADDRESSES);
+		_exit(1);
 	}
 	_getline(b, fd, envp);
 	close(fd);
-	return (FILEREADING);
-}
-/**
- * _getline_file_exit - janky solution to correctly exit on fileread failure
- * @b: buffer structure
- */
-void _getline_file_exit(buffer *b)
-{
-	/* DEBUG: We need to rework some builtins for this solution to be fixed*/
-	b->buf[0] = 'e';
-	b->buf[1] = 'x';
-	b->buf[2] = 'i';
-	b->buf[3] = 't';
-	b->buf[4] = ' ';
-	b->buf[5] = '1';
-	b->buf[6] = '\0';
-	b->bp = 0;
+	return (0);
 }
