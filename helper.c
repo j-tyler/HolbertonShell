@@ -9,7 +9,7 @@ void print_cmdline(void)
 	char *str;
 
 	str = "(^.^) ";
-	_write(str);
+	write(0, str, 6);
 }
 
 /**
