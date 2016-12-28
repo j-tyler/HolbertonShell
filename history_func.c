@@ -129,16 +129,21 @@ int read_file(env_t *envp, char **buf)
  * @filename: filename to open
  * @key: key to create
  * @envp: environemental linked list
- * @size: size of oath
  * Return: the path str
  */
-char *make_path(char **path, char *filename, char *key, env_t *envp, int size)
+char *make_path(char **path, char *filename, char *key, env_t *envp)
 {
-	(void) size;
+	char *value;
 
-	*path = safe_malloc(sizeof(char) * BUFSIZE);
-	_memset(*path, '\0', BUFSIZE);
-	*path = rm_vname(envp, key, BUFSIZE);
+	if (_strstr(key, "/"))
+	{
+		*path = filename;
+		return (filename);
+	}
+
+	value = get_env_value(envp, key);
+	*path = safe_malloc(sizeof(char) * (_strlen(value) + _strlen(filename) + 2));
+	_memcpy(*path, value, _strlen(value) + 1);
 	strcat(*path, "/");
 	strcat(*path, filename);
 	return (*path);

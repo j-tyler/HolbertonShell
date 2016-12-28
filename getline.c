@@ -41,21 +41,27 @@ int _getline_fileread(buffer *b, env_t *envp)
 	int fd, i;
 	char *filename, *fullfilename;
 
+	/* scan through buffer and pull out filename to read */
 	i = b->bp;
 	while (_is_whitespace(b->buf[i]))
 		i++;
 	if (!_str_match_tonull(b->buf + i, "simple_shell") || b->buf[i] == '\0')
 		return (0);
-	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
+	while (!_is_whitespace(b->buf[i]) && b->buf[i] != '\0')
 		i++;
-	while (_is_whitespace(b->buf[i]) && b->buf != '\0')
+	while (_is_whitespace(b->buf[i]) && b->buf[i] != '\0')
 		i++;
-	filename = b->buf + i;
-	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
-		i++;
-	b->buf[i] = '\0';
-	make_path(&fullfilename, filename, "PWD", envp, b->size);
-	fd = open(fullfilename, O_RDONLY);
+	if (b->buf[i] == '\0')
+		fd = -1;
+	else
+	{
+		filename = b->buf + i;
+		while (!_is_whitespace(b->buf[i]) && b->buf[i] != '\0')
+			i++;
+		b->buf[i] = '\0';
+		make_path(&fullfilename, filename, "PWD", envp);
+		fd = open(fullfilename, O_RDONLY);
+	}
 	if (fd == -1)
 	{
 		history_wrapper("", envp, 'w');
