@@ -55,7 +55,7 @@ void tokenize_buf(buffer *b, char ***argv)
  */
 void _av_init(char *buf, char ***argv)
 {
-	int c, flag, whitespace;
+	int c, i, flag, whitespace;
 
 	for (c = 0, flag = 1; !_is_endofcmd(*buf); buf++)
 	{
@@ -66,10 +66,19 @@ void _av_init(char *buf, char ***argv)
 			flag = 1;
 	}
 
-	/* ADD: Do not reallocate if array is big enough ! */
 	if (*argv != NULL)
-		_free(*argv);
-	*argv = safe_malloc(sizeof(char *) * (c + 1));
+	{
+		for (i = 0; (*argv)[i] != NULL; i++)
+			;
+		if (c > i)
+		{
+			_free(*argv);
+			*argv = safe_malloc(sizeof(char *) * (c + 1));
+		}
+		return;
+	}
+	else
+		*argv = safe_malloc(sizeof(char *) * (c + 1));
 }
 /**
  * _add_null - Add a null before the multi-command operator
@@ -78,8 +87,6 @@ void _av_init(char *buf, char ***argv)
 void _add_null(char *buf)
 {
 	int i;
-
-	/* DEBUG: overwrites by one when buffer is completely full */
 
 	for (i = 0; buf[i] != '\0'; i++)
 		;
