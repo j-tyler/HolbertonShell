@@ -59,7 +59,7 @@ int execute_func(char *cmd, char **args, env_t *envp)
 		i = execve(cmd, args, array);
 		if (i < 0)
 		{
-			write(0, "Error: command not found\n", 25);
+			_write("Error: command not found\n");
 			return (2);
 			_exit(1);
 		}
