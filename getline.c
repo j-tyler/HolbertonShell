@@ -44,7 +44,7 @@ int _getline_fileread(buffer *b, env_t *envp)
 	i = b->bp;
 	while (_is_whitespace(b->buf[i]))
 		i++;
-	if (!_str_match(b->buf + i, "simple_shell") || b->buf[i] == '\0')
+	if (!_str_match_tonull(b->buf + i, "simple_shell") || b->buf[i] == '\0')
 		return (0);
 	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
 		i++;
