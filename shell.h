@@ -130,6 +130,7 @@ void print_cmdline(void);
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
+char *get_env_value(env_t *envp, char *name);
 
 /* helper2.c */
 void _write(char *s);

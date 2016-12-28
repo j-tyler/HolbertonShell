@@ -35,7 +35,7 @@ int _strstr_int(char *haystack, char *needle)
  * _str_match_strict - See if two strings are matching
  * @s1: string 1
  * @s2: string 2
- * Description: Returns a match if either string reaches \0
+ * Description: Returns a match if both strings are the exactly the same
  *
  * Return: 1 if match, 0 if not match
  */
