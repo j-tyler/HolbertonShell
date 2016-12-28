@@ -28,6 +28,7 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 		{
 			_write("Error. Too many arguments.");
 			return (1);
+		}
 		else
 		{
 			retrn = hsh_alias_print(&list, argv);
