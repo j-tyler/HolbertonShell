@@ -4,9 +4,11 @@
  * get_path - copies the $PATH into the string path
  * @path: string to copy the $PATH into
  * @list: environemental variable list
+ * Return: 0 if successly found PATH variable and 1 if PATH
+ * not found
  */
 
-void get_path(char *path, env_t *list)
+int get_path(char *path, env_t *list)
 {
 	env_t *temp;
 
@@ -14,8 +16,12 @@ void get_path(char *path, env_t *list)
 	for (; temp->next != NULL; temp = temp->next)
 	{
 		if (_strstr(temp->value, "PATH") != NULL)
+		{
 			_strcpy(path, temp->value);
+			return (0);
+		}
 	}
+	return (1);
 }
 
 /**

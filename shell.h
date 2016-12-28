@@ -102,7 +102,7 @@ char *make_path(char **path, char *filename, char *key, env_t *envp, int size);
 /* history_func2.c*/
 void add_cmdhist(hist_t *history, char *cmd);
 void pop_head(hist_t *head);
-void write_history(env_t *envp, hist_t *history);
+int write_history(env_t *envp, hist_t *history);
 char *_itoa(int num, int mode);
 
 /* shell.c */
@@ -178,7 +178,7 @@ int hsh_alias_print(alias *list, char **argv);
 int hsh_alias_add(alias *list, char **argv);
 
 /* path_funcs.c */
-void get_path(char *path, env_t *list);
+int get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
 int create_path(char *cmd, char **search_path);
 
