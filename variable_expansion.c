@@ -16,7 +16,8 @@ void variable_expansion(buffer *b, env_t *envp, int retrn_value)
 
 
 	offset = index = 0;
-	while ((index = _strstr_int(b->buf + b->bp + offset, "$")) >= 0)
+	while ((index = _strstr_int(b->buf + b->bp + offset, "$")) >= 0 &&
+		index < _strpbrk_int(b->buf + b->bp + offset, "\n;&|"))
 	{
 		index += offset;
 		offset = index + 1;
