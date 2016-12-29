@@ -18,14 +18,7 @@ void defer_free(void *address)
 	static addr_list list = {NULL, NULL};
 	addr_list *tmp;
 
-/*	printf("DEBUG: We are defer_freeing address: %p\n", address); */
 	tmp = &list;
-	/*tmp2 = tmp;*/
-/*	while (tmp2 != NULL) */
-/*	{*/
-/*		printf("Addresses in the list: %p\n", tmp2->address);*/
-/*		tmp2 = tmp2->next;*/
-/*	}*/
 	/* If not given signal to free all, and address not already in list, add it */
 	if (address != FREE_ADDRESSES && clear_addr_list_node(tmp, address))
 	{
@@ -57,7 +50,7 @@ void defer_free(void *address)
  * @address: address to search and clear
  *
  * Return: 0 if address is found and cleared, 1 if no match is found
-*/
+ */
 int clear_addr_list_node(addr_list *list, void *address)
 {
 	while (list != NULL)
@@ -72,7 +65,7 @@ int clear_addr_list_node(addr_list *list, void *address)
 	return (1);
 }
 /**
- * add_addr_list_node - add a node to the end of an addr_list list
+ * add_addr_list_node - add a node to the addr_list list
  * @list: addr_list list
  * @address: address to add to node
  */
@@ -88,7 +81,7 @@ void add_addr_list_node(addr_list *list, void *address)
 		_exit(4);
 	}
 	node->address = address;
-	node->next = NULL;
+	node->next = list->next;
 	list->next = node;
 }
 /**
