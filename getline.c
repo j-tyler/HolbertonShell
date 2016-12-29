@@ -64,7 +64,7 @@ int _getline_fileread(buffer *b, env_t *envp)
 	}
 	_getline(b, fd, envp);
 	close(fd);
-	return (FILEREADING);
+	return (0);
 }
 /**
  * _getline_file_exit - janky solution to correctly exit on fileread failure
