@@ -11,7 +11,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define BUFSIZE 1024
+
+#define BUFSIZE 600
 #define FREE_ADDRESSES ((void *)3)
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof((ARRAY)[0]))
 /**

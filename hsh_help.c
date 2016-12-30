@@ -2,7 +2,7 @@
 /**
  * hsh_help - help command for hsh_shell builtins
  * @arg: argument lists;
- * Return: 0 if success and 1 if failed
+ * Return: 0 if success and 2 if failed
  */
 int hsh_help(char **arg)
 {
@@ -25,7 +25,7 @@ int hsh_help(char **arg)
 		size = ARRAY_SIZE(table);
 		for (i = 0; i < size; i++)
 		{
-			if (_str_match(arg[1], table[i].name))
+			if (_str_match_strict(arg[1], table[i].name))
 			{
 				table[i].func();
 				return (0);
@@ -33,7 +33,7 @@ int hsh_help(char **arg)
 		}
 	}
 	_write("No help topics match your query (._.)\n");
-	return (22);
+	return (2);
 }
 /**
  * hsh_help_help - builtin help printout for help

@@ -16,9 +16,10 @@ int main(int argc, char **argv, char **envp)
 
 	b.buf = safe_malloc(sizeof(char) * b.size);
 	arg_list = NULL;
+	retrn_value = 0;
+
 	env_p = create_envlist();
 	history_wrapper("", env_p, 'c');
-	retrn_value = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	while (1)
@@ -87,10 +88,19 @@ int more_cmds(buffer *b, int retrn_value)
  */
 void trim_cmd(buffer *b)
 {
+	int flag;
+
+	flag = 0;
 	while (b->buf[b->bp] == ';')
-		b->bp++;
+		b->bp++, flag = 1;
+	if (flag)
+		return;
+
 	while (b->buf[b->bp] == '|')
-		b->bp++;
+		b->bp++, flag = 1;
+	if (flag)
+		return;
+
 	while (b->buf[b->bp] == '&')
 		b->bp++;
 }
