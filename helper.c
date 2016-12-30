@@ -1,9 +1,7 @@
 #include "shell.h"
-
 /**
  * print_cmdline - prints the command line or PS1
  */
-
 void print_cmdline(void)
 {
 	char *str;
@@ -11,7 +9,6 @@ void print_cmdline(void)
 	str = "(^.^) ";
 	write(0, str, 6);
 }
-
 /**
  * safe_malloc - allocates memory and handles errors
  * @size: size of space to allocate
@@ -32,7 +29,14 @@ void *safe_malloc(size_t size)
 	defer_free(tmp);
 	return (tmp);
 }
-
+/**
+ * _write_err - Write to standard error
+ * @s: string to write to stderr
+ */
+void _write_err(char *s)
+{
+	write(STDERR_FILENO, s, _strlen(s));
+}
 /**
  * rm_vname - removes varaiable name of an environemental variable
  * @envp: the environemental varaible name and value string

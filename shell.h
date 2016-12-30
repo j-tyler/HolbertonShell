@@ -128,6 +128,7 @@ void print_env(env_t *head);
 /* helpers.c */
 void print_cmdline(void);
 void *safe_malloc(size_t size);
+void _write_err(char *s);
 void free_args(char **arg_list);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
 char *get_env_value(env_t *envp, char *name);
@@ -154,12 +155,16 @@ int _str_match(char *s1, char *s2);
 int _str_match_tonull(char *s1, char *s2);
 int _atoi(char *s);
 
-/* hepler_str3.c */
+/* helper_str3.c */
 int _strstr_int(char *haystack, char *needle);
 int _strpbrk_int(char *s, char *needles);
 int _str_match_strict(char *s1, char *s2);
 int is_alpha(char c);
 int is_digit(char c);
+
+/* helper_str4.c */
+int string_match(char *s1, char *s2, char *delim);
+int char_match(char c, char *needles);
 
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
