@@ -130,6 +130,7 @@ void print_cmdline(void);
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
+char *get_env_value(env_t *envp, char *name);
 
 /* helper2.c */
 void _write(char *s);
@@ -155,9 +156,11 @@ int _atoi(char *s);
 
 /* hepler_str3.c */
 int _strstr_int(char *haystack, char *needle);
+int _strpbrk_int(char *s, char *needles);
 int _str_match_strict(char *s1, char *s2);
 int is_alpha(char c);
 int is_digit(char c);
+
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
