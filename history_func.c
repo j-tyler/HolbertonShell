@@ -11,7 +11,7 @@
 void create_history(hist_t *history, env_t *envp)
 {
 	char *str, *buf;
-	int i, j, count, n;
+	int i, j, n;
 
 	/* create a buf of what is in the file */
 	buf = safe_malloc(sizeof(char) * BUFSIZE);
@@ -20,19 +20,18 @@ void create_history(hist_t *history, env_t *envp)
 	if (n > 0)
 	{
 		str = safe_malloc(sizeof(char) * _strlen(buf));
-		_memset(str, '\0', _strlen(buf));
 		if (*buf == '\0')
 		{
 			add_history(history, "");
 		}
 		/* create linked list and fill in with what is in file*/
-		for (i = 0, j = 0, count = 0; buf[i] != '\0'; i++)
+		for (i = 0, j = 0; buf[i] != '\0'; i++)
 		{
 			if (buf[i] == '\n')
 			{
+				str[j] = '\0';
 				add_history(history, str);
-				count++, j = 0;
-				_memset(str, '\0', _strlen(str));
+				j = 0;
 			}
 			else
 				str[j++] = buf[i];
@@ -101,6 +100,12 @@ int read_file(env_t *envp, char **buf)
 	char *path, *new_buf;
 
 	path = rm_vname(envp, "HOME", BUFSIZE);
+	if (path == NULL)
+	{
+		_write("Error: Cannot find Home\n");
+		_write("Cannot find history file\n");
+		return (1);
+	}
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_RDWR | 0600);
 	if (fd > 0)
@@ -129,16 +134,21 @@ int read_file(env_t *envp, char **buf)
  * @filename: filename to open
  * @key: key to create
  * @envp: environemental linked list
- * @size: size of oath
  * Return: the path str
  */
-char *make_path(char **path, char *filename, char *key, env_t *envp, int size)
+char *make_path(char **path, char *filename, char *key, env_t *envp)
 {
-	(void) size;
+	char *value;
 
-	*path = safe_malloc(sizeof(char) * BUFSIZE);
-	_memset(*path, '\0', BUFSIZE);
-	*path = rm_vname(envp, key, BUFSIZE);
+	if (_strstr(key, "/"))
+	{
+		*path = filename;
+		return (filename);
+	}
+
+	value = get_env_value(envp, key);
+	*path = safe_malloc(sizeof(char) * (_strlen(value) + _strlen(filename) + 2));
+	_memcpy(*path, value, _strlen(value) + 1);
 	strcat(*path, "/");
 	strcat(*path, filename);
 	return (*path);

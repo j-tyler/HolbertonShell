@@ -56,8 +56,7 @@ void buffer_insert(buffer *b, char *s, int n)
 		; /* insert happens below */
 	else
 	{
-		total_len = 0;
-		total_len += b->bp;
+		total_len = b->bp;
 		total_len += _strlen(b->buf + b->bp);
 		total_len += s_len;
 		while (total_len > b->size)
@@ -65,8 +64,9 @@ void buffer_insert(buffer *b, char *s, int n)
 		/* Find out how many chars remain in the string to move over */
 		for (j = 0; b->buf[j + n] != '\0'; j++)
 			;
+		/* Make room in buffer by moving chars to the right */
 		/* jth char at nth position + length of the string */
-		/* - total open whitespace + 1 buffer */
+		/* - total open whitespace + 1 whitespace at end of cmd */
 		for ( ; j >= 0; j--)
 			b->buf[j + n + s_len - i + 1] = b->buf[j + n];
 	}

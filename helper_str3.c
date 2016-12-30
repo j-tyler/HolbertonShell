@@ -32,10 +32,26 @@ int _strstr_int(char *haystack, char *needle)
 	return (-1);
 }
 /**
+ * _strpbrk_int - Finds and returns index of first char needle in string
+ * @s: haystack to search
+ * @needles: Chars to search for in s
+ * Return: index of first char in s, else -1
+ */
+int _strpbrk_int(char *s, char *needles)
+{
+	int i, c;
+
+	for (i = 0; s[i]; i++)
+		for (c = 0; needles[c]; c++)
+			if (needles[c] == s[i])
+				return (i);
+	return (-1);
+}
+/**
  * _str_match_strict - See if two strings are matching
  * @s1: string 1
  * @s2: string 2
- * Description: Returns a match if either string reaches \0
+ * Description: Returns a match if both strings are the exactly the same
  *
  * Return: 1 if match, 0 if not match
  */
@@ -71,7 +87,7 @@ int is_alpha(char c)
 
 /**
  * is_digit - checks whether something is a digit
- * @c - character to check
+ * @c: character to check
  * Return: 1 if true, 0 if false
  */
 

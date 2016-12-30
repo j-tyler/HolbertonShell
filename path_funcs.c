@@ -4,18 +4,24 @@
  * get_path - copies the $PATH into the string path
  * @path: string to copy the $PATH into
  * @list: environemental variable list
+ * Return: 0 if successly found PATH variable and 1 if PATH
+ * not found
  */
 
-void get_path(char *path, env_t *list)
+int get_path(char *path, env_t *list)
 {
 	env_t *temp;
 
 	temp = list;
 	for (; temp->next != NULL; temp = temp->next)
 	{
-		if (_strstr(temp->value, "PATH") != NULL)
+		if (_str_match_tonull(temp->value, "PATH=") != 0)
+		{
 			_strcpy(path, temp->value);
+			return (0);
+		}
 	}
+	return (1);
 }
 
 /**
@@ -36,7 +42,7 @@ char **tokenize_path(char **search_path, char *path, int size)
 	char *temp, *buffer;
 
 	buffer = safe_malloc(sizeof(char) * size);
-	_memset(buffer, '\0', size);
+	buffer[0] = '\0';
 	for (i = 0, count = 1; path[i] != '\0'; i++)
 	{
 		if (path[i] == ':')
@@ -47,26 +53,20 @@ char **tokenize_path(char **search_path, char *path, int size)
 	/* skip the PATH= */
 	for (temp = path; *temp != '='; temp++)
 		;
-	temp++;
-	for (s_index = 0; *temp; temp++)
-	{
-		if (*temp == ':')
+	temp++, s_index = 0;
+	do {
+		if (*temp == ':' || *temp == '\0')
 		{
 			_strncat(buffer, "/", 1);
 			search_path[s_index] = safe_malloc(sizeof(char) * size);
-			_memset(search_path[s_index], 0, size);
+			search_path[s_index][0] = '\0';
 			_strncat(search_path[s_index], buffer, _strlen(buffer));
 			s_index++;
-			_memset(buffer, '\0', size);
+			buffer[0] = '\0';
 		}
 		else
 			_strncat(buffer, temp, 1);
-	}
-	_strncat(buffer, "/", 1);
-	search_path[s_index] = safe_malloc(sizeof(char) * size);
-	_memset(search_path[s_index], 0, size);
-	_strncat(search_path[s_index], buffer, _strlen(buffer));
-	s_index++;
+	} while (*temp++);
 	search_path[s_index] = safe_malloc(sizeof(char *));
 	search_path[s_index] = NULL;
 	return (search_path);

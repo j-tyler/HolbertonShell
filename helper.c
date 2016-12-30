@@ -9,7 +9,7 @@ void print_cmdline(void)
 	char *str;
 
 	str = "(^.^) ";
-	write(0, str, _strlen(str));
+	write(0, str, 6);
 }
 
 /**
@@ -66,4 +66,29 @@ char *rm_vname(env_t *envp, char *name, int buf_size)
 		pwd++;
 	pwd++;
 	return (pwd);
+}
+/**
+ * get_env_value - get a the value from an env variable
+ * @envp: the env list
+ * @name: key/name of the env variable
+ * Return: a pointer to the value, NULL if none found
+ */
+char *get_env_value(env_t *envp, char *name)
+{
+	char *value;
+
+	while (1)
+	{
+		if (_str_match(envp->value, name))
+		{
+			value = envp->value;
+			break;
+		}
+		else if (envp->next == NULL)
+			return (NULL);
+		envp = envp->next;
+	}
+	while (*value++ != '=')
+		;
+	return (value);
 }

@@ -12,21 +12,20 @@
 void add_cmdhist(hist_t *history, char *cmd)
 {
 	static int hist_index = 1;
-	int i;
+	int i, len;
 	hist_t *temp;
 	char *new_cmd;
 
-	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd));
-	_memset(new_cmd, '\0', _strlen(cmd));
+	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd) + 1);
 	temp = history;
 	if (hist_index == 1)
-	{
 		for (temp = history; temp != NULL; temp = temp->next)
 			hist_index++;
-	}
-	for (i = 0; i < (_strlen(cmd) - 1); i++)
+	len = _strlen(cmd);
+	for (i = 0; i < len - 1; i++)
 		new_cmd[i] = cmd[i];
-	if (_strlen(cmd) > 1)
+	new_cmd[i] = '\0';
+	if (len > 1)
 		add_history(history, new_cmd);
 	hist_index++;
 	_free(new_cmd);
@@ -36,9 +35,10 @@ void add_cmdhist(hist_t *history, char *cmd)
  * .simple_shell_history
  * @envp: environemental variable linked list to find the path of file
  * @history: history link list to find what to write in
+ * Return: 0 if success and 1 if failed to find path for file
  */
 
-void write_history(env_t *envp, hist_t *history)
+int  write_history(env_t *envp, hist_t *history)
 {
 	hist_t *temp, *temp_c;
 	char *path;
@@ -59,7 +59,13 @@ void write_history(env_t *envp, hist_t *history)
 	}
 	path = safe_malloc(sizeof(char) * BUFSIZE);
 	_memset(path, '\0', BUFSIZE);
-	path = rm_vname(envp, "HOME", BUFSIZE);
+	path = rm_vname(envp, "HOME=", BUFSIZE);
+	if (path == NULL)
+	{
+		_write("Error: failed to find history file\n");
+		_write("Cannot write history\n");
+		return (1);
+	}
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	for (temp = history; temp != NULL; temp = temp->next)
@@ -69,4 +75,5 @@ void write_history(env_t *envp, hist_t *history)
 	}
 	_free(history);
 	close(fd);
+	return (0);
 }

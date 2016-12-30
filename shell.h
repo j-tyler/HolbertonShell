@@ -11,8 +11,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define BUFSIZE 1024
-#define FILEREADING 55
+
+#define BUFSIZE 600
 #define FREE_ADDRESSES ((void *)3)
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof((ARRAY)[0]))
 /**
@@ -97,12 +97,12 @@ void create_history(hist_t *history, env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t *head, char *cmd);
 void print_history(hist_t *head);
-char *make_path(char **path, char *filename, char *key, env_t *envp, int size);
+char *make_path(char **path, char *filename, char *key, env_t *envp);
 
 /* history_func2.c*/
 void add_cmdhist(hist_t *history, char *cmd);
 void pop_head(hist_t *head);
-void write_history(env_t *envp, hist_t *history);
+int write_history(env_t *envp, hist_t *history);
 char *_itoa(int num, int mode);
 
 /* shell.c */
@@ -130,6 +130,7 @@ void print_cmdline(void);
 void *safe_malloc(size_t size);
 void free_args(char **arg_list);
 char *rm_vname(env_t *envp, char *arg, int buf_size);
+char *get_env_value(env_t *envp, char *name);
 
 /* helper2.c */
 void _write(char *s);
@@ -155,14 +156,15 @@ int _atoi(char *s);
 
 /* hepler_str3.c */
 int _strstr_int(char *haystack, char *needle);
+int _strpbrk_int(char *s, char *needles);
 int _str_match_strict(char *s1, char *s2);
 int is_alpha(char c);
 int is_digit(char c);
+
 /* getline.c */
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
 int _getline_fileread(buffer *b, env_t *envp);
-void _getline_file_exit(buffer *b);
 
 /* buffer_maniputlation.c */
 void buffer_reallocate(buffer *b);
@@ -176,8 +178,11 @@ int hsh_alias_printall(alias *list);
 int hsh_alias_print(alias *list, char **argv);
 int hsh_alias_add(alias *list, char **argv);
 
+/* cd_func.c */
+char *cd_path(char **arg_list, env_t *envp, int buf_size);
+
 /* path_funcs.c */
-void get_path(char *path, env_t *list);
+int get_path(char *path, env_t *list);
 char **tokenize_path(char **search_path, char *path, int size);
 int create_path(char *cmd, char **search_path);
 

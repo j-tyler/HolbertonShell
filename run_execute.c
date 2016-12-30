@@ -14,7 +14,7 @@ int run_execute(char **arg_list, env_t *env_p, int cmd_size)
 {
 	char *cmd, *path;
 	char **search_path;
-	int status, n;
+	int status, n, m;
 
 	search_path = NULL;
 	n = 0;
@@ -25,7 +25,12 @@ int run_execute(char **arg_list, env_t *env_p, int cmd_size)
 		status = execute_func(cmd, arg_list, env_p);
 	else
 	{
-		get_path(path, env_p);
+		m = get_path(path, env_p);
+		if (m != 0)
+		{
+			_write("Error: Cannot find PATH variable\n");
+			return (127);
+		}
 		search_path = tokenize_path(search_path, path, cmd_size);
 		n = create_path(cmd, search_path);
 		if (n == 0)
@@ -59,7 +64,7 @@ int execute_func(char *cmd, char **args, env_t *envp)
 		i = execve(cmd, args, array);
 		if (i < 0)
 		{
-			write(0, "Error: command not found\n", 25);
+			_write("Error: command not found\n");
 			return (2);
 			_exit(1);
 		}

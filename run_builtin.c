@@ -4,7 +4,7 @@
  * @arg_list: argument list
  * @env_p: enviorn list
  * @buf_size: buffer size
- * Return: 0 on found builtin, 1 on found nothing
+ * Return: 0 on found builtin, 1 on found nothing, 2 on builtin error
  */
 int run_builtin(char **arg_list, env_t *env_p, int buf_size)
 {
