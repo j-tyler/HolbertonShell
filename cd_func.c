@@ -4,6 +4,7 @@
  * cd_path - function to return the path to change directory
  * @arg_list: arg list given by user (directory to change to)
  * @envp: environemental linked list to find HOME and OLDPWD
+ * @buf_size: size of the buffer
  * Return: returns the path to change, returns NULL if HOME
  * or OLDPWD is not found
  */
