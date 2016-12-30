@@ -7,7 +7,7 @@
  * Description: Complicated parent function for the alias functionality
  *				of hsh. Uses two modes to allow it being called from
  *				multiple points from within our program.
- * Return: 0 on success, 1 on failure.
+ * Return: 0 on success, 2 on failure.
  */
 int hsh_alias(char **argv, env_t *env_p, int mode)
 {
@@ -24,6 +24,11 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 	{
 		if (argv[1] == NULL)
 			retrn = hsh_alias_printall(&list);
+		else if (argv[2] != NULL)
+		{
+			_write("Error. Too many arguments.");
+			return (2);
+		}
 		else
 		{
 			retrn = hsh_alias_print(&list, argv);
@@ -34,7 +39,7 @@ int hsh_alias(char **argv, env_t *env_p, int mode)
 	return (retrn);
 }
 /**
- * hsh_alias_search - find and replace aliases
+ * hsh_alias_search - find alias values matching their key
  * @list: alias linked list
  * @arg: alias to search for
  *
@@ -82,12 +87,9 @@ int hsh_alias_print(alias *list, char **argv)
 
 	value = _strstr(argv[1], "=");
 	if (value != NULL)
-	{
-		value += 1;
 		return (1);
-	}
 
-	value = hsh_alias_search(list, argv[0]);
+	value = hsh_alias_search(list, argv[1]);
 	if (value == NULL)
 	{
 		_write("alias not found\n");
