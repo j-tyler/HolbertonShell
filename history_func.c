@@ -101,6 +101,12 @@ int read_file(env_t *envp, char **buf)
 	char *path, *new_buf;
 
 	path = rm_vname(envp, "HOME", BUFSIZE);
+	if (path == NULL)
+	{
+		_write("Error: Cannot find Home\n");
+		_write("Cannot find history file\n");
+		return (1);
+	}
 	_strcat(path, "/.simple_shell_history");
 	fd = open(path, O_RDWR | 0600);
 	if (fd > 0)
