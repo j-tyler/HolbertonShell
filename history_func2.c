@@ -12,21 +12,20 @@
 void add_cmdhist(hist_t *history, char *cmd)
 {
 	static int hist_index = 1;
-	int i;
+	int i, len;
 	hist_t *temp;
 	char *new_cmd;
 
-	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd));
-	_memset(new_cmd, '\0', _strlen(cmd));
+	new_cmd = safe_malloc(sizeof(char) * _strlen(cmd) + 1);
 	temp = history;
 	if (hist_index == 1)
-	{
 		for (temp = history; temp != NULL; temp = temp->next)
 			hist_index++;
-	}
-	for (i = 0; i < (_strlen(cmd) - 1); i++)
+	len = _strlen(cmd);
+	for (i = 0; i < len - 1; i++)
 		new_cmd[i] = cmd[i];
-	if (_strlen(cmd) > 1)
+	new_cmd[i] = '\0';
+	if (len > 1)
 		add_history(history, new_cmd);
 	hist_index++;
 	_free(new_cmd);

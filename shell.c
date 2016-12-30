@@ -27,8 +27,8 @@ int main(int argc, char **argv, char **envp)
 		{
 			print_cmdline();
 			_getline(&b, STDIN_FILENO, env_p);
+			history_wrapper(b.buf, env_p, 'a');
 		}
-		history_wrapper(b.buf, env_p, 'a');
 		while (alias_expansion(&b, env_p))
 			;
 		variable_expansion(&b, env_p, retrn_value);

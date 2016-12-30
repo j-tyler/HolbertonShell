@@ -11,7 +11,7 @@
 void create_history(hist_t *history, env_t *envp)
 {
 	char *str, *buf;
-	int i, j, count, n;
+	int i, j, n;
 
 	/* create a buf of what is in the file */
 	buf = safe_malloc(sizeof(char) * BUFSIZE);
@@ -20,19 +20,18 @@ void create_history(hist_t *history, env_t *envp)
 	if (n > 0)
 	{
 		str = safe_malloc(sizeof(char) * _strlen(buf));
-		_memset(str, '\0', _strlen(buf));
 		if (*buf == '\0')
 		{
 			add_history(history, "");
 		}
 		/* create linked list and fill in with what is in file*/
-		for (i = 0, j = 0, count = 0; buf[i] != '\0'; i++)
+		for (i = 0, j = 0; buf[i] != '\0'; i++)
 		{
 			if (buf[i] == '\n')
 			{
+				str[j] = '\0';
 				add_history(history, str);
-				count++, j = 0;
-				_memset(str, '\0', _strlen(str));
+				j = 0;
 			}
 			else
 				str[j++] = buf[i];
