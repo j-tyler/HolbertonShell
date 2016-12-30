@@ -41,44 +41,34 @@ int _getline_fileread(buffer *b, env_t *envp)
 	int fd, i;
 	char *filename, *fullfilename;
 
+	/* scan through buffer and pull out filename to read */
 	i = b->bp;
 	while (_is_whitespace(b->buf[i]))
 		i++;
 	if (!_str_match_tonull(b->buf + i, "simple_shell") || b->buf[i] == '\0')
 		return (0);
-	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
+	while (!_is_whitespace(b->buf[i]) && b->buf[i] != '\0')
 		i++;
-	while (_is_whitespace(b->buf[i]) && b->buf != '\0')
+	while (_is_whitespace(b->buf[i]) && b->buf[i] != '\0')
 		i++;
-	filename = b->buf + i;
-	while (!_is_whitespace(b->buf[i]) && b->buf != '\0')
-		i++;
-	b->buf[i] = '\0';
-	make_path(&fullfilename, filename, "PWD", envp, b->size);
-	fd = open(fullfilename, O_RDONLY);
+	if (b->buf[i] == '\0')
+		fd = -1;
+	else
+	{
+		filename = b->buf + i;
+		while (!_is_whitespace(b->buf[i]) && b->buf[i] != '\0')
+			i++;
+		b->buf[i] = '\0';
+		make_path(&fullfilename, filename, "PWD", envp);
+		fd = open(fullfilename, O_RDONLY);
+	}
 	if (fd == -1)
 	{
-		_write("Cannot open filename specified\n");
-		_getline_file_exit(b);
-		return (1);
+		history_wrapper("", envp, 'w');
+		defer_free(FREE_ADDRESSES);
+		_exit(1);
 	}
 	_getline(b, fd, envp);
 	close(fd);
-	return (FILEREADING);
-}
-/**
- * _getline_file_exit - janky solution to correctly exit on fileread failure
- * @b: buffer structure
- */
-void _getline_file_exit(buffer *b)
-{
-	/* DEBUG: We need to rework some builtins for this solution to be fixed*/
-	b->buf[0] = 'e';
-	b->buf[1] = 'x';
-	b->buf[2] = 'i';
-	b->buf[3] = 't';
-	b->buf[4] = ' ';
-	b->buf[5] = '1';
-	b->buf[6] = '\0';
-	b->bp = 0;
+	return (0);
 }

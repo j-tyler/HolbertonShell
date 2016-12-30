@@ -12,7 +12,6 @@
 #include <fcntl.h>
 
 #define BUFSIZE 1024
-#define FILEREADING 55
 #define FREE_ADDRESSES ((void *)3)
 #define ARRAY_SIZE(ARRAY) (sizeof(ARRAY) / sizeof((ARRAY)[0]))
 /**
@@ -97,7 +96,7 @@ void create_history(hist_t *history, env_t *envp);
 int read_file(env_t *envp, char **buf);
 hist_t *add_history(hist_t *head, char *cmd);
 void print_history(hist_t *head);
-char *make_path(char **path, char *filename, char *key, env_t *envp, int size);
+char *make_path(char **path, char *filename, char *key, env_t *envp);
 
 /* history_func2.c*/
 void add_cmdhist(hist_t *history, char *cmd);
@@ -165,7 +164,6 @@ int is_digit(char c);
 int _getline(buffer *b, int fd, env_t *envp);
 int _endread(char *s);
 int _getline_fileread(buffer *b, env_t *envp);
-void _getline_file_exit(buffer *b);
 
 /* buffer_maniputlation.c */
 void buffer_reallocate(buffer *b);
