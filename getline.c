@@ -10,10 +10,9 @@ int _getline(buffer *b, int fd, env_t *envp)
 {
 	int offset, n;
 
-	offset = 0;
-	while ((n = read(fd, b->buf + offset, b->size - offset - 1)) > 0 &&
-			b->buf[b->bp + offset + n - 1] != '\n' &&
-			b->buf[b->bp + offset + n] != '\0')
+	offset = 0, n = 0;
+	while ((n = read(fd, b->buf + offset, b->size - offset)) > 0 &&
+			b->buf[b->bp + offset + n - 1] != '\n')
 	{
 		buffer_reallocate(b);
 		offset += n;
