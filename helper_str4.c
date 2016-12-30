@@ -48,7 +48,7 @@ int string_match(char *s1, char *s2, char *delim)
 			return (1);
 
 	if (char_match(s1[i], delim) || char_match(s2[i], delim))
-			return (1);
+		return (1);
 
 	return (0);
 }
